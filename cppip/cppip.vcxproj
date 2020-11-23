@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="arp.cpp" />
     <ClCompile Include="cppip.cpp" />
     <ClCompile Include="eth.cpp" />
     <ClCompile Include="main.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="udp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="arp.h" />
     <ClInclude Include="cppip.h" />
     <ClInclude Include="eth.h" />
     <ClInclude Include="ethertype.h" />

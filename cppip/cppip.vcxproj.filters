@@ -30,6 +30,9 @@
     <ClCompile Include="udp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="arp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cppip.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="udp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="arp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,6 +5,7 @@
 
 typedef uint8_t* buf_t;
 
+#include "arp.h"
 #include "ethertype.h"
 #include "eth.h"
 #include "ipv4.h"
