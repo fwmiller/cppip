@@ -18,6 +18,10 @@ struct alignas(1) arp_hdr {
 	uint8_t hw_addr_len;
 	uint8_t proto_addr_len;
 	uint16_t opcode;
+	uint8_t sha[6];
+	uint32_t spa;
+	uint8_t tha[6];
+	uint32_t tpa;
 };
 
 typedef struct arp_hdr* arp_hdr_t;

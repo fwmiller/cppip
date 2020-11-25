@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "cppip.h"
 
-static void dump_ethertype(uint16_t ethertype);
-
 eth::eth()
 {
 	this->buf = nullptr;
@@ -38,37 +36,13 @@ eth::dump()
 
 	eth_hdr_t eh = (eth_hdr_t)this->buf;
 
-	printf("ethernet dst %02x:%02x:%02x:%02x:%02x:%02x ",
-		eh->dst[0], eh->dst[1], eh->dst[2], eh->dst[3], eh->dst[4], eh->dst[5]);
-	printf("src %02x:%02x:%02x:%02x:%02x:%02x ",
-		eh->src[0], eh->src[1], eh->src[2], eh->src[3], eh->src[4], eh->src[5]);
+	printf("ethernet dst ");
+	dump_ethaddr(eh->dst);
+	printf(" src ");
+	dump_ethaddr(eh->src);
 
 	uint16_t ethertype = ntohs(eh->ethertype);
-	printf("type 0x%04x (", ethertype);
+	printf(" type 0x%04x (", ethertype);
 	dump_ethertype(ethertype);
 	printf(")\r\n");
-}
-
-static void
-dump_ethertype(uint16_t ethertype)
-{
-	switch (ethertype) {
-	case ETHERTYPE_IPV4:
-		printf("IPv4");
-		break;
-	case ETHERTYPE_ARP:
-		printf("ARP");
-		break;
-	case ETHERTYPE_RARP:
-		printf("RARP");
-		break;
-	case ETHERTYPE_VLAN:
-		printf("802.1Q VLAN");
-		break;
-	case ETHERTYPE_IPV6:
-		printf("IPv6");
-		break;
-	default:
-		printf("UNKNOWN");
-	}
 }

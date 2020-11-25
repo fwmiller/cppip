@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "cppip.h"
 
-static void dump_ipaddr(uint32_t ipaddr);
-
 ipv4::ipv4()
 {
 	this->buf = nullptr;
@@ -37,19 +35,4 @@ ipv4::dump()
 	printf(" src ");
 	dump_ipaddr(ntohl(ih->src));
 	printf("\r\n");
-}
-
-static void
-dump_ipaddr(uint32_t ipaddr)
-{
-	uint8_t x;
-
-	x = ipaddr >> 24;
-	printf("%u.", x);
-	x = (ipaddr >> 16) & 0xff;
-	printf("%u.", x);
-	x = (ipaddr >> 8) & 0xff;
-	printf("%u.", x);
-	x = ipaddr & 0xff;
-	printf("%u", x);
 }
