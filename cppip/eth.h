@@ -3,7 +3,8 @@
 
 #include <stdint.h>
 
-struct alignas(1) eth_hdr {
+#pragma pack(1)
+struct eth_hdr {
 	uint8_t dst[6];
 	uint8_t src[6];
 	uint16_t ethertype;

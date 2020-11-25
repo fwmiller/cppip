@@ -12,7 +12,8 @@ const static uint16_t ARP_OP_REP = 0x0002;
 const static uint16_t RARP_OP_REQ = 0x0003;
 const static uint16_t RARP_OP_REP = 0x0004;
 
-struct alignas(1) arp_hdr {
+#pragma pack(1)
+struct arp_hdr {
 	uint16_t hw;
 	uint16_t proto;
 	uint8_t hw_addr_len;

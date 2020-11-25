@@ -3,7 +3,8 @@
 
 #include <stdint.h>
 
-struct alignas(1) ipv4_hdr {
+#pragma pack(1)
+struct ipv4_hdr {
 	uint8_t version;
 	uint8_t tos;
 	uint16_t len;

@@ -1,7 +1,8 @@
 #ifndef __UDP_H
 #define __UDP_H
 
-struct alignas(1) udp_hdr {
+#pragma pack(1)
+struct udp_hdr {
 	uint16_t src;
 	uint16_t dst;
 	uint16_t len;
