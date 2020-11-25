@@ -2,6 +2,7 @@
 #define __ARP_H
 
 #include <stdint.h>
+#include "cppip.h"
 
 const static uint16_t ARP_HW_ETH = 0x0001;
 const static uint16_t ARP_HW_802 = 0x0006;
@@ -19,9 +20,9 @@ struct arp_hdr {
 	uint8_t hw_addr_len;
 	uint8_t proto_addr_len;
 	uint16_t opcode;
-	uint8_t sha[6];
+	uint8_t sha[ETH_ADDR_LEN];
 	uint32_t spa;
-	uint8_t tha[6];
+	uint8_t tha[ETH_ADDR_LEN];
 	uint32_t tpa;
 };
 

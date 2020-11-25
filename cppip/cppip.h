@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+static const unsigned ETH_ADDR_LEN = 6;
+
 typedef uint8_t* buf_t;
 
 #include "arp.h"

@@ -5,8 +5,8 @@
 
 #pragma pack(1)
 struct eth_hdr {
-	uint8_t dst[6];
-	uint8_t src[6];
+	uint8_t dst[ETH_ADDR_LEN];
+	uint8_t src[ETH_ADDR_LEN];
 	uint16_t ethertype;
 };
 
@@ -15,11 +15,12 @@ typedef struct eth_hdr* eth_hdr_t;
 class eth {
 private:
 	buf_t buf;
+	uint16_t get_ethertype();
 public:
 	eth();
 	buf_t get_buf();
 	void set_buf(buf_t buf);
-	uint16_t get_ethertype();
+	void receive();
 	void dump();
 };
 

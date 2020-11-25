@@ -29,6 +29,31 @@ eth::get_ethertype()
 }
 
 void
+eth::receive()
+{
+	switch (this->get_ethertype()) {
+	case ETHERTYPE_IPV4:
+	{
+		class ipv4 ip;
+		class udp udp;
+		ip.set_buf(this->buf + sizeof(struct eth_hdr));
+		ip.dump();
+		udp.set_buf(this->buf + sizeof(struct ipv4_hdr));
+		udp.dump();
+	}
+	break;
+	case ETHERTYPE_ARP:
+	case ETHERTYPE_RARP:
+	{
+		class arp arp;
+		arp.set_buf(this->buf + sizeof(struct eth_hdr));
+		arp.dump();
+	}
+	break;
+	}
+}
+
+void
 eth::dump()
 {
 	if (this->buf == nullptr)
