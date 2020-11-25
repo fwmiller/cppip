@@ -19,6 +19,12 @@ arp::set_buf(buf_t buf)
 }
 
 void
+arp::receive()
+{
+	return;
+}
+
+void
 arp::dump()
 {
 	if (this->buf == nullptr)

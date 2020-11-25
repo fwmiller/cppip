@@ -78,7 +78,8 @@ dump_ethaddr(uint8_t* ethaddr)
 		return;
 
 	printf("%02x:%02x:%02x:%02x:%02x:%02x",
-		ethaddr[0], ethaddr[1], ethaddr[2], ethaddr[3], ethaddr[4], ethaddr[5]);
+		ethaddr[0], ethaddr[1], ethaddr[2],
+		ethaddr[3], ethaddr[4], ethaddr[5]);
 }
 
 uint16_t

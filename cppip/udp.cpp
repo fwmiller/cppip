@@ -19,6 +19,12 @@ udp::set_buf(buf_t buf)
 }
 
 void
+udp::receive()
+{
+	return;
+}
+
+void
 udp::dump()
 {
 	if (this->buf == nullptr)
