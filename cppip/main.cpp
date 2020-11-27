@@ -15,7 +15,7 @@ int main()
 {
     class eth eth;
 
-    printf("C++ Internet Protocols\r\n");
+    printf("C++ Internet Protocols (cppip)\r\n");
 
     bufdump((uint8_t *)pkt1, sizeof(pkt1));
     eth.set_buf((uint8_t*)pkt1);

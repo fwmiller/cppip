@@ -33,6 +33,15 @@
     <ClCompile Include="arp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="arp_dump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ipv4_dump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="eth_dump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cppip.h">
@@ -51,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="arp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ipv4proto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

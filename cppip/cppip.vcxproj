@@ -140,8 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="arp.cpp" />
+    <ClCompile Include="arp_dump.cpp" />
     <ClCompile Include="cppip.cpp" />
     <ClCompile Include="eth.cpp" />
+    <ClCompile Include="eth_dump.cpp" />
+    <ClCompile Include="ipv4_dump.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ipv4.cpp" />
     <ClCompile Include="udp.cpp" />
@@ -152,6 +155,7 @@
     <ClInclude Include="eth.h" />
     <ClInclude Include="ethertype.h" />
     <ClInclude Include="ipv4.h" />
+    <ClInclude Include="ipv4proto.h" />
     <ClInclude Include="udp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
