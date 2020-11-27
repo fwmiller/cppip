@@ -1,6 +1,8 @@
 #ifndef __ETHERTYPE_H
 #define __ETHERTYPE_H
 
+#include <stdint.h>
+
 static const uint16_t ETHERTYPE_IPV4 = 0x0800;
 static const uint16_t ETHERTYPE_ARP = 0x0806;
 static const uint16_t ETHERTYPE_RARP = 0x8035;

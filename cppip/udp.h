@@ -1,6 +1,8 @@
 #ifndef __UDP_H
 #define __UDP_H
 
+#include <stdint.h>
+
 #pragma pack(1)
 struct udp_hdr {
 	uint16_t src;

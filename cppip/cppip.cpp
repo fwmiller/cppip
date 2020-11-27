@@ -6,7 +6,7 @@
 static const int LEN = 16;
 
 void
-bufdump(uint8_t* buf, int len)
+bufdump(uint8_t* buf, unsigned len)
 {
 	uint8_t* line;
 	int i, j, lines;
@@ -33,41 +33,15 @@ bufdump(uint8_t* buf, int len)
 }
 
 void
-dump_ipaddr(uint32_t ipaddr)
-{
-	uint8_t x;
-
-	x = ipaddr >> 24;
-	printf("%u.", x);
-	x = (ipaddr >> 16) & 0xff;
-	printf("%u.", x);
-	x = (ipaddr >> 8) & 0xff;
-	printf("%u.", x);
-	x = ipaddr & 0xff;
-	printf("%u", x);
-}
-
-void
 dump_ethertype(uint16_t ethertype)
 {
 	switch (ethertype) {
-	case ETHERTYPE_IPV4:
-		printf("IPv4");
-		break;
-	case ETHERTYPE_ARP:
-		printf("ARP");
-		break;
-	case ETHERTYPE_RARP:
-		printf("RARP");
-		break;
-	case ETHERTYPE_VLAN:
-		printf("802.1Q VLAN");
-		break;
-	case ETHERTYPE_IPV6:
-		printf("IPv6");
-		break;
-	default:
-		printf("UNKNOWN");
+	case ETHERTYPE_IPV4: printf("IPv4"); break;
+	case ETHERTYPE_ARP: printf("ARP"); break;
+	case ETHERTYPE_RARP: printf("RARP"); break;
+	case ETHERTYPE_VLAN: printf("802.1Q VLAN"); break;
+	case ETHERTYPE_IPV6: printf("IPv6"); break;
+	default: printf("UNKNOWN"); break;
 	}
 }
 
@@ -82,18 +56,32 @@ dump_ethaddr(uint8_t* ethaddr)
 		ethaddr[3], ethaddr[4], ethaddr[5]);
 }
 
+void
+dump_ipaddr(uint32_t ipaddr)
+{
+	uint8_t x;
+
+	x = ipaddr >> 24;
+	printf("%u.", x);
+	x = (ipaddr >> 16) & 0xff;
+	printf("%u.", x);
+	x = (ipaddr >> 8) & 0xff;
+	printf("%u.", x);
+	x = ipaddr & 0xff;
+	printf("%u", x);
+}
+
 uint16_t
 ntohs(uint16_t x)
 {
-	return ((x & 0xff) << 8) |
-		((x & 0xff00) >> 8);
+	return (((x & 0xff) << 8) | ((x & 0xff00) >> 8));
 }
 
 uint32_t
 ntohl(uint32_t x)
 {
-	return ((x & 0xff) << 24) |
+	return (((x & 0xff) << 24) |
 		((x & 0xff00) << 8) |
 		((x & 0xff0000) >> 8) |
-		((x & 0xff000000) >> 24);
+		((x & 0xff000000) >> 24));
 }
