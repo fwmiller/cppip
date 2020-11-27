@@ -11,10 +11,49 @@ ipv4::dump()
 
 	ipv4_hdr_t ih = (ipv4_hdr_t)this->buf;
 
-	printf("ipv4 version 0x%02x tos 0x%02x len %u id 0x%04x\r\n",
-		ih->version, ih->tos, ih->len, ih->id);
-	printf(" frag 0x%04x ttl %u protocol 0x%02x (",
-		ih->frag, ih->ttl, ih->protocol);
+	printf("ipv4 version %u hdr len %u tos 0x%02x",
+		(ih->version >> 4) & 0x0f, (ih->version & 0x0f) * 32 / 8, ih->tos);
+
+	if (ih->tos) {
+		uint8_t prec = (ih->tos >> 5) & 0x03;
+		uint8_t delay = (ih->tos >> 4) & 0x01;
+		uint8_t throughput = (ih->tos >> 3) & 0x01;
+		uint8_t reliability = (ih->tos >> 2) & 0x01;
+		uint8_t cost = (ih->tos >> 1) & 0x01;
+
+		switch (prec) {
+		case 1: printf(" PRIORITY"); break;
+		case 2: printf(" IMMEDIATE"); break;
+		case 3: printf(" FLASH"); break;
+		case 4: printf(" FLASH-OVERRIDE"); break;
+		case 5: printf(" CRITICAL"); break;
+		case 6: printf(" INET-CTL"); break;
+		case 7: printf(" NET-CTL"); break;
+		}
+		if (delay)
+			printf(" MIN_DELAY");
+		if (throughput)
+			printf(" MAX_THROUGHPUT");
+		if (reliability)
+			printf(" MAX RELIABILITY");
+		if (cost)
+			printf(" MIN COST");
+	}
+	printf("\r\n");
+
+	printf(" len %u id 0x%04x frag 0x%04x",
+		ntohs(ih->len), ntohs(ih->id), ntohs(ih->frag));
+	uint16_t flags = ntohs(ih->frag) >> 13;
+	if (flags) {
+		printf(" (");
+		if (flags & 0x01)
+			printf("MF");
+		if (flags & 0x02)
+			printf("DF");
+		printf(")");
+	}
+	printf(" offset %u\r\n", ntohs(ih->frag) & 0x1fff);
+	printf(" ttl %u protocol 0x%02x (", ih->ttl, ih->protocol);
 	ipv4_dump_proto(ih->protocol);
 	printf(") hdr cksum 0x%04x\r\n", ih->hdr_cksum);
 	printf(" dst ");
