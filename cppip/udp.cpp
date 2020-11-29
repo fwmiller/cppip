@@ -33,5 +33,8 @@ udp::dump()
 	udp_hdr_t uh = (udp_hdr_t)this->buf;
 
 	printf("udp dst %u src %u len %u cksum 0x%04x\r\n",
-		ntohs(uh->dst), ntohs(uh->src), ntohs(uh->len), ntohs(uh->cksum));
+		net_to_host_order_short(uh->dst),
+		net_to_host_order_short(uh->src),
+		net_to_host_order_short(uh->len),
+		net_to_host_order_short(uh->cksum));
 }

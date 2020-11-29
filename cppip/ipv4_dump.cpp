@@ -42,8 +42,8 @@ ipv4::dump()
 	printf("\r\n");
 
 	printf(" len %u id 0x%04x frag 0x%04x",
-		ntohs(ih->len), ntohs(ih->id), ntohs(ih->frag));
-	uint16_t flags = ntohs(ih->frag) >> 13;
+		net_to_host_order_short(ih->len), net_to_host_order_short(ih->id), net_to_host_order_short(ih->frag));
+	uint16_t flags = net_to_host_order_short(ih->frag) >> 13;
 	if (flags) {
 		printf(" (");
 		if (flags & 0x01)
@@ -52,14 +52,14 @@ ipv4::dump()
 			printf("DF");
 		printf(")");
 	}
-	printf(" offset %u\r\n", ntohs(ih->frag) & 0x1fff);
+	printf(" offset %u\r\n", net_to_host_order_short(ih->frag) & 0x1fff);
 	printf(" ttl %u protocol 0x%02x (", ih->ttl, ih->protocol);
 	ipv4_dump_proto(ih->protocol);
 	printf(") hdr cksum 0x%04x\r\n", ih->hdr_cksum);
 	printf(" dst ");
-	dump_ipaddr(ntohl(ih->dst));
+	dump_ipaddr(net_to_host_order_long(ih->dst));
 	printf(" src ");
-	dump_ipaddr(ntohl(ih->src));
+	dump_ipaddr(net_to_host_order_long(ih->src));
 	printf("\r\n");
 }
 

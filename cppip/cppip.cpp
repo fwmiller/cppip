@@ -72,13 +72,13 @@ dump_ipaddr(uint32_t ipaddr)
 }
 
 uint16_t
-ntohs(uint16_t x)
+net_to_host_order_short(uint16_t x)
 {
 	return (((x & 0xff) << 8) | ((x & 0xff00) >> 8));
 }
 
 uint32_t
-ntohl(uint32_t x)
+net_to_host_order_long(uint32_t x)
 {
 	return (((x & 0xff) << 24) |
 		((x & 0xff00) << 8) |

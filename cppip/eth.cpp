@@ -1,3 +1,4 @@
+
 #include "cppip.h"
 
 uint16_t
@@ -7,7 +8,7 @@ eth::get_ethertype()
 		return 0;
 
 	eth_hdr_t eh = (eth_hdr_t)this->buf;
-	return ntohs(eh->ethertype);
+	return net_to_host_order_short(eh->ethertype);
 }
 
 eth::eth()

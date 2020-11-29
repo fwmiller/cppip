@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define WINDOWS_IGNORE_PACKING_MISMATCH
+
 static const unsigned ETH_ADDR_LEN = 6;
 static const unsigned IPV4_ADDR_LEN = 4;
 
@@ -19,7 +21,7 @@ void dump_ethertype(uint16_t ethertype);
 void dump_ethaddr(uint8_t* ethaddr);
 void dump_ipaddr(uint32_t ipaddr);
 
-uint16_t ntohs(uint16_t x);
-uint32_t ntohl(uint32_t x);
+uint16_t net_to_host_order_short(uint16_t x);
+uint32_t net_to_host_order_long (uint32_t x);
 
 #endif
