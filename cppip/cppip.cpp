@@ -40,7 +40,14 @@ dump_ethertype(uint16_t ethertype)
 	case ETHERTYPE_ARP: printf("ARP"); break;
 	case ETHERTYPE_RARP: printf("RARP"); break;
 	case ETHERTYPE_VLAN: printf("802.1Q VLAN"); break;
+	case ETHERTYPE_SNMP: printf("SNMP"); break;
 	case ETHERTYPE_IPV6: printf("IPv6"); break;
+	case ETHERTYPE_MPLS: printf("MPLS"); break;
+	case ETHERTYPE_MPLS_MULTICAST: printf("MPLS Multicast"); break;
+	case ETHERTYPE_JUMBO: printf("JUMBO"); break;
+	case ETHERTYPE_802_1X: printf("802.1X"); break;
+	case ETHERTYPE_802_1AE: printf("802.1AE"); break;
+	case ETHERTYPE_PTP: printf("PTP"); break;
 	default: printf("UNKNOWN"); break;
 	}
 }

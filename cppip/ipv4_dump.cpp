@@ -35,17 +35,17 @@ ipv4::dump()
 		if (throughput)
 			printf(" MAX_THROUGHPUT");
 		if (reliability)
-			printf(" MAX RELIABILITY");
+			printf(" MAX_RELIABILITY");
 		if (cost)
-			printf(" MIN COST");
+			printf(" MIN_COST");
 	}
-	printf("\r\n");
-
-	printf(" len %u id 0x%04x frag 0x%04x",
+	printf(" len %u id 0x%04x\r\n",
 		net_to_host_order_short(ih->len),
-		net_to_host_order_short(ih->id),
-		net_to_host_order_short(ih->frag));
-	uint16_t flags = net_to_host_order_short(ih->frag) >> 13;
+		net_to_host_order_short(ih->id));
+	
+	uint16_t frag = net_to_host_order_short(ih->frag);
+	printf(" frag 0x%04x", frag);
+	uint16_t flags = frag >> 13;
 	if (flags) {
 		printf(" (");
 		if (flags & 0x01)
@@ -54,8 +54,9 @@ ipv4::dump()
 			printf("DF");
 		printf(")");
 	}
-	printf(" offset %u\r\n", net_to_host_order_short(ih->frag) & 0x1fff);
-	printf(" ttl %u protocol 0x%02x (", ih->ttl, ih->protocol);
+	printf(" offset %u ttl %u protocol 0x%02x (",
+		net_to_host_order_short(ih->frag) & 0x1fff,
+		ih->ttl, ih->protocol);
 	ipv4_dump_proto(ih->protocol);
 	printf(") hdr cksum 0x%04x\r\n", ih->hdr_cksum);
 	printf(" dst ");
