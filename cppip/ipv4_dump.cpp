@@ -12,7 +12,7 @@ ipv4::dump()
 	ipv4_hdr_t ih = (ipv4_hdr_t)this->buf;
 
 	printf("ipv4 version %u hdr len %u tos 0x%02x",
-		(ih->version >> 4) & 0x0f, (ih->version & 0x0f) * 32 / 8, ih->tos);
+		(ih->version >> 4) & 0x0f, this->get_hdr_len(), ih->tos);
 
 	if (ih->tos) {
 		uint8_t prec = (ih->tos >> 5) & 0x03;
@@ -42,7 +42,9 @@ ipv4::dump()
 	printf("\r\n");
 
 	printf(" len %u id 0x%04x frag 0x%04x",
-		net_to_host_order_short(ih->len), net_to_host_order_short(ih->id), net_to_host_order_short(ih->frag));
+		net_to_host_order_short(ih->len),
+		net_to_host_order_short(ih->id),
+		net_to_host_order_short(ih->frag));
 	uint16_t flags = net_to_host_order_short(ih->frag) >> 13;
 	if (flags) {
 		printf(" (");
