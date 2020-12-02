@@ -34,11 +34,11 @@ eth::receive()
 
 	ethertype = this->get_ethertype();
 	if (ethertype < ETH_MTU_SIZE) {
-		class ieee802_3 ie;
+		class ieee802_2 llc;
 
-		ie.set_buf(this->buf + sizeof(struct eth_hdr));
-		ie.dump();
-		ie.receive();
+		llc.set_buf(this->buf + sizeof(struct eth_hdr));
+		llc.dump();
+		llc.receive();
 		return;
 	}
 	switch (ethertype) {

@@ -42,7 +42,7 @@
     <ClCompile Include="eth_dump.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ieee802_3.cpp">
+    <ClCompile Include="ieee802_2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,7 +68,7 @@
     <ClInclude Include="ipv4proto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ieee802_3.h">
+    <ClInclude Include="ieee802_2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
