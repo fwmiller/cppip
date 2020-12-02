@@ -2,6 +2,7 @@
 #define __IPV4_H
 
 #include <stdint.h>
+#include "cppip.h"
 #include "ipv4proto.h"
 
 #pragma pack(1)

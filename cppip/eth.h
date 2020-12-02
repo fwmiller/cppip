@@ -2,6 +2,9 @@
 #define __ETHERNET_H
 
 #include <stdint.h>
+#include "cppip.h"
+
+static const unsigned ETH_MTU_SIZE = 1536;
 
 #pragma pack(1)
 struct eth_hdr {

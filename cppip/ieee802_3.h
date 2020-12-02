@@ -1,24 +1,21 @@
-#ifndef __UDP_H
-#define __UDP_H
+#ifndef __IEEE_802_3_H
+#define __IEEE_802_3_H
 
 #include <stdint.h>
 #include "cppip.h"
 
 #pragma pack(1)
-struct udp_hdr {
-	uint16_t src;
-	uint16_t dst;
-	uint16_t len;
-	uint16_t cksum;
+struct ieee802_3_hdr {
+
 };
 
-typedef struct udp_hdr* udp_hdr_t;
+typedef struct ieee802_3_hdr* ieee802_3_hdr_t;
 
-class udp {
+class ieee802_3 {
 private:
 	buf_t buf;
 public:
-	udp();
+	ieee802_3();
 	buf_t get_buf();
 	void set_buf(buf_t buf);
 	void receive();

@@ -156,6 +156,7 @@
     <ClCompile Include="cppip.cpp" />
     <ClCompile Include="eth.cpp" />
     <ClCompile Include="eth_dump.cpp" />
+    <ClCompile Include="ieee802_3.cpp" />
     <ClCompile Include="ipv4_dump.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ipv4.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="cppip.h" />
     <ClInclude Include="eth.h" />
     <ClInclude Include="ethertype.h" />
+    <ClInclude Include="ieee802_3.h" />
     <ClInclude Include="ipv4.h" />
     <ClInclude Include="ipv4proto.h" />
     <ClInclude Include="udp.h" />

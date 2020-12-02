@@ -13,6 +13,7 @@ typedef uint8_t* buf_t;
 #include "arp.h"
 #include "ethertype.h"
 #include "eth.h"
+#include "ieee802_3.h"
 #include "ipv4.h"
 #include "udp.h"
 

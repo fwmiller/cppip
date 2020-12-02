@@ -1,4 +1,3 @@
-
 #include "cppip.h"
 
 uint16_t
@@ -31,7 +30,18 @@ eth::set_buf(buf_t buf)
 void
 eth::receive()
 {
-	switch (this->get_ethertype()) {
+	uint16_t ethertype;
+
+	ethertype = this->get_ethertype();
+	if (ethertype < ETH_MTU_SIZE) {
+		class ieee802_3 ie;
+
+		ie.set_buf(this->buf + sizeof(struct eth_hdr));
+		ie.dump();
+		ie.receive();
+		return;
+	}
+	switch (ethertype) {
 	case ETHERTYPE_IPV4:
 	{
 		class ipv4 ip;
