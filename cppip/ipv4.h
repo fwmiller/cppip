@@ -34,4 +34,6 @@ public:
 	void dump();
 };
 
+void ipv4_dump_proto(uint8_t proto);
+
 #endif

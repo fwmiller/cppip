@@ -42,6 +42,15 @@ eth::receive()
 		return;
 	}
 	switch (ethertype) {
+	case ETHERTYPE_ARP:
+	case ETHERTYPE_RARP:
+	{
+		class arp arp;
+		arp.set_buf(this->buf + sizeof(struct eth_hdr));
+		arp.dump();
+		arp.receive();
+	}
+	break;
 	case ETHERTYPE_IPV4:
 	{
 		class ipv4 ip;
@@ -50,13 +59,12 @@ eth::receive()
 		ip.receive();
 	}
 	break;
-	case ETHERTYPE_ARP:
-	case ETHERTYPE_RARP:
+	case ETHERTYPE_IPV6:
 	{
-		class arp arp;
-		arp.set_buf(this->buf + sizeof(struct eth_hdr));
-		arp.dump();
-		arp.receive();
+		class ipv6 ip;
+		ip.set_buf(this->buf + sizeof(struct eth_hdr));
+		ip.dump();
+		ip.receive();
 	}
 	break;
 	}

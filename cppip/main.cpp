@@ -85,7 +85,7 @@ static unsigned pkt_count = 0;
 static void
 packet_handler(u_char* param, const struct pcap_pkthdr* header, const u_char* pkt_data)
 {
-	printf("Frame %u\r\n", ++pkt_count);
+	printf("\r\nFrame %u\r\n", ++pkt_count);
 	//bufdump((uint8_t *)pkt_data, header->len);
 
 	class eth eth;

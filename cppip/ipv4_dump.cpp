@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "cppip.h"
 
-static void ipv4_dump_proto(uint8_t proto);
-
 void
 ipv4::dump()
 {
@@ -11,7 +9,7 @@ ipv4::dump()
 
 	ipv4_hdr_t ih = (ipv4_hdr_t)this->buf;
 
-	printf("ipv4 version %u hdr len %u tos 0x%02x",
+	printf("ipv4 ver %u hdr len %u tos 0x%02x",
 		(ih->version >> 4) & 0x0f, this->get_hdr_len(), ih->tos);
 
 	if (ih->tos) {
@@ -66,7 +64,7 @@ ipv4::dump()
 	printf("\r\n");
 }
 
-static void
+void
 ipv4_dump_proto(uint8_t proto)
 {
 	switch (proto) {

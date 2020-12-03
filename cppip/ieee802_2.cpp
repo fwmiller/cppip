@@ -31,14 +31,16 @@ ieee802_2::dump()
 	if (this->buf == nullptr)
 		return;
 
-	ieee802_2_hdr_t llchdr = (ieee802_2_hdr_t)this->buf;
+	ieee802_2_hdr_t llc_hdr = (ieee802_2_hdr_t)this->buf;
 
-	printf("802.2 LLC dsap 0x%02x ssap 0x%02x", llchdr->dsap, llchdr->ssap);
+	printf("802.2 LLC dsap 0x%02x ssap 0x%02x", llc_hdr->dsap, llc_hdr->ssap);
 
-	if ((llchdr->control & 0x03) == 0x03)
-		printf(" U-format");
-	else
-		printf(" I/S-format");
-
+	if ((llc_hdr->control & 0x03) == 0x03)
+		printf(" control 0x%02x (U-format)", llc_hdr->control);
+	else {
+		uint16_t control;
+		control = net_to_host_order_short(*((uint16_t *) &(llc_hdr->control)));
+		printf(" control 0x%04x (I/S-format)", control);
+	}
 	printf("\r\n");
 }

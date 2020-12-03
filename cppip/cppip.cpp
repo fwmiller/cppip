@@ -78,6 +78,14 @@ dump_ipaddr(uint32_t ipaddr)
 	printf("%u", x);
 }
 
+void
+dump_ipv6addr(uint8_t* ipv6addr)
+{
+	printf("%02x", ipv6addr[0]);
+	for (int i = 1; i < 16; i++)
+		printf(":%02x", ipv6addr[i]);
+}
+
 uint16_t
 net_to_host_order_short(uint16_t x)
 {
