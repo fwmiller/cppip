@@ -159,6 +159,7 @@
     <ClCompile Include="ieee802_2.cpp" />
     <ClCompile Include="ipv4_dump.cpp" />
     <ClCompile Include="ipv6.cpp" />
+    <ClCompile Include="dump_ipproto.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ipv4.cpp" />
     <ClCompile Include="udp.cpp" />
@@ -170,7 +171,7 @@
     <ClInclude Include="ethertype.h" />
     <ClInclude Include="ieee802_2.h" />
     <ClInclude Include="ipv4.h" />
-    <ClInclude Include="ipv4proto.h" />
+    <ClInclude Include="ipproto.h" />
     <ClInclude Include="ipv6.h" />
     <ClInclude Include="udp.h" />
   </ItemGroup>

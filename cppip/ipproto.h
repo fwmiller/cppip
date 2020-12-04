@@ -1,5 +1,5 @@
-#ifndef __IPV4_PROTOCOL
-#define __IPV4_PROTOCOL
+#ifndef __IP_PROTOCOL
+#define __IP_PROTOCOL
 
 #include <stdint.h>
 

@@ -52,7 +52,7 @@ ipv6::dump()
 	printf("\r\n");
 
 	printf(" next 0x%04x (", ih->next);
-	ipv4_dump_proto(ih->next);
+	dump_ipproto(ih->next);
 	printf(") hop limit %u\r\n", ih->hop_lmt);
 
 	printf(" dst ");

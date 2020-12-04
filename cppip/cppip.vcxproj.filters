@@ -48,6 +48,9 @@
     <ClCompile Include="ipv6.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dump_ipproto.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cppip.h">
@@ -68,13 +71,13 @@
     <ClInclude Include="arp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ipv4proto.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ieee802_2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ipv6.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ipproto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include "cppip.h"
-#include "ipv4proto.h"
 
 #pragma pack(1)
 struct ipv4_hdr {
@@ -33,7 +32,5 @@ public:
 	void receive();
 	void dump();
 };
-
-void ipv4_dump_proto(uint8_t proto);
 
 #endif
