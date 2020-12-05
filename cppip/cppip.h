@@ -17,6 +17,7 @@ typedef uint8_t* buf_t;
 #include "ipproto.h"
 #include "ipv4.h"
 #include "ipv6.h"
+#include "icmpv6.h"
 #include "udp.h"
 
 void bufdump(uint8_t* buf, unsigned len);
