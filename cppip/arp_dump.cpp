@@ -17,7 +17,10 @@ arp::dump()
 		dump_ipaddr(net_to_host_order_long(ah->spa));
 		break;
 	case ARP_OP_REP:
-		printf("arp is at ");
+		printf("arp ");
+		dump_ipaddr(net_to_host_order_long(ah->spa));
+		printf(" is at ");
+		dump_ethaddr(ah->sha);
 		break;
 	case RARP_OP_REQ:
 		printf("rarp who has ");

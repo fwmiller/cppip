@@ -19,6 +19,7 @@ typedef uint8_t* buf_t;
 #include "ipv6.h"
 #include "icmpv6.h"
 #include "udp.h"
+#include "socket.h"
 
 void bufdump(uint8_t* buf, unsigned len);
 void dump_ethertype(uint16_t ethertype);
