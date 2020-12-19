@@ -24,7 +24,8 @@ ipv4::get_hdr_len()
 		return 0;
 
 	ipv4_hdr_t ih = (ipv4_hdr_t)this->buf;
-	return (ih->version & 0x0f) * 32 / 8;
+	//return (ih->version & 0x0f) * 32 / 8;
+	return (ih->version & 0x0f) << 2;
 }
 
 uint8_t
