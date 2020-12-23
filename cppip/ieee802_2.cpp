@@ -39,7 +39,7 @@ ieee802_2::dump()
 		printf(" control 0x%02x (U-format)", llc_hdr->control);
 	else {
 		uint16_t control;
-		control = net_to_host_order_short(*((uint16_t *) &(llc_hdr->control)));
+		control = reverse_byte_order_short(*((uint16_t *) &(llc_hdr->control)));
 		printf(" control 0x%04x (I/S-format)", control);
 	}
 	printf("\r\n");

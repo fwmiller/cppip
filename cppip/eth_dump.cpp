@@ -14,7 +14,7 @@ eth::dump()
 	printf(" src ");
 	dump_ethaddr(eh->src);
 
-	uint16_t ethertype = net_to_host_order_short(eh->ethertype);
+	uint16_t ethertype = reverse_byte_order_short(eh->ethertype);
 	if (ethertype < ETH_MTU_SIZE)
 		printf(" len %u (802.3", ethertype);
 	else {

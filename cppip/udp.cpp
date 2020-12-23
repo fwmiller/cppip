@@ -26,7 +26,7 @@ udp::receive()
 
 	udp_hdr_t uh = (udp_hdr_t)this->buf;
 	uint8_t* data = this->buf + sizeof(struct udp_hdr);
-	unsigned len = net_to_host_order_short(uh->len);
+	unsigned len = reverse_byte_order_short(uh->len);
 
 	// Search open UDP sockets for a matching destination port
 
@@ -44,9 +44,9 @@ udp::dump()
 	udp_hdr_t uh = (udp_hdr_t)this->buf;
 
 	printf("udp dst %u src %u len %u cksum 0x%04x\r\n",
-		net_to_host_order_short(uh->dst),
-		net_to_host_order_short(uh->src),
-		net_to_host_order_short(uh->len),
-		net_to_host_order_short(uh->cksum));
-	bufdump(this->buf + sizeof(struct udp_hdr), net_to_host_order_short(uh->len));
+		reverse_byte_order_short(uh->dst),
+		reverse_byte_order_short(uh->src),
+		reverse_byte_order_short(uh->len),
+		reverse_byte_order_short(uh->cksum));
+	bufdump(this->buf + sizeof(struct udp_hdr), reverse_byte_order_short(uh->len));
 }

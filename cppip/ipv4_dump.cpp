@@ -38,10 +38,10 @@ ipv4::dump()
 			printf(" MIN_COST");
 	}
 	printf(" len %u id 0x%04x\r\n",
-		net_to_host_order_short(ih->len),
-		net_to_host_order_short(ih->id));
+		reverse_byte_order_short(ih->len),
+		reverse_byte_order_short(ih->id));
 	
-	uint16_t frag = net_to_host_order_short(ih->frag);
+	uint16_t frag = reverse_byte_order_short(ih->frag);
 	printf(" frag 0x%04x", frag);
 	uint16_t flags = frag >> 13;
 	if (flags) {
@@ -53,13 +53,13 @@ ipv4::dump()
 		printf(")");
 	}
 	printf(" offset %u ttl %u protocol 0x%02x (",
-		net_to_host_order_short(ih->frag) & 0x1fff,
+		reverse_byte_order_short(ih->frag) & 0x1fff,
 		ih->ttl, ih->protocol);
 	dump_ipproto(ih->protocol);
 	printf(") hdr cksum 0x%04x\r\n", ih->hdr_cksum);
 	printf(" dst ");
-	dump_ipaddr(net_to_host_order_long(ih->dst));
+	dump_ipaddr(reverse_byte_order_long(ih->dst));
 	printf(" src ");
-	dump_ipaddr(net_to_host_order_long(ih->src));
+	dump_ipaddr(reverse_byte_order_long(ih->src));
 	printf("\r\n");
 }

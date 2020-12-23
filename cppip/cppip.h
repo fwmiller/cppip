@@ -28,7 +28,7 @@ void dump_ipproto(uint8_t proto);
 void dump_ipaddr(uint32_t ipaddr);
 void dump_ipv6addr(uint8_t* ipv6addr);
 
-uint16_t net_to_host_order_short(uint16_t x);
-uint32_t net_to_host_order_long (uint32_t x);
+uint16_t reverse_byte_order_short(uint16_t x);
+uint32_t reverse_byte_order_long(uint32_t x);
 
 #endif

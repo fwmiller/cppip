@@ -20,10 +20,10 @@ ipv6::dump()
 
 	uint32_t flow =
 		((ih->class_flow & 0x0f) << 16) |
-		net_to_host_order_short(ih->flow_label);
+		reverse_byte_order_short(ih->flow_label);
 	printf(" flow 0x%08x", flow);
 
-	uint32_t len = net_to_host_order_short(ih->len);
+	uint32_t len = reverse_byte_order_short(ih->len);
 	printf(" payload len %u", len);
 
 	printf("\r\n");

@@ -17,6 +17,7 @@ typedef struct udp_hdr* udp_hdr_t;
 class udp {
 private:
 	buf_t buf;
+
 public:
 	udp();
 	buf_t get_buf();

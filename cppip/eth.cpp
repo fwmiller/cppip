@@ -7,7 +7,7 @@ eth::get_ethertype()
 		return 0;
 
 	eth_hdr_t eh = (eth_hdr_t)this->buf;
-	return net_to_host_order_short(eh->ethertype);
+	return reverse_byte_order_short(eh->ethertype);
 }
 
 eth::eth()

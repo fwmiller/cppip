@@ -87,13 +87,13 @@ dump_ipv6addr(uint8_t* ipv6addr)
 }
 
 uint16_t
-net_to_host_order_short(uint16_t x)
+reverse_byte_order_short(uint16_t x)
 {
 	return (((x & 0xff) << 8) | ((x & 0xff00) >> 8));
 }
 
 uint32_t
-net_to_host_order_long(uint32_t x)
+reverse_byte_order_long(uint32_t x)
 {
 	return (((x & 0xff) << 24) |
 		((x & 0xff00) << 8) |

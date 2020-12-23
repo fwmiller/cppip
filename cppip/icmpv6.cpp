@@ -37,7 +37,7 @@ icmpv6::dump()
 	printf("icmpv6 type 0x%02x (", ih->type);
 	icmp_dump_type(ih->type);
 	printf(") code 0x%02x chksum 0x%04x\r\n",
-		ih->code, net_to_host_order_short(ih->cksum));
+		ih->code, reverse_byte_order_short(ih->cksum));
 }
 
 static void
