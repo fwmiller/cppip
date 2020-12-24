@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "socket.h"
 #include "cppip.h"
 
 udp::udp()
@@ -28,11 +29,10 @@ udp::receive()
 	uint8_t* data = this->buf + sizeof(struct udp_hdr);
 	unsigned len = reverse_byte_order_short(uh->len);
 
-	// Search open UDP sockets for a matching destination port
-
-	// Copy data into socket buffer
-
-	return;
+	class socket s;
+	s.set_buf(data);
+	s.bind(nullptr, 0);
+	s.receive(len);
 }
 
 void

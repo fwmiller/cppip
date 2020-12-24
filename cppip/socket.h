@@ -1,6 +1,8 @@
 #ifndef __SOCKET_H
 #define __SOCKET_H
 
+#include "cppip.h"
+
 enum SOCKET_STATE { SOCKET_FREE, SOCKET_OPEN, SOCKET_READY, SOCKET_ERROR };
 
 static const int SOCKET_INPUT_BUFFER_SIZE = (1 << 16);	// 64 KB
@@ -31,10 +33,18 @@ struct socket_desc {
 };
 
 class socket {
+	friend class udp;
+
 private:
 	struct socket_desc* desc;
+	buf_t buf;
+
+	buf_t get_buf();
+	void set_buf(buf_t buf);
+	int receive(int len);
 
 public:
+	socket();
 	socket(int domain, int type, int protocol);
 	int bind(struct sockaddr* addr, int addrlen);
 	int send(const uint8_t* buf, unsigned len, int flags);

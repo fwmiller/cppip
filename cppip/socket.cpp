@@ -3,9 +3,29 @@
 
 static const int MAX_SOCKETS = 64;
 
+// These are shared global data structure and need synchronization
+//  in a multi-threaded environment
 static bool initialized = false;
 static int sockets_open_count = 0;
 static struct socket_desc socketstab[MAX_SOCKETS];
+
+buf_t
+socket::get_buf()
+{
+	return this->buf;
+}
+
+void
+socket::set_buf(buf_t buf)
+{
+	this->buf = buf;
+}
+
+int
+socket::receive(int len)
+{
+	return (-1);
+}
 
 static void
 socket_desc_init(struct socket_desc* desc)
@@ -19,7 +39,8 @@ socket_desc_init(struct socket_desc* desc)
 	desc->full = false;
 }
 
-socket::socket(int domain, int type, int protocol)
+static void
+socket_alloc()
 {
 	if (!initialized) {
 		for (int i = 0; i < MAX_SOCKETS; i++)
@@ -39,17 +60,35 @@ socket::socket(int domain, int type, int protocol)
 	}
 }
 
+socket::socket()
+{
+	// Sync wait
+	socket_alloc();
+	// Sync signal
+}
+
+socket::socket(int domain, int type, int protocol)
+{
+	// Sync wait
+	socket_alloc();
+	// Sync signal
+}
+
 int
 socket::bind(struct sockaddr* addr, int addrlen)
 {
 	if (this->desc->state != SOCKET_OPEN)
 		return (-1);
 
+	// Sync wait
+
 	// Search the socketstab to see whether this port is already bound
 	for (int i = 0; i < MAX_SOCKETS; i++) {
 		struct socket_desc* desc = &(socketstab[i]);
 
 	}
+
+	// Sync signal
 	return 0;
 }
 
@@ -89,7 +128,5 @@ socket::recvfrom(uint8_t* buf, unsigned len, int flags, struct sockaddr* from, u
 int
 socket::close()
 {
-	if (this->desc->state != SOCKET_READY)
-		return (-1);
 	return (-1);
 }
