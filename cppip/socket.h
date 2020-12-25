@@ -37,11 +37,14 @@ class socket {
 
 private:
 	struct socket_desc* desc;
-	buf_t buf;
+	buf_t buf;					// Receive buffer
+	int len;					// Receive buffer length
 
 	buf_t get_buf();
 	void set_buf(buf_t buf);
-	int receive(int len);
+	int get_len();
+	void set_len(int len);
+	int receive();
 
 public:
 	socket();

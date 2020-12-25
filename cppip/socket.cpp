@@ -22,8 +22,23 @@ socket::set_buf(buf_t buf)
 }
 
 int
-socket::receive(int len)
+socket::get_len()
 {
+	return this->len;
+}
+
+void
+socket::set_len(int len)
+{
+	this->len = len;
+}
+
+int
+socket::receive()
+{
+	if (this->buf == nullptr)
+		return (-1);
+
 	return (-1);
 }
 
@@ -39,7 +54,7 @@ socket_desc_init(struct socket_desc* desc)
 	desc->full = false;
 }
 
-static void
+static struct socket_desc *
 socket_alloc()
 {
 	if (!initialized) {
@@ -48,7 +63,7 @@ socket_alloc()
 		initialized = true;
 	}
 	if (sockets_open_count == MAX_SOCKETS)
-		return;
+		return nullptr;
 
 	for (int i = 0; i < MAX_SOCKETS; i++) {
 		struct socket_desc* desc = &(socketstab[i]);
@@ -56,21 +71,23 @@ socket_alloc()
 		if (desc->state == SOCKET_FREE) {
 			desc->state = SOCKET_OPEN;
 			sockets_open_count++;
+			return desc;
 		}
 	}
+	return nullptr;
 }
 
 socket::socket()
 {
 	// Sync wait
-	socket_alloc();
+	this->desc = socket_alloc();
 	// Sync signal
 }
 
 socket::socket(int domain, int type, int protocol)
 {
 	// Sync wait
-	socket_alloc();
+	this->desc = socket_alloc();
 	// Sync signal
 }
 

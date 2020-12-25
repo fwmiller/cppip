@@ -26,13 +26,12 @@ udp::receive()
 		return;
 
 	udp_hdr_t uh = (udp_hdr_t)this->buf;
-	uint8_t* data = this->buf + sizeof(struct udp_hdr);
-	unsigned len = reverse_byte_order_short(uh->len);
-
 	class socket s;
-	s.set_buf(data);
-	s.bind(nullptr, 0);
-	s.receive(len);
+	s.set_buf(this->buf + sizeof(struct udp_hdr));
+	s.set_len(reverse_byte_order_short(uh->len));
+	if (s.bind(nullptr, 0) == 0)
+		s.receive();
+	s.close();
 }
 
 void
@@ -48,5 +47,5 @@ udp::dump()
 		reverse_byte_order_short(uh->src),
 		reverse_byte_order_short(uh->len),
 		reverse_byte_order_short(uh->cksum));
-	bufdump(this->buf + sizeof(struct udp_hdr), reverse_byte_order_short(uh->len));
+	//bufdump(this->buf + sizeof(struct udp_hdr), reverse_byte_order_short(uh->len));
 }
