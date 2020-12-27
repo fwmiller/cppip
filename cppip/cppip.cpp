@@ -82,8 +82,11 @@ void
 dump_ipv6addr(uint8_t* ipv6addr)
 {
 	printf("%02x", ipv6addr[0]);
-	for (int i = 1; i < 16; i++)
-		printf(":%02x", ipv6addr[i]);
+	for (int i = 1; i < 16; i++) {
+		if (i % 2 == 0)
+			printf(":");
+		printf("%02x", ipv6addr[i]);
+	}
 }
 
 uint16_t

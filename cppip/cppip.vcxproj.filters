@@ -60,6 +60,9 @@
     <ClCompile Include="inq.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="udp_dump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cppip.h">

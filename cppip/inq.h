@@ -3,7 +3,7 @@
 #include "cppip.h"
 
 //static const int MAX_INQ_SIZE = 2048; // 2 KB
-static const int MAX_INQ_SIZE = 5;
+static const int MAX_INQ_SIZE = 16; // 16 bytes
 
 class inq {
 private:

@@ -166,6 +166,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ipv4.cpp" />
     <ClCompile Include="udp.cpp" />
+    <ClCompile Include="udp_dump.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arp.h" />
