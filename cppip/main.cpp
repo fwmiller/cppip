@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "cppip.h"
+#include "inq.h"
 
 #include <pcap.h>
 

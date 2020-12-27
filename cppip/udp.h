@@ -16,10 +16,13 @@ typedef struct udp_hdr* udp_hdr_t;
 
 class udp {
 private:
+	uint16_t port;	// Receive port number
 	buf_t buf;
 
 public:
 	udp();
+	uint16_t get_port();
+	void set_port(uint16_t port);
 	buf_t get_buf();
 	void set_buf(buf_t buf);
 	void receive();

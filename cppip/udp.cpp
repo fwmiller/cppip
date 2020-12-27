@@ -1,9 +1,23 @@
 #include <stdio.h>
+#include <string.h>
 #include "cppip.h"
 
 udp::udp()
 {
+	this->port = 0;
 	this->buf = nullptr;
+}
+
+uint16_t
+udp::get_port()
+{
+	return this->port;
+}
+
+void
+udp::set_port(uint16_t port)
+{
+	this->port = port;
 }
 
 buf_t
