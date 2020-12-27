@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "socket.h"
 #include "cppip.h"
 
 udp::udp()
@@ -26,12 +25,6 @@ udp::receive()
 		return;
 
 	udp_hdr_t uh = (udp_hdr_t)this->buf;
-	class socket s;
-	s.set_buf(this->buf + sizeof(struct udp_hdr));
-	s.set_len(reverse_byte_order_short(uh->len));
-	if (s.bind(nullptr, 0) == 0)
-		s.receive();
-	s.close();
 }
 
 void
