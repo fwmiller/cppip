@@ -11,6 +11,18 @@ inq::inq()
 	this->full = false;
 }
 
+uint16_t
+inq::get_port()
+{
+	return this->port;
+}
+
+void
+inq::set_port(uint16_t port)
+{
+	this->port = port;
+}
+
 int
 inq::append(buf_t buf, int len)
 {

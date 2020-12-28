@@ -1,4 +1,18 @@
+#include <stdio.h>
 #include "cppip.h"
+#include "inq.h"
+
+static const int MAX_RECV_PORTS = 16;
+
+static class inq udptab[MAX_RECV_PORTS];
+
+static class inq* udptab_lookup(uint16_t port)
+{
+	for (int i = 0; i < MAX_RECV_PORTS; i++)
+		if (udptab[i].get_port() == port)
+			return &(udptab[i]);
+	return nullptr;
+}
 
 udp::udp()
 {
@@ -37,4 +51,12 @@ udp::receive()
 		return;
 
 	udp_hdr_t uh = (udp_hdr_t)this->buf;
+	class inq* q = udptab_lookup(reverse_byte_order_short(uh->dst));
+	if (q == nullptr) {
+		// No input queue open drop packet data
+		return;
+	}
+	int len = reverse_byte_order_short(uh->len);
+	int rcvd = q->append(this->buf + sizeof(struct udp_hdr), len);
+	printf("rcvd %d bytes queued %d bytes\r\n", rcvd, len);
 }

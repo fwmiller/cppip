@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "cppip.h"
 
 uint16_t
