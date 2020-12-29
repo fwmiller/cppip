@@ -16,7 +16,7 @@ typedef struct udp_hdr* udp_hdr_t;
 
 class udp {
 private:
-	uint16_t port;	// Receive port number
+	uint16_t port;	// Local port number
 	buf_t buf;
 
 public:
@@ -27,6 +27,7 @@ public:
 	void set_buf(buf_t buf);
 	void receive();
 	void dump();
+	int read(buf_t buf, int len);
 };
 
 #endif
