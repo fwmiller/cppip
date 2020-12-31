@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="arp.cpp" />
+    <ClCompile Include="arptab.cpp" />
     <ClCompile Include="arp_dump.cpp" />
     <ClCompile Include="cppip.cpp" />
     <ClCompile Include="eth.cpp" />

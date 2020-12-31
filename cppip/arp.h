@@ -37,6 +37,7 @@ public:
 	void set_buf(buf_t buf);
 	void receive();
 	void dump();
+	void send_gratuitous();
 };
 
 #endif

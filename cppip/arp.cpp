@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "cppip.h"
 
 arp::arp()
@@ -20,6 +19,12 @@ arp::set_buf(buf_t buf)
 
 void
 arp::receive()
+{
+	return;
+}
+
+void
+arp::send_gratuitous()
 {
 	return;
 }

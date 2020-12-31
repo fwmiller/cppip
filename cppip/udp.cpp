@@ -2,13 +2,13 @@
 #include "cppip.h"
 #include "inq.h"
 
-static const int MAX_RECV_PORTS = 16;
+static const int RECV_PORTS = 16;
 
-static class inq udptab[MAX_RECV_PORTS];
+static class inq udptab[RECV_PORTS];
 
 static class inq* udptab_find(uint16_t port)
 {
-	for (int i = 0; i < MAX_RECV_PORTS; i++)
+	for (int i = 0; i < RECV_PORTS; i++)
 		if (udptab[i].get_port() == port)
 			return &(udptab[i]);
 	return nullptr;

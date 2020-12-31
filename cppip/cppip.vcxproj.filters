@@ -63,6 +63,9 @@
     <ClCompile Include="udp_dump.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="arptab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cppip.h">
