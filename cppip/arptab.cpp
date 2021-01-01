@@ -19,14 +19,20 @@ public:
 static class arptab_entry arptab[ARPTAB_ENTRIES];
 
 static class arptab_entry*
-arptab_find_ha()
+arptab_find_ha(uint8_t* ha)
 {
+	for (int i = 0; i < ARPTAB_ENTRIES; i++)
+		if (memcmp(ha, arptab[i].get_ha(), ETH_ADDR_LEN) == 0)
+			return &(arptab[i]);
 	return nullptr;
 }
 
 static class arptab_entry*
-arptab_find_pa()
+arptab_find_pa(uint32_t pa)
 {
+	for (int i = 0; i < ARPTAB_ENTRIES; i++)
+		if (pa == arptab[i].get_pa())
+			return &(arptab[i]);
 	return nullptr;
 }
 
