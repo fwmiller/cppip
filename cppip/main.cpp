@@ -4,6 +4,7 @@
 
 #include <pcap.h>
 
+void arptab_init();
 static void packet_handler(u_char* param, const struct pcap_pkthdr* header, const u_char* pkt_data);
 
 int main()
@@ -16,6 +17,8 @@ int main()
 	int i = 0;
 
 	printf("C++ Internet Protocols (cppip)\r\n");
+
+	arptab_init();
 
 	/* Retrieve the device list */
 	if (pcap_findalldevs(&alldevs, errbuf) == (-1))	{

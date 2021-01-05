@@ -1,22 +1,15 @@
 #include <string.h>
 #include "cppip.h"
 
-static const int ARPTAB_ENTRIES = 16;
-
-class arptab_entry {
-private:
-	uint8_t ha[ETH_ADDR_LEN];	// Hardware address (Ethernet)
-	uint32_t pa;				// Protocol address (IPv4)
-
-public:
-	arptab_entry();
-	uint8_t* get_ha();
-	void set_ha(uint8_t* ha);
-	uint32_t get_pa();
-	void set_pa(uint32_t pa);
-};
-
+class arptab_entry* my_addr = nullptr;
 static class arptab_entry arptab[ARPTAB_ENTRIES];
+
+void
+arptab_init()
+{
+	memset(arptab, 0, sizeof(arptab));
+	my_addr = &(arptab[0]);
+}
 
 static class arptab_entry*
 arptab_find_ha(uint8_t* ha)
