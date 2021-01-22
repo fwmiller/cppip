@@ -24,6 +24,7 @@ public:
 	buf_t get_buf();
 	void set_buf(buf_t buf);
 	void receive();
+	void send(buf_t buf);
 	void dump();
 };
 

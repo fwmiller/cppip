@@ -1,5 +1,9 @@
+#include <pcap.h>
 #include <stdio.h>
 #include "cppip.h"
+
+static pcap_t* fp = nullptr;
+static char errbuf[PCAP_ERRBUF_SIZE];
 
 uint16_t
 eth::get_ethertype()
@@ -14,6 +18,17 @@ eth::get_ethertype()
 eth::eth()
 {
 	this->buf = nullptr;
+#if 0
+	if (fp == nullptr)
+		fp = pcap_open(
+			intf_name,					// Name of the device
+			ETH_MTU_SIZE,				// Portion of the packet to capture
+			PCAP_OPENFLAG_PROMISCUOUS,	// Promiscuous mode
+			1000,						// Read timeout
+			NULL,						// Authentication on the remote machine
+			errbuf						// Error buffer
+		);
+#endif
 }
 
 buf_t
@@ -69,4 +84,10 @@ eth::receive()
 	}
 	break;
 	}
+}
+
+void
+eth::send(buf_t buf)
+{
+	return;
 }

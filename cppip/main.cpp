@@ -1,17 +1,22 @@
 #include <stdio.h>
+#include <string.h>
 #include "cppip.h"
 #include "inq.h"
 
 #include <pcap.h>
 
-void arptab_init();
+static const int INTF_NAME_MAX_LEN = 4096;
+static char intf_name[INTF_NAME_MAX_LEN];
+pcap_t* intf_handl;
+
 static void packet_handler(u_char* param, const struct pcap_pkthdr* header, const u_char* pkt_data);
+
+void arptab_init();
 
 int main()
 {
 	pcap_if_t* alldevs;
-	pcap_if_t* d;
-	pcap_t* adhandle;
+	pcap_if_t* intf;
 	char errbuf[PCAP_ERRBUF_SIZE];
 	int inum;
 	int i = 0;
@@ -25,11 +30,11 @@ int main()
 		fprintf(stderr, "Error in pcap_findalldevs: %s\n", errbuf);
 		exit(-1);
 	}
-	for (d = alldevs; d != nullptr; d = d->next) {
+	for (intf = alldevs; intf != nullptr; intf = intf->next) {
 		printf("%d ", ++i);
 		//printf("%s ", d->name);
-		if (d->description)
-			printf("%s\n", d->description);
+		if (intf->description)
+			printf("%s\n", intf->description);
 		else
 			printf("(No description available)\n");
 	}
@@ -44,11 +49,11 @@ int main()
 	}
 
 	/* Jump to the selected adapter */
-	for (d = alldevs, i = 0; i < inum - 1; d = d->next, i++);
+	for (intf = alldevs, i = 0; i < inum - 1; intf = intf->next, i++);
 
 	/* Open the device */
 	/* Open the adapter */
-	if ((adhandle = pcap_open_live(d->name,	// name of the device
+	if ((intf_handl = pcap_open_live(intf->name,	// name of the device
 		65536,								// portion of the packet to capture
 											//  65536 grants that the whole packet will be captured on all the MACs
 		1,									// promiscuous mode (nonzero means promiscuous)
@@ -56,20 +61,33 @@ int main()
 		errbuf								// error buffer
 	)) == NULL)
 	{
-		fprintf(stderr, "\nUnable to open the adapter. %s is not supported by WinPcap\n", d->name);
+		fprintf(stderr, "\nUnable to open the adapter. %s is not supported by WinPcap\n", intf->name);
 		/* Free the device list */
 		pcap_freealldevs(alldevs);
 		return (-1);
 	}
-	printf("\nListening on %s...\n", d->description);
+	printf("\nListening on %s...\n", intf->description);
+
+	memset(intf_name, 0, INTF_NAME_MAX_LEN);
+	strcpy_s(intf_name, intf->name);
+	printf("Interface name %s\r\n", intf_name);
 
 	/* At this point, we don't need any more the device list. Free it */
 	pcap_freealldevs(alldevs);
 
 	/* start the capture */
-	pcap_loop(adhandle, 0, packet_handler, NULL);
+	pcap_loop(intf_handl, 0, packet_handler, NULL);
 
-	pcap_close(adhandle);
+	// Leave the interface adapter handle open so we can write raw packets
+	//pcap_close(adhandle);
+
+	for (;;) {
+		char s[256];
+		memset(s, 0, 256);
+		printf("> ");
+		scanf_s("%s", s);
+		printf("%s\r\n", s);
+	}
 	return 0;
 }
 

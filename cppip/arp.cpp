@@ -58,7 +58,7 @@ arp::send_probe()
 	// Generate ARP probe packet
 	uint8_t buf[ETH_MTU_SIZE];
 	memset(buf, 0, ETH_MTU_SIZE);  // Zeros ah->tha
-	gen_arp_packet(buf, ARP_OP_REQ,
+	gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
 		my_addr->get_ha(), 0, NULL, 0);
 }
 
@@ -69,7 +69,7 @@ arp::send_announce()
 	//  Note: ARP REP announcement method not supported
 	uint8_t buf[ETH_MTU_SIZE];
 	memset(buf, 0, ETH_MTU_SIZE);  // Zeros ah->tha
-	gen_arp_packet(buf, ARP_OP_REQ,
+	gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
 		my_addr->get_ha(), reverse_byte_order_short(my_addr->get_pa()),
 		NULL, reverse_byte_order_short(my_addr->get_pa()));
 }
