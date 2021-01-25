@@ -1,6 +1,7 @@
 #include <process.h>
 #include <stdio.h>
 #include <string.h>
+#include "cli.h"
 #include "cppip.h"
 #include "inq.h"
 
@@ -13,39 +14,6 @@ pcap_t* intf_handl;
 static void packet_handler(u_char* param, const struct pcap_pkthdr* header, const u_char* pkt_data);
 
 void arptab_init();
-
-static int
-readline(const char* prompt, char *buf, int maxlen)
-{
-	int c, pos;
-
-	if (buf == NULL)
-		return (-1);
-
-	memset(buf, 0, maxlen);
-
-	printf(prompt);
-	for (pos = 0; pos < maxlen - 1; pos++) {
-		c = getchar();
-		if (c == '\n')
-			break;
-		buf[pos] = c;
-	}
-	return 0;
-}
-
-static void
-cli(void* pMyID)
-{
-	char cmdline[80];
-
-	for (;;) {
-		readline("> ", cmdline, 80);
-		if (strlen(cmdline) == 0)
-			continue;
-		printf("%s\r\n", cmdline);
-	}
-}
 
 int main()
 {

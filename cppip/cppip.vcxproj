@@ -154,6 +154,7 @@
     <ClCompile Include="arp.cpp" />
     <ClCompile Include="arptab.cpp" />
     <ClCompile Include="arp_dump.cpp" />
+    <ClCompile Include="cli.cpp" />
     <ClCompile Include="cppip.cpp" />
     <ClCompile Include="eth.cpp" />
     <ClCompile Include="eth_dump.cpp" />
@@ -171,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arp.h" />
+    <ClInclude Include="cli.h" />
     <ClInclude Include="cppip.h" />
     <ClInclude Include="eth.h" />
     <ClInclude Include="ethertype.h" />
