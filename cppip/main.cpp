@@ -1,3 +1,4 @@
+#include <process.h>
 #include <stdio.h>
 #include <string.h>
 #include "cppip.h"
@@ -12,6 +13,39 @@ pcap_t* intf_handl;
 static void packet_handler(u_char* param, const struct pcap_pkthdr* header, const u_char* pkt_data);
 
 void arptab_init();
+
+static int
+readline(const char* prompt, char *buf, int maxlen)
+{
+	int c, pos;
+
+	if (buf == NULL)
+		return (-1);
+
+	memset(buf, 0, maxlen);
+
+	printf(prompt);
+	for (pos = 0; pos < maxlen - 1; pos++) {
+		c = getchar();
+		if (c == '\n')
+			break;
+		buf[pos] = c;
+	}
+	return 0;
+}
+
+static void
+cli(void* pMyID)
+{
+	char cmdline[80];
+
+	for (;;) {
+		readline("> ", cmdline, 80);
+		if (strlen(cmdline) == 0)
+			continue;
+		printf("%s\r\n", cmdline);
+	}
+}
 
 int main()
 {
@@ -75,19 +109,14 @@ int main()
 	/* At this point, we don't need any more the device list. Free it */
 	pcap_freealldevs(alldevs);
 
+	_beginthread(cli, 0, NULL);
+
 	/* start the capture */
 	pcap_loop(intf_handl, 0, packet_handler, NULL);
 
 	// Leave the interface adapter handle open so we can write raw packets
-	//pcap_close(adhandle);
+	pcap_close(intf_handl);
 
-	for (;;) {
-		char s[256];
-		memset(s, 0, 256);
-		printf("> ");
-		scanf_s("%s", s);
-		printf("%s\r\n", s);
-	}
 	return 0;
 }
 
