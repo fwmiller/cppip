@@ -47,7 +47,8 @@ ipv4::receive()
 	{
 		class udp udp;
 		udp.set_buf(this->buf + this->get_hdr_len());
-		udp.dump();
+		if (dump_enabled)
+			udp.dump();
 		udp.receive();
 	}
 	break;

@@ -5,6 +5,32 @@
 
 static const int LEN = 16;
 
+bool dump_enabled = false;
+class cppip_stats stats;
+
+cppip_stats::cppip_stats()
+{
+	this->frame_count = 0;
+}
+
+unsigned
+cppip_stats::get_frame_count()
+{
+	return this->frame_count;
+}
+
+void
+cppip_stats::set_frame_count(unsigned frame_count)
+{
+	this->frame_count = frame_count;
+}
+
+void
+cppip_stats::inc_frame_count()
+{
+	this->frame_count++;
+}
+
 void
 bufdump(uint8_t* buf, unsigned len)
 {

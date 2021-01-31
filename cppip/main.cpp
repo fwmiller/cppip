@@ -9,7 +9,7 @@
 
 static const int INTF_NAME_MAX_LEN = 4096;
 static char intf_name[INTF_NAME_MAX_LEN];
-pcap_t* intf_handl;
+static pcap_t* intf_handl;
 
 static void packet_handler(u_char* param, const struct pcap_pkthdr* header, const u_char* pkt_data);
 
@@ -41,7 +41,7 @@ int main()
 			printf("(No description available)\n");
 	}
 	printf("Enter the interface number (1-%d):", i);
-	scanf_s("%d", &inum);
+	scanf("%d", &inum);
 
 	if (inum < 1 || inum > i) {
 		printf("\nInterface number out of range\n");
@@ -71,7 +71,7 @@ int main()
 	printf("\nListening on %s...\n", intf->description);
 
 	memset(intf_name, 0, INTF_NAME_MAX_LEN);
-	strcpy_s(intf_name, intf->name);
+	strcpy(intf_name, intf->name);
 	printf("Interface name %s\r\n", intf_name);
 
 	/* At this point, we don't need any more the device list. Free it */
@@ -88,17 +88,19 @@ int main()
 	return 0;
 }
 
-static unsigned frame_count = 0;
-
 /* Callback function invoked by libpcap for every incoming packet */
 static void
 packet_handler(u_char* param, const struct pcap_pkthdr* header, const u_char* pkt_data)
 {
-	printf("\r\nFrame %u\r\n", ++frame_count);
-	//bufdump((uint8_t *)pkt_data, header->len);
+	if (dump_enabled) {
+		printf("\r\nFrame %u\r\n", stats.get_frame_count());
+		//bufdump((uint8_t *)pkt_data, header->len);
+	}
+	stats.inc_frame_count();
 
 	class eth eth;
 	eth.set_buf((uint8_t*)pkt_data);
-	eth.dump();
+	if (dump_enabled)
+		eth.dump();
 	eth.receive();
 }

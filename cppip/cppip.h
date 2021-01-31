@@ -10,6 +10,20 @@ static const unsigned IPV4_ADDR_LEN = 4;
 
 typedef uint8_t* buf_t;
 
+class cppip_stats {
+private:
+	unsigned frame_count;
+
+public:
+	cppip_stats();
+	unsigned get_frame_count();
+	void set_frame_count(unsigned frame_count);
+	void inc_frame_count();
+};
+
+extern bool dump_enabled;
+extern class cppip_stats stats;
+
 #include "arp.h"
 #include "ethertype.h"
 #include "eth.h"

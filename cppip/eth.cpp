@@ -53,7 +53,8 @@ eth::receive()
 		class ieee802_2 llc;
 
 		llc.set_buf(this->buf + sizeof(struct eth_hdr));
-		llc.dump();
+		if (dump_enabled)
+			llc.dump();
 		llc.receive();
 		return;
 	}
@@ -63,7 +64,8 @@ eth::receive()
 	{
 		class arp arp;
 		arp.set_buf(this->buf + sizeof(struct eth_hdr));
-		arp.dump();
+		if (dump_enabled)
+			arp.dump();
 		arp.receive();
 	}
 	break;
@@ -71,7 +73,8 @@ eth::receive()
 	{
 		class ipv4 ip;
 		ip.set_buf(this->buf + sizeof(struct eth_hdr));
-		ip.dump();
+		if (dump_enabled)
+			ip.dump();
 		ip.receive();
 	}
 	break;
@@ -79,7 +82,8 @@ eth::receive()
 	{
 		class ipv6 ip;
 		ip.set_buf(this->buf + sizeof(struct eth_hdr));
-		ip.dump();
+		if (dump_enabled)
+			ip.dump();
 		ip.receive();
 	}
 	break;

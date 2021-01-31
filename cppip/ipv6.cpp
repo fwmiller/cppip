@@ -31,7 +31,8 @@ ipv6::receive()
 	{
 		class icmpv6 ic;
 		ic.set_buf(this->buf + sizeof(struct ipv6_hdr));
-		ic.dump();
+		if (dump_enabled)
+			ic.dump();
 		ic.receive();
 	}
 	break;
