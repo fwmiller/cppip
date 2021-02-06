@@ -93,6 +93,9 @@ cli(void* pMyID)
 				dump_enabled = true;
 			else if (strcmp(arg, "off") == 0)
 				dump_enabled = false;
+
+		} else if (strcmp(arg, "stats") == 0) {
+			printf("frames %u\r\n", stats.get_frame_count());
 		}
 	}
 }
