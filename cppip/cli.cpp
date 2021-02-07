@@ -95,7 +95,16 @@ cli(void* pMyID)
 				dump_enabled = false;
 
 		} else if (strcmp(arg, "stats") == 0) {
-			printf("frames %u\r\n", stats.get_frame_count());
+			printf("frames           %u\r\n", stats.get_frame_count());
+			printf("ethernet frames  %u\r\n", stats.get_eth_count());
+			printf("802.2 frames     %u\r\n", stats.get_ieee802_2_count());
+			printf("arp packets      %u\r\n", stats.get_arp_count());
+			printf("rarp packets     %u\r\n", stats.get_rarp_count());
+			printf("ipv4 packets     %u\r\n", stats.get_ipv4_count());
+			printf("ipv6 packets     %u\r\n", stats.get_ipv6_count());
+
+		} else if (strcmp(arg, "arp") == 0) {
+
 		}
 	}
 }
