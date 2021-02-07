@@ -44,10 +44,10 @@ gen_arp_packet(uint8_t *buf, uint16_t opcode,
 	ah->hw_addr_len = ETH_ADDR_LEN;
 	ah->proto_addr_len = IPV4_ADDR_LEN;
 	ah->opcode = reverse_byte_order_short(opcode);
-	if (sha != NULL)
+	if (sha != nullptr)
 		memcpy(ah->sha, sha, ETH_ADDR_LEN);
 	ah->spa = spa;
-	if (tha != NULL)
+	if (tha != nullptr)
 		memcpy(ah->tha, tha, ETH_ADDR_LEN);
 	ah->tpa = tpa;
 }
@@ -59,7 +59,7 @@ arp::send_probe()
 	uint8_t buf[ETH_MTU_SIZE];
 	memset(buf, 0, ETH_MTU_SIZE);  // Zeros ah->tha
 	gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
-		my_addr->get_ha(), 0, NULL, 0);
+		my_addr->get_ha(), 0, nullptr, 0);
 }
 
 void
@@ -71,5 +71,5 @@ arp::send_announce()
 	memset(buf, 0, ETH_MTU_SIZE);  // Zeros ah->tha
 	gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
 		my_addr->get_ha(), reverse_byte_order_short(my_addr->get_pa()),
-		NULL, reverse_byte_order_short(my_addr->get_pa()));
+		nullptr, reverse_byte_order_short(my_addr->get_pa()));
 }

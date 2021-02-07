@@ -1,6 +1,7 @@
 #include <pcap.h>
 #include <stdio.h>
 #include "cppip.h"
+#include "stats.h"
 
 static pcap_t* fp = nullptr;
 static char errbuf[PCAP_ERRBUF_SIZE];
@@ -25,7 +26,7 @@ eth::eth()
 			ETH_MTU_SIZE,				// Portion of the packet to capture
 			PCAP_OPENFLAG_PROMISCUOUS,	// Promiscuous mode
 			1000,						// Read timeout
-			NULL,						// Authentication on the remote machine
+			nullptr,						// Authentication on the remote machine
 			errbuf						// Error buffer
 		);
 #endif

@@ -4,6 +4,7 @@
 #include "cli.h"
 #include "cppip.h"
 #include "inq.h"
+#include "stats.h"
 
 #include <pcap.h>
 
@@ -61,7 +62,7 @@ int main()
 		1,									// promiscuous mode (nonzero means promiscuous)
 		1000,								// read timeout
 		errbuf								// error buffer
-	)) == NULL)
+	)) == nullptr)
 	{
 		fprintf(stderr, "\nUnable to open the adapter. %s is not supported by WinPcap\n", intf->name);
 		/* Free the device list */
@@ -77,10 +78,10 @@ int main()
 	/* At this point, we don't need any more the device list. Free it */
 	pcap_freealldevs(alldevs);
 
-	_beginthread(cli, 0, NULL);
+	_beginthread(cli, 0, nullptr);
 
 	/* start the capture */
-	pcap_loop(intf_handl, 0, packet_handler, NULL);
+	pcap_loop(intf_handl, 0, packet_handler, nullptr);
 
 	// Leave the interface adapter handle open so we can write raw packets
 	pcap_close(intf_handl);

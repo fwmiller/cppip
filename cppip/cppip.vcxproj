@@ -167,6 +167,7 @@
     <ClCompile Include="ipv6_dump.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ipv4.cpp" />
+    <ClCompile Include="stats.cpp" />
     <ClCompile Include="udp.cpp" />
     <ClCompile Include="udp_dump.cpp" />
   </ItemGroup>
@@ -182,6 +183,7 @@
     <ClInclude Include="ipv4.h" />
     <ClInclude Include="ipproto.h" />
     <ClInclude Include="ipv6.h" />
+    <ClInclude Include="stats.h" />
     <ClInclude Include="udp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

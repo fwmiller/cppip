@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "cppip.h"
+#include "stats.h"
 
 ipv4::ipv4()
 {
@@ -45,11 +46,17 @@ ipv4::receive()
 	switch (this->get_protocol()) {
 	case IP_PROTO_UDP:
 	{
+		stats.inc_udp_count();
+
 		class udp udp;
 		udp.set_buf(this->buf + this->get_hdr_len());
 		if (dump_enabled)
 			udp.dump();
 		udp.receive();
+	}
+	case IP_PROTO_TCP:
+	{
+		stats.inc_tcp_count();
 	}
 	break;
 	}

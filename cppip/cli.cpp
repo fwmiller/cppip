@@ -4,13 +4,14 @@
 #include <string.h>
 #include "cli.h"
 #include "cppip.h"
+#include "stats.h"
 
 static int
 readline(const char* prompt, char* line, int maxlen)
 {
 	int c, pos;
 
-	if (prompt == NULL || line == NULL)
+	if (prompt == nullptr || line == nullptr)
 		return (-1);
 
 	memset(line, 0, maxlen);
@@ -30,7 +31,7 @@ issep(char* sep, char ch)
 {
 	int i, len;
 
-	if (sep == NULL)
+	if (sep == nullptr)
 		return 0;
 
 	for (len = strlen(sep), i = 0; i < len; i++)
@@ -45,7 +46,7 @@ nextarg(char* ln, int* pos, char* sep, char* arg)
 	char* s;
 	char ch;
 
-	if (ln == NULL || pos == NULL || arg == NULL)
+	if (ln == nullptr || pos == nullptr || arg == nullptr)
 		return;
 
 	s = arg;
@@ -95,13 +96,15 @@ cli(void* pMyID)
 				dump_enabled = false;
 
 		} else if (strcmp(arg, "stats") == 0) {
-			printf("frames           %u\r\n", stats.get_frame_count());
-			printf("ethernet frames  %u\r\n", stats.get_eth_count());
-			printf("802.2 frames     %u\r\n", stats.get_ieee802_2_count());
-			printf("arp packets      %u\r\n", stats.get_arp_count());
-			printf("rarp packets     %u\r\n", stats.get_rarp_count());
-			printf("ipv4 packets     %u\r\n", stats.get_ipv4_count());
-			printf("ipv6 packets     %u\r\n", stats.get_ipv6_count());
+			printf("frames   %u\r\n", stats.get_frame_count());
+			printf("ethernet %u\r\n", stats.get_eth_count());
+			printf("802.2    %u\r\n", stats.get_ieee802_2_count());
+			printf("arp      %u\r\n", stats.get_arp_count());
+			printf("rarp     %u\r\n", stats.get_rarp_count());
+			printf("ipv4     %u\r\n", stats.get_ipv4_count());
+			printf("ipv6     %u\r\n", stats.get_ipv6_count());
+			printf("udp      %u\r\n", stats.get_udp_count());
+			printf("tcp      %u\r\n", stats.get_tcp_count());
 
 		} else if (strcmp(arg, "arp") == 0) {
 
