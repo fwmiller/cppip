@@ -1,12 +1,10 @@
 #ifndef __ETHERNET_H
 #define __ETHERNET_H
 
-#include <stdint.h>
 #include "cppip.h"
 
 static const unsigned ETH_MTU_SIZE = 1536;
 
-#pragma pack(1)
 struct eth_hdr {
 	uint8_t dst[ETH_ADDR_LEN];
 	uint8_t src[ETH_ADDR_LEN];
@@ -24,7 +22,7 @@ public:
 	buf_t get_buf();
 	void set_buf(buf_t buf);
 	void receive();
-	void send(buf_t buf);
+	void send(class arptab_entry* ae, buf_t buf);
 	void dump();
 };
 

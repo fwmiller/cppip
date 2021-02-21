@@ -79,6 +79,13 @@ cli(void* pMyID)
 	memset(sep, 0, CMDLINE_LEN);
 	strcpy(sep, " ");
 
+	// Generate and send the initial ARP probe packet.  Assumes
+	// my_addr->ha is set
+	uint8_t *pktbuf = (uint8_t*)malloc(ETH_MTU_SIZE);
+	class arp ap;
+	ap.set_buf(pktbuf);
+	ap.send_probe();
+
 	for (;;) {
 		readline("> ", cmdline, CMDLINE_LEN);
 		if (strlen(cmdline) == 0)

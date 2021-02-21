@@ -1,6 +1,6 @@
+#include "cppip.h"
 #include <pcap.h>
 #include <stdio.h>
-#include "cppip.h"
 #include "stats.h"
 
 static pcap_t* fp = nullptr;
@@ -104,7 +104,7 @@ eth::receive()
 }
 
 void
-eth::send(buf_t buf)
+eth::send(class arptab_entry *ae, buf_t buf)
 {
 	return;
 }

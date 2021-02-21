@@ -12,6 +12,8 @@ static const int INTF_NAME_MAX_LEN = 4096;
 static char intf_name[INTF_NAME_MAX_LEN];
 static pcap_t* intf_handl;
 
+extern class arptab_entry* my_addr;
+
 static void packet_handler(u_char* param, const struct pcap_pkthdr* header, const u_char* pkt_data);
 
 void arptab_init();
@@ -27,6 +29,9 @@ int main()
 	printf("C++ Internet Protocols (cppip)\r\n");
 
 	arptab_init();
+	// Assign initial MAC address to support the initial ARP probe
+	uint8_t ha[ETH_ADDR_LEN] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 };
+	my_addr->set_ha(ha);
 
 	/* Retrieve the device list */
 	if (pcap_findalldevs(&alldevs, errbuf) == (-1))	{

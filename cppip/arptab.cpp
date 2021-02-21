@@ -1,8 +1,9 @@
 #include <string.h>
 #include "cppip.h"
 
-class arptab_entry* my_addr = nullptr;
 static class arptab_entry arptab[ARPTAB_ENTRIES];
+
+class arptab_entry* my_addr = nullptr;
 
 void
 arptab_init()

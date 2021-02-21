@@ -1,7 +1,6 @@
 #ifndef __ARP_H
 #define __ARP_H
 
-#include <stdint.h>
 #include "cppip.h"
 
 const static uint16_t ARP_HW_ETH = 0x0001;
@@ -13,7 +12,6 @@ const static uint16_t ARP_OP_REP = 0x0002;
 const static uint16_t RARP_OP_REQ = 0x0003;
 const static uint16_t RARP_OP_REP = 0x0004;
 
-#pragma pack(1)
 struct arp_hdr {
 	uint16_t hw;
 	uint16_t proto;
@@ -55,7 +53,5 @@ public:
 	uint32_t get_pa();
 	void set_pa(uint32_t pa);
 };
-
-extern struct arptab_entry* my_addr;
 
 #endif

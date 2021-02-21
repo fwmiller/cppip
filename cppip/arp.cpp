@@ -1,6 +1,8 @@
 #include <string.h>
 #include "cppip.h"
 
+extern class arptab_entry* my_addr;
+
 arp::arp()
 {
 	this->buf = nullptr;
@@ -60,6 +62,8 @@ arp::send_probe()
 	memset(buf, 0, ETH_MTU_SIZE);  // Zeros ah->tha
 	gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
 		my_addr->get_ha(), 0, nullptr, 0);
+
+	bufdump(buf + sizeof(struct eth_hdr), sizeof(struct arp_hdr));
 }
 
 void
@@ -72,4 +76,6 @@ arp::send_announce()
 	gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
 		my_addr->get_ha(), reverse_byte_order_short(my_addr->get_pa()),
 		nullptr, reverse_byte_order_short(my_addr->get_pa()));
+
+	bufdump(buf + sizeof(struct eth_hdr), sizeof(struct arp_hdr));
 }

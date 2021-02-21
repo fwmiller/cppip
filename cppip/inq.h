@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __INQ_H
+#define __INQ_H
 
 #include "cppip.h"
 
@@ -20,3 +21,5 @@ public:
 	int remove(buf_t buf, int len);
 	void dump();
 };
+
+#endif

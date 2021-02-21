@@ -35,7 +35,6 @@ static const uint8_t ICMP_TYPE_MCAST_ROUTER_SOL = 152;
 static const uint8_t ICMP_TYPE_MCAST_ROUTER_TERM = 153;
 static const uint8_t ICMP_TYPE_RPL_CTL = 155;
 
-#pragma pack(1)
 struct icmpv6_hdr {
 	uint8_t type;
 	uint8_t code;

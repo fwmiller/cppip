@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include "cppip.h"
 
-#pragma pack(1)
 struct ipv6_hdr {
 	uint8_t ver_class;
 	uint8_t class_flow;

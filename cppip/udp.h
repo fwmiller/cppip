@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include "cppip.h"
 
-#pragma pack(1)
 struct udp_hdr {
 	uint16_t src;
 	uint16_t dst;

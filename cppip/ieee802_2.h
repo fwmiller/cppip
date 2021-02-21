@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include "cppip.h"
 
-#pragma pack(1)
 struct ieee802_2_hdr {
 	uint8_t dsap;
 	uint8_t ssap;

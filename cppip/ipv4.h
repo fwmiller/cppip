@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include "cppip.h"
 
-#pragma pack(1)
 struct ipv4_hdr {
 	uint8_t version;
 	uint8_t tos;
