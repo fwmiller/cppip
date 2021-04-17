@@ -22,7 +22,7 @@ public:
 	buf_t get_buf();
 	void set_buf(buf_t buf);
 	void receive();
-	void send(class arptab_entry* ae, buf_t buf);
+	void send();
 	void dump();
 };
 

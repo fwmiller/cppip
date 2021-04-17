@@ -162,6 +162,8 @@
     <ClCompile Include="cppip.cpp" />
     <ClCompile Include="eth.cpp" />
     <ClCompile Include="eth_dump.cpp" />
+    <ClCompile Include="eth_receive.cpp" />
+    <ClCompile Include="eth_send.cpp" />
     <ClCompile Include="icmpv6.cpp" />
     <ClCompile Include="ieee802_2.cpp" />
     <ClCompile Include="inq.cpp" />
