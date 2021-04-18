@@ -60,11 +60,18 @@ arp::send_probe()
 	// Generate ARP probe packet
 	uint8_t buf[ETH_MTU_SIZE];
 	memset(buf, 0, ETH_MTU_SIZE);  // Zeros ah->tha
+
 	// Leave space for the Ethernet header
 	gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
 		my_addr->get_ha(), 0, nullptr, 0);
 
-	//bufdump(buf + sizeof(struct eth_hdr), sizeof(struct arp_hdr));
+	// Format Ethernet header
+	memset(buf, 0xff, ETH_ADDR_LEN);
+	memcpy(buf + ETH_ADDR_LEN, my_addr->get_ha(), ETH_ADDR_LEN);
+	*((uint16_t*)(buf + (ETH_ADDR_LEN << 1))) =
+		reverse_byte_order_short(ETHERTYPE_ARP);
+
+	bufdump(buf, sizeof(struct arp_hdr) + sizeof(struct eth_hdr));
 
 	class eth e;
 	e.set_buf(buf);
