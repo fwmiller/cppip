@@ -18,6 +18,7 @@ eth::get_ethertype()
 eth::eth()
 {
 	this->buf = nullptr;
+	this->buflen = 0;
 #if 0
 	if (fp == nullptr)
 		fp = pcap_open(
@@ -41,4 +42,16 @@ void
 eth::set_buf(buf_t buf)
 {
 	this->buf = buf;
+}
+
+unsigned
+eth::get_buflen()
+{
+	return this->buflen;
+}
+
+void
+eth::set_buflen(unsigned buflen)
+{
+	this->buflen = buflen;
 }

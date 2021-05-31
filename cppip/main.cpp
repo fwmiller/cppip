@@ -10,7 +10,7 @@
 
 static const int INTF_NAME_MAX_LEN = 4096;
 static char intf_name[INTF_NAME_MAX_LEN];
-static pcap_t* intf_handl;
+pcap_t* intf_handl;
 
 extern class arptab_entry* my_addr;
 
@@ -85,11 +85,15 @@ int main()
 
 	_beginthread(cli, 0, nullptr);
 
+	// Send ARP announcement
+	class arp a;
+	a.send_probe();
+
 	/* start the capture */
 	pcap_loop(intf_handl, 0, packet_handler, nullptr);
 
 	// Leave the interface adapter handle open so we can write raw packets
-	pcap_close(intf_handl);
+	//pcap_close(intf_handl);
 
 	return 0;
 }

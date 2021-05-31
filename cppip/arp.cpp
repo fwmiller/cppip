@@ -66,15 +66,14 @@ arp::send_probe()
 		my_addr->get_ha(), 0, nullptr, 0);
 
 	// Format Ethernet header
-	memset(buf, 0xff, ETH_ADDR_LEN);
-	memcpy(buf + ETH_ADDR_LEN, my_addr->get_ha(), ETH_ADDR_LEN);
-	*((uint16_t*)(buf + (ETH_ADDR_LEN << 1))) =
-		reverse_byte_order_short(ETHERTYPE_ARP);
-
-	bufdump(buf, sizeof(struct arp_hdr) + sizeof(struct eth_hdr));
+	eth_hdr_t eh = (eth_hdr_t)buf;
+	memset(&(eh->dst), 0xff, ETH_ADDR_LEN);
+	memcpy(&(eh->src), my_addr->get_ha(), ETH_ADDR_LEN);
+	eh->ethertype = reverse_byte_order_short(ETHERTYPE_ARP);
 
 	class eth e;
 	e.set_buf(buf);
+	e.set_buflen(sizeof(struct arp_hdr) + sizeof(struct eth_hdr));
 	e.send();
 }
 
@@ -88,6 +87,4 @@ arp::send_announce()
 	gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
 		my_addr->get_ha(), reverse_byte_order_short(my_addr->get_pa()),
 		nullptr, reverse_byte_order_short(my_addr->get_pa()));
-
-	bufdump(buf + sizeof(struct eth_hdr), sizeof(struct arp_hdr));
 }
