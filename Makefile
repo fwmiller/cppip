@@ -61,16 +61,15 @@ run: all
 	qemu-system-x86_64 -m size=4 -nographic -no-reboot -drive format=raw,file=$(BIN)/iso.img
 
 clean:
-	rm $(EXECUTABLE)
+	rm -f $(EXECUTABLE)
 	$(RM) $(BIN)
 
 #
 # Indent pass of the include and src directories
 #
 indent: clean
-	cd $(INC);indent $(INDENT_RULES) *.h
-	cd $(SRC);indent $(INDENT_RULES) *.cpp
-	rm $(INC)/*~ $(SRC)/*~
+	cd $(INC);clang-format -i *.h
+	cd $(SRC);clang-format -i *.cpp
 
 wc: clean
 	wc -l $(INC)/*.h $(SRC)/*.cpp

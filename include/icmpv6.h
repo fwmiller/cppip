@@ -36,22 +36,23 @@ static const uint8_t ICMP_TYPE_MCAST_ROUTER_TERM = 153;
 static const uint8_t ICMP_TYPE_RPL_CTL = 155;
 
 struct icmpv6_hdr {
-	uint8_t type;
-	uint8_t code;
-	uint16_t cksum;
-};
+    uint8_t type;
+    uint8_t code;
+    uint16_t cksum;
+} __attribute__((packed));
 
 typedef struct icmpv6_hdr *icmpv6_hdr_t;
 
 class icmpv6 {
- private:
-	buf_t buf;
- public:
-	icmpv6();
-	buf_t get_buf();
-	void set_buf(buf_t buf);
-	void receive();
-	void dump();
+   private:
+    buf_t buf;
+
+   public:
+    icmpv6();
+    buf_t get_buf();
+    void set_buf(buf_t buf);
+    void receive();
+    void dump();
 };
 
 #endif

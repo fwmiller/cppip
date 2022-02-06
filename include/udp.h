@@ -5,28 +5,28 @@
 #include "cppip.h"
 
 struct udp_hdr {
-	uint16_t src;
-	uint16_t dst;
-	uint16_t len;
-	uint16_t cksum;
-};
+    uint16_t src;
+    uint16_t dst;
+    uint16_t len;
+    uint16_t cksum;
+} __attribute__((packed));
 
 typedef struct udp_hdr *udp_hdr_t;
 
 class udp {
- private:
-	uint16_t port;		// Local port number
-	buf_t buf;
+   private:
+    uint16_t port;  // Local port number
+    buf_t buf;
 
- public:
-	 udp();
-	uint16_t get_port();
-	void set_port(uint16_t port);
-	buf_t get_buf();
-	void set_buf(buf_t buf);
-	void receive();
-	void dump();
-	int read(buf_t buf, int len);
+   public:
+    udp();
+    uint16_t get_port();
+    void set_port(uint16_t port);
+    buf_t get_buf();
+    void set_buf(buf_t buf);
+    void receive();
+    void dump();
+    int read(buf_t buf, int len);
 };
 
 #endif

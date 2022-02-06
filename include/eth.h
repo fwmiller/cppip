@@ -6,27 +6,28 @@
 static const unsigned ETH_MTU_SIZE = 1536;
 
 struct eth_hdr {
-	uint8_t dst[ETH_ADDR_LEN];
-	uint8_t src[ETH_ADDR_LEN];
-	uint16_t ethertype;
-};
+    uint8_t dst[ETH_ADDR_LEN];
+    uint8_t src[ETH_ADDR_LEN];
+    uint16_t ethertype;
+} __attribute__((packed));
 
 typedef struct eth_hdr *eth_hdr_t;
 
 class eth {
- private:
-	buf_t buf;
-	unsigned buflen;
-	uint16_t get_ethertype();
- public:
-	 eth();
-	buf_t get_buf();
-	void set_buf(buf_t buf);
-	unsigned get_buflen();
-	void set_buflen(unsigned buflen);
-	void receive();
-	void send();
-	void dump();
+   private:
+    buf_t buf;
+    unsigned buflen;
+    uint16_t get_ethertype();
+
+   public:
+    eth();
+    buf_t get_buf();
+    void set_buf(buf_t buf);
+    unsigned get_buflen();
+    void set_buflen(unsigned buflen);
+    void receive();
+    void send();
+    void dump();
 };
 
 #endif
