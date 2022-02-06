@@ -21,7 +21,8 @@ udp::udp()
 	this->buf = nullptr;
 }
 
-uint16_t udp::get_port()
+uint16_t
+udp::get_port()
 {
 	return this->port;
 }
@@ -32,7 +33,8 @@ void
 	this->port = port;
 }
 
-buf_t udp::get_buf()
+buf_t
+udp::get_buf()
 {
 	return this->buf;
 }
@@ -49,8 +51,7 @@ void
 	if (this->buf == nullptr)
 		return;
 
-	udp_hdr_t
-	    uh = (udp_hdr_t) this->buf;
+	udp_hdr_t uh = (udp_hdr_t) this->buf;
 	class inq *
 	    q = udptab_find(reverse_byte_order_short(uh->dst));
 	if (q == nullptr) {
@@ -58,9 +59,9 @@ void
 		return;
 	}
 	int
-	    len = reverse_byte_order_short(uh->len);
+	 len = reverse_byte_order_short(uh->len);
 	int
-	    n = q->append(this->buf + sizeof(struct udp_hdr), len);
+	 n = q->append(this->buf + sizeof(struct udp_hdr), len);
 	printf("rcvd %d bytes queued %d bytes\r\n", len, n);
 }
 

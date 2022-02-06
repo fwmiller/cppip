@@ -7,8 +7,7 @@ void
 	if (this->buf == nullptr)
 		return;
 
-	arp_hdr_t
-	    ah = (arp_hdr_t) this->buf;
+	arp_hdr_t ah = (arp_hdr_t) this->buf;
 
 	switch (reverse_byte_order_short(ah->opcode)) {
 	case ARP_OP_REQ:

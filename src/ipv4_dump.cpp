@@ -7,23 +7,17 @@ void
 	if (this->buf == nullptr)
 		return;
 
-	ipv4_hdr_t
-	    ih = (ipv4_hdr_t) this->buf;
+	ipv4_hdr_t ih = (ipv4_hdr_t) this->buf;
 
 	printf("ipv4 ver %u hdr len %u tos 0x%02x",
 	       (ih->version >> 4) & 0x0f, this->get_hdr_len(), ih->tos);
 
 	if (ih->tos) {
-		uint8_t
-		    prec = (ih->tos >> 5) & 0x03;
-		uint8_t
-		    delay = (ih->tos >> 4) & 0x01;
-		uint8_t
-		    throughput = (ih->tos >> 3) & 0x01;
-		uint8_t
-		    reliability = (ih->tos >> 2) & 0x01;
-		uint8_t
-		    cost = (ih->tos >> 1) & 0x01;
+		uint8_t prec = (ih->tos >> 5) & 0x03;
+		uint8_t delay = (ih->tos >> 4) & 0x01;
+		uint8_t throughput = (ih->tos >> 3) & 0x01;
+		uint8_t reliability = (ih->tos >> 2) & 0x01;
+		uint8_t cost = (ih->tos >> 1) & 0x01;
 
 		switch (prec) {
 		case 1:
@@ -61,11 +55,9 @@ void
 	       reverse_byte_order_short(ih->len),
 	       reverse_byte_order_short(ih->id));
 
-	uint16_t
-	    frag = reverse_byte_order_short(ih->frag);
+	uint16_t frag = reverse_byte_order_short(ih->frag);
 	printf(" frag 0x%04x", frag);
-	uint16_t
-	    flags = frag >> 13;
+	uint16_t flags = frag >> 13;
 	if (flags) {
 		printf(" (");
 		if (flags & 0x01)

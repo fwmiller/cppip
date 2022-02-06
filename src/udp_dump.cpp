@@ -7,8 +7,7 @@ void
 	if (this->buf == nullptr)
 		return;
 
-	udp_hdr_t
-	    uh = (udp_hdr_t) this->buf;
+	udp_hdr_t uh = (udp_hdr_t) this->buf;
 
 	printf("udp dst %u src %u len %u cksum 0x%04x\r\n",
 	       reverse_byte_order_short(uh->dst),

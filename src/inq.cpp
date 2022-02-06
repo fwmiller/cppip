@@ -11,7 +11,8 @@ inq::inq()
 	this->full = false;
 }
 
-uint16_t inq::get_port()
+uint16_t
+inq::get_port()
 {
 	return this->port;
 }
@@ -29,7 +30,7 @@ int
 		return 0;
 
 	int
-	    h = this->h;
+	 h = this->h;
 	for (int i = 0;;) {
 		this->q[h] = buf[i++];
 
@@ -50,7 +51,7 @@ int
  inq::remove(buf_t buf, int len)
 {
 	int
-	    t = this->t;
+	 t = this->t;
 	for (int i = 0;;) {
 		if (i == len) {
 			this->t = t;

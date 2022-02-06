@@ -8,7 +8,8 @@ icmpv6::icmpv6()
 	this->buf = nullptr;
 }
 
-buf_t icmpv6::get_buf()
+buf_t
+icmpv6::get_buf()
 {
 	return this->buf;
 }
@@ -31,8 +32,7 @@ void
 	if (this->buf == nullptr)
 		return;
 
-	icmpv6_hdr_t
-	    ih = (icmpv6_hdr_t) this->buf;
+	icmpv6_hdr_t ih = (icmpv6_hdr_t) this->buf;
 
 	printf("icmpv6 type 0x%02x (", ih->type);
 	icmp_dump_type(ih->type);

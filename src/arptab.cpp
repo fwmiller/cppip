@@ -48,7 +48,8 @@ void
 	memcpy(this->ha, ha, ETH_ADDR_LEN);
 }
 
-uint32_t arptab_entry::get_pa()
+uint32_t
+arptab_entry::get_pa()
 {
 	return this->pa;
 }

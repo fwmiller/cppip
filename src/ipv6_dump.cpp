@@ -7,8 +7,7 @@ void
 	if (this->buf == nullptr)
 		return;
 
-	ipv6_hdr_t
-	    ih = (ipv6_hdr_t) this->buf;
+	ipv6_hdr_t ih = (ipv6_hdr_t) this->buf;
 
 	printf("ipv6 ver %u", (ih->ver_class >> 4) & 0x0f);
 
@@ -16,8 +15,7 @@ void
 	    traffic_class =
 	    ((ih->ver_class & 0x0f) << 2) | ((ih->class_flow & 0xc0) >> 6);
 	printf(" class 0x%02x", traffic_class);
-	uint8_t
-	    ecn = (ih->class_flow >> 4) & 0x03;
+	uint8_t ecn = (ih->class_flow >> 4) & 0x03;
 	printf(" ecn 0x%02x", ecn);
 
 	uint32_t
@@ -26,8 +24,7 @@ void
 	    reverse_byte_order_short(ih->flow_label);
 	printf(" flow 0x%08x", flow);
 
-	uint32_t
-	    len = reverse_byte_order_short(ih->len);
+	uint32_t len = reverse_byte_order_short(ih->len);
 	printf(" payload len %u", len);
 
 	printf("\r\n");

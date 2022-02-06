@@ -49,13 +49,16 @@ main()
 			printf("(No description available)\n");
 	}
 	printf("Enter the interface number (1-%d):", i);
-	scanf("%d", &inum);
-
+	int result = scanf("%d", &inum);
+	if (result < 0) {
+		printf("\nscanf() failed\n");
+		exit(-1);
+	}
 	if (inum < 1 || inum > i) {
 		printf("\nInterface number out of range\n");
 		/* Free the device list */
 		pcap_freealldevs(alldevs);
-		return (-1);
+		exit(-1);
 	}
 
 	/* Jump to selected adapter */
@@ -63,14 +66,13 @@ main()
 
 	/* Open the device */
 	/* Open the adapter */
-	intf_handl = pcap_open_live(
-			intf->name,	// Device Name
-			65536,		// Portion of packet to capture
-					// 65536 grants that the whole packet
-					// will be captured on all the MACs
-			1,		// Promiscuous mode
-			1000,		// Read timeout
-			errbuf);	// Error buffer
+	intf_handl = pcap_open_live(intf->name,	// Device Name
+				    65536,	// Portion of packet to capture
+				    // 65536 grants that the whole packet
+				    // will be captured on all the MACs
+				    1,	// Promiscuous mode
+				    1000,	// Read timeout
+				    errbuf);	// Error buffer
 	if (intf_handl == nullptr) {
 		fprintf(stderr, "\nOpen adapter %s failed", intf->name);
 		pcap_freealldevs(alldevs);

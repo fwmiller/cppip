@@ -4,14 +4,14 @@
 void
  eth::receive()
 {
-	uint16_t
-	    ethertype;
+	uint16_t ethertype;
 
 	ethertype = this->get_ethertype();
 	if (ethertype < ETH_MTU_SIZE) {
 		stats.inc_ieee802_2_count();
 
-		class ieee802_2
+		class
+		    ieee802_2
 		    llc;
 		llc.set_buf(this->buf + sizeof(struct eth_hdr));
 		if (dump_enabled)
@@ -30,7 +30,8 @@ void
 			else if (ethertype == ETHERTYPE_RARP)
 				stats.inc_rarp_count();
 
-			class arp
+			class
+			    arp
 			    arp;
 			arp.set_buf(this->buf + sizeof(struct eth_hdr));
 			if (dump_enabled)
@@ -42,7 +43,8 @@ void
 		{
 			stats.inc_ipv4_count();
 
-			class ipv4
+			class
+			    ipv4
 			    ip;
 			ip.set_buf(this->buf + sizeof(struct eth_hdr));
 			if (dump_enabled)
@@ -54,7 +56,8 @@ void
 		{
 			stats.inc_ipv6_count();
 
-			class ipv6
+			class
+			    ipv6
 			    ip;
 			ip.set_buf(this->buf + sizeof(struct eth_hdr));
 			if (dump_enabled)

@@ -2,16 +2,18 @@
 #include <pcap/pcap.h>
 #include "stats.h"
 
+#if 0
 static pcap_t *fp = nullptr;
 static char errbuf[PCAP_ERRBUF_SIZE];
+#endif
 
-uint16_t eth::get_ethertype()
+uint16_t
+eth::get_ethertype()
 {
 	if (this->buf == nullptr)
 		return 0;
 
-	eth_hdr_t
-	    eh = (eth_hdr_t) this->buf;
+	eth_hdr_t eh = (eth_hdr_t) this->buf;
 	return reverse_byte_order_short(eh->ethertype);
 }
 
@@ -31,7 +33,8 @@ eth::eth()
 #endif
 }
 
-buf_t eth::get_buf()
+buf_t
+eth::get_buf()
 {
 	return this->buf;
 }
