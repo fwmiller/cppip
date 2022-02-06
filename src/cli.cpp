@@ -9,7 +9,7 @@
 static int readline(const char *prompt, char *line, int maxlen) {
     int c, pos;
 
-    if (prompt == nullptr || line == nullptr) return (-1);
+    if (prompt == NULL || line == NULL) return (-1);
 
     memset(line, 0, maxlen);
 
@@ -25,7 +25,7 @@ static int readline(const char *prompt, char *line, int maxlen) {
 static int issep(char *sep, char ch) {
     int i, len;
 
-    if (sep == nullptr) return 0;
+    if (sep == NULL) return 0;
 
     for (len = strlen(sep), i = 0; i < len; i++)
         if (ch == sep[i]) return 1;
@@ -36,7 +36,7 @@ static void nextarg(char *ln, int *pos, char *sep, char *arg) {
     char *s;
     char ch;
 
-    if (ln == nullptr || pos == nullptr || arg == nullptr) return;
+    if (ln == NULL || pos == NULL || arg == NULL) return;
 
     s = arg;
 

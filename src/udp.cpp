@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "cppip.h"
 #include "inq.h"
 
@@ -9,12 +10,12 @@ static class inq udptab[RECV_PORTS];
 static class inq *udptab_find(uint16_t port) {
     for (int i = 0; i < RECV_PORTS; i++)
         if (udptab[i].get_port() == port) return &(udptab[i]);
-    return nullptr;
+    return NULL;
 }
 
 udp::udp() {
     this->port = 0;
-    this->buf = nullptr;
+    this->buf = NULL;
 }
 
 uint16_t udp::get_port() { return this->port; }
@@ -26,11 +27,11 @@ buf_t udp::get_buf() { return this->buf; }
 void udp::set_buf(buf_t buf) { this->buf = buf; }
 
 void udp::receive() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     udp_hdr_t uh = (udp_hdr_t)this->buf;
     class inq *q = udptab_find(reverse_byte_order_short(uh->dst));
-    if (q == nullptr) {
+    if (q == NULL) {
         // No input queue open drop packet data
         return;
     }
@@ -43,7 +44,7 @@ int udp::read(buf_t buf, int len) {
     if (this->port == 0) return (-1);
 
     class inq *q = udptab_find(this->port);
-    if (q == nullptr) {
+    if (q == NULL) {
         // No input queue
         return (-1);
     }

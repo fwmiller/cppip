@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "cppip.h"
 
 void udp::dump() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     udp_hdr_t uh = (udp_hdr_t)this->buf;
 

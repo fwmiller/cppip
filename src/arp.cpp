@@ -1,16 +1,17 @@
+#include <stdlib.h>
 #include <string.h>
 #include "cppip.h"
 
 extern class arptab_entry *my_addr;
 
-arp::arp() { this->buf = nullptr; }
+arp::arp() { this->buf = NULL; }
 
 buf_t arp::get_buf() { return this->buf; }
 
 void arp::set_buf(buf_t buf) { this->buf = buf; }
 
 void arp::receive() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     arp_hdr_t ah = (arp_hdr_t)this->buf;
 
@@ -30,9 +31,9 @@ static void gen_arp_packet(uint8_t *buf, uint16_t opcode, uint8_t *sha,
     ah->hw_addr_len = ETH_ADDR_LEN;
     ah->proto_addr_len = IPV4_ADDR_LEN;
     ah->opcode = reverse_byte_order_short(opcode);
-    if (sha != nullptr) memcpy(ah->sha, sha, ETH_ADDR_LEN);
+    if (sha != NULL) memcpy(ah->sha, sha, ETH_ADDR_LEN);
     ah->spa = spa;
-    if (tha != nullptr) memcpy(ah->tha, tha, ETH_ADDR_LEN);
+    if (tha != NULL) memcpy(ah->tha, tha, ETH_ADDR_LEN);
     ah->tpa = tpa;
 }
 
@@ -43,7 +44,7 @@ void arp::send_probe() {
 
     // Leave space for the Ethernet header
     gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
-                   my_addr->get_ha(), 0, nullptr, 0);
+                   my_addr->get_ha(), 0, NULL, 0);
 
     // Format Ethernet header
     eth_hdr_t eh = (eth_hdr_t)buf;
@@ -64,6 +65,6 @@ void arp::send_announce() {
     memset(buf, 0, ETH_MTU_SIZE);  // Zeros ah->tha
     gen_arp_packet(buf + sizeof(struct eth_hdr), ARP_OP_REQ,
                    my_addr->get_ha(),
-                   reverse_byte_order_short(my_addr->get_pa()), nullptr,
+                   reverse_byte_order_short(my_addr->get_pa()), NULL,
                    reverse_byte_order_short(my_addr->get_pa()));
 }

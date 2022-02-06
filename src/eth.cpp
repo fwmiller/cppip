@@ -1,13 +1,14 @@
+#include <stdlib.h>
 #include "cppip.h"
 #include "stats.h"
 
 eth::eth() {
-    this->buf = nullptr;
+    this->buf = NULL;
     this->buflen = 0;
 }
 
 uint16_t eth::get_ethertype() {
-    if (this->buf == nullptr) return 0;
+    if (this->buf == NULL) return 0;
 
     eth_hdr_t eh = (eth_hdr_t)this->buf;
     return reverse_byte_order_short(eh->ethertype);

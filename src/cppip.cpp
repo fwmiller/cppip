@@ -74,7 +74,7 @@ void dump_ethertype(uint16_t ethertype) {
 }
 
 void dump_ethaddr(uint8_t *ethaddr) {
-    if (ethaddr == nullptr) return;
+    if (ethaddr == NULL) return;
 
     printf("%02x:%02x:%02x:%02x:%02x:%02x", ethaddr[0], ethaddr[1],
            ethaddr[2], ethaddr[3], ethaddr[4], ethaddr[5]);

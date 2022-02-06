@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "cppip.h"
 
 void eth::dump() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     eth_hdr_t eh = (eth_hdr_t)this->buf;
 

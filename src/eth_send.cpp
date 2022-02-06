@@ -1,10 +1,11 @@
-#include <pcap.h>
+#include <pcap/pcap.h>
+#include <stdlib.h>
 #include "cppip.h"
 
 extern pcap_t *intf_handl;
 
 void eth::send() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     printf("eth::send()\r\n");
     bufdump(this->buf, this->buflen);

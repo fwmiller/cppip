@@ -1,9 +1,10 @@
+#include <stdlib.h>
 #include <string.h>
 #include "cppip.h"
 
 static class arptab_entry arptab[ARPTAB_ENTRIES];
 
-class arptab_entry *my_addr = nullptr;
+class arptab_entry *my_addr = NULL;
 
 void arptab_init() {
     memset(arptab, 0, sizeof(arptab));
@@ -14,13 +15,13 @@ static class arptab_entry *arptab_find_ha(uint8_t *ha) {
     for (int i = 0; i < ARPTAB_ENTRIES; i++)
         if (memcmp(ha, arptab[i].get_ha(), ETH_ADDR_LEN) == 0)
             return &(arptab[i]);
-    return nullptr;
+    return NULL;
 }
 
 static class arptab_entry *arptab_find_pa(uint32_t pa) {
     for (int i = 0; i < ARPTAB_ENTRIES; i++)
         if (pa == arptab[i].get_pa()) return &(arptab[i]);
-    return nullptr;
+    return NULL;
 }
 
 arptab_entry::arptab_entry() {

@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "cppip.h"
 
 void ipv4::dump() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     ipv4_hdr_t ih = (ipv4_hdr_t)this->buf;
 

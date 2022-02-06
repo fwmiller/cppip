@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "cppip.h"
 
 void ipv6::dump() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     ipv6_hdr_t ih = (ipv6_hdr_t)this->buf;
 

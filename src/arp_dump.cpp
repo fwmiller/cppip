@@ -2,7 +2,7 @@
 #include "cppip.h"
 
 void arp::dump() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     arp_hdr_t ah = (arp_hdr_t)this->buf;
 

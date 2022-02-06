@@ -38,7 +38,7 @@ int main() {
         fprintf(stderr, "Error in pcap_findalldevs: %s\n", errbuf);
         exit(-1);
     }
-    for (intf = alldevs; intf != nullptr; intf = intf->next) {
+    for (intf = alldevs; intf != NULL; intf = intf->next) {
         printf("%d ", ++i);
         // printf("%s ", d->name);
         if (intf->description)
@@ -72,7 +72,7 @@ int main() {
                                 1,        // Promiscuous mode
                                 1000,     // Read timeout
                                 errbuf);  // Error buffer
-    if (intf_handl == nullptr) {
+    if (intf_handl == NULL) {
         fprintf(stderr, "\nOpen adapter %s failed", intf->name);
         pcap_freealldevs(alldevs);
         return (-1);
@@ -85,14 +85,14 @@ int main() {
 
     pcap_freealldevs(alldevs);
 
-    //_beginthread(cli, 0, nullptr);
+    //_beginthread(cli, 0, NULL);
 
     // Send ARP announcement
     class arp a;
     a.send_probe();
 
     /* start the capture */
-    pcap_loop(intf_handl, 0, packet_handler, nullptr);
+    pcap_loop(intf_handl, 0, packet_handler, NULL);
 
     // Leave the interface adapter handle open so we can write raw packets
     // pcap_close(intf_handl);

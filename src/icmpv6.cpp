@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "cppip.h"
 
 static void icmp_dump_type(uint8_t type);
 
-icmpv6::icmpv6() { this->buf = nullptr; }
+icmpv6::icmpv6() { this->buf = NULL; }
 
 buf_t icmpv6::get_buf() { return this->buf; }
 
@@ -12,7 +13,7 @@ void icmpv6::set_buf(buf_t buf) { this->buf = buf; }
 void icmpv6::receive() { return; }
 
 void icmpv6::dump() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     icmpv6_hdr_t ih = (icmpv6_hdr_t)this->buf;
 

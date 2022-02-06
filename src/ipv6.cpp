@@ -1,14 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "cppip.h"
 
-ipv6::ipv6() { this->buf = nullptr; }
+ipv6::ipv6() { this->buf = NULL; }
 
 buf_t ipv6::get_buf() { return this->buf; }
 
 void ipv6::set_buf(buf_t buf) { this->buf = buf; }
 
 void ipv6::receive() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     ipv6_hdr_t ih = (ipv6_hdr_t)this->buf;
 

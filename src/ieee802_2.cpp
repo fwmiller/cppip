@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "cppip.h"
 
-ieee802_2::ieee802_2() { this->buf = nullptr; }
+ieee802_2::ieee802_2() { this->buf = NULL; }
 
 buf_t ieee802_2::get_buf() { return this->buf; }
 
@@ -10,7 +10,7 @@ void ieee802_2::set_buf(buf_t buf) { this->buf = buf; }
 void ieee802_2::receive() { return; }
 
 void ieee802_2::dump() {
-    if (this->buf == nullptr) return;
+    if (this->buf == NULL) return;
 
     ieee802_2_hdr_t llc_hdr = (ieee802_2_hdr_t)this->buf;
 
