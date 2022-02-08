@@ -13,7 +13,7 @@ static int readline(const char *prompt, char *line, int maxlen) {
 
     memset(line, 0, maxlen);
 
-    printf(prompt);
+    printf("%s", prompt);
     for (pos = 0; pos < maxlen - 1; pos++) {
         c = getchar();
         if (c == '\n') break;

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "arptab.h"
 #include "cli.h"
 #include "cppip.h"
 #include "inq.h"
@@ -12,12 +13,11 @@ static const int INTF_NAME_MAX_LEN = 4096;
 static char intf_name[INTF_NAME_MAX_LEN];
 pcap_t *intf_handl;
 
-extern class arptab_entry *my_addr;
+class arptab arptab;
+class arptab_entry *my_addr;
 
 static void packet_handler(u_char *param, const struct pcap_pkthdr *header,
                            const u_char *pkt_data);
-
-void arptab_init();
 
 int main() {
     pcap_if_t *alldevs;
@@ -28,9 +28,8 @@ int main() {
 
     printf("C++ Internet Protocols (cppip)\r\n");
 
-    arptab_init();
     // Assign initial MAC address to support the initial ARP probe
-    uint8_t ha[ETH_ADDR_LEN] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
+    uint8_t ha[ETH_ADDR_LEN] = {0xde, 0xad, 0xbe, 0xef, 0xfe, 0xed};
     my_addr->set_ha(ha);
 
     /* Retrieve device list */
@@ -41,6 +40,7 @@ int main() {
     for (intf = alldevs; intf != NULL; intf = intf->next) {
         printf("%d ", ++i);
         // printf("%s ", d->name);
+        if (intf->name) printf("%s: ", intf->name);
         if (intf->description)
             printf("%s\n", intf->description);
         else
@@ -77,21 +77,21 @@ int main() {
         pcap_freealldevs(alldevs);
         return (-1);
     }
-    printf("\nListening on %s...\n", intf->description);
+    printf("\nListening on %s\n",
+           (intf->name == NULL ? intf->description : intf->name));
 
     memset(intf_name, 0, INTF_NAME_MAX_LEN);
     strcpy(intf_name, intf->name);
-    printf("Interface name %s\r\n", intf_name);
 
     pcap_freealldevs(alldevs);
 
     //_beginthread(cli, 0, NULL);
-
+#if 0
     // Send ARP announcement
     class arp a;
     a.send_probe();
-
-    /* start the capture */
+#endif
+    /* Start the capture */
     pcap_loop(intf_handl, 0, packet_handler, NULL);
 
     // Leave the interface adapter handle open so we can write raw packets

@@ -20,6 +20,7 @@ RM		:= rm -fr
 # Tool options
 #
 CFLAGS		:= -c -Wall -Og
+#CFLAGS		+= -g
 CFLAGS		+= -D_DEBUG
 
 INDENT_RULES := -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l80 -lp -npcs -nprs -psl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1
