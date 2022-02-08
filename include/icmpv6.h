@@ -44,10 +44,10 @@ struct icmpv6_hdr {
 typedef struct icmpv6_hdr *icmpv6_hdr_t;
 
 class icmpv6 {
-   private:
+private:
     buf_t buf;
 
-   public:
+public:
     icmpv6();
     buf_t get_buf();
     void set_buf(buf_t buf);

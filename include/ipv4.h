@@ -20,12 +20,12 @@ struct ipv4_hdr {
 typedef struct ipv4_hdr *ipv4_hdr_t;
 
 class ipv4 {
-   private:
+private:
     buf_t buf;
     uint8_t get_hdr_len();
     uint8_t get_protocol();
 
-   public:
+public:
     ipv4();
     buf_t get_buf();
     void set_buf(buf_t buf);

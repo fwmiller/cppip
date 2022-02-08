@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include "cppip.h"
 
-void ipv6::dump() {
-    if (this->buf == NULL) return;
+void
+ipv6::dump() {
+    if (this->buf == NULL)
+        return;
 
-    ipv6_hdr_t ih = (ipv6_hdr_t)this->buf;
+    ipv6_hdr_t ih = (ipv6_hdr_t) this->buf;
 
     printf("ipv6 ver %u", (ih->ver_class >> 4) & 0x0f);
 
@@ -29,10 +31,10 @@ void ipv6::dump() {
     printf(") hop limit %u\r\n", ih->hop_lmt);
 
     printf(" dst ");
-    dump_ipv6addr((uint8_t *)&(ih->dst));
+    dump_ipv6addr((uint8_t *) &(ih->dst));
 
     printf("\r\n src ");
-    dump_ipv6addr((uint8_t *)&(ih->src));
+    dump_ipv6addr((uint8_t *) &(ih->src));
 
     printf("\r\n");
 }

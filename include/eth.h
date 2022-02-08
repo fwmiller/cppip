@@ -14,12 +14,12 @@ struct eth_hdr {
 typedef struct eth_hdr *eth_hdr_t;
 
 class eth {
-   private:
+private:
     buf_t buf;
     unsigned buflen;
     uint16_t get_ethertype();
 
-   public:
+public:
     eth();
     buf_t get_buf();
     void set_buf(buf_t buf);

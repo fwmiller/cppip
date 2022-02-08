@@ -14,10 +14,10 @@ struct ieee802_2_hdr {
 typedef struct ieee802_2_hdr *ieee802_2_hdr_t;
 
 class ieee802_2 {
-   private:
+private:
     buf_t buf;
 
-   public:
+public:
     ieee802_2();
     buf_t get_buf();
     void set_buf(buf_t buf);

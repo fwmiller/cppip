@@ -19,7 +19,8 @@ class arptab_entry *my_addr;
 static void packet_handler(u_char *param, const struct pcap_pkthdr *header,
                            const u_char *pkt_data);
 
-int main() {
+int
+main() {
     pcap_if_t *alldevs;
     pcap_if_t *intf;
     char errbuf[PCAP_ERRBUF_SIZE];
@@ -40,7 +41,8 @@ int main() {
     for (intf = alldevs; intf != NULL; intf = intf->next) {
         printf("%d ", ++i);
         // printf("%s ", d->name);
-        if (intf->name) printf("%s: ", intf->name);
+        if (intf->name)
+            printf("%s: ", intf->name);
         if (intf->description)
             printf("%s\n", intf->description);
         else
@@ -101,8 +103,9 @@ int main() {
 }
 
 /* Callback function invoked by libpcap for every incoming packet */
-static void packet_handler(u_char *param, const struct pcap_pkthdr *header,
-                           const u_char *pkt_data) {
+static void
+packet_handler(u_char *param, const struct pcap_pkthdr *header,
+               const u_char *pkt_data) {
     if (dump_enabled) {
         printf("\r\nFrame %u\r\n", stats.get_frame_count());
         // bufdump((uint8_t *)pkt_data, header->len);
@@ -110,7 +113,8 @@ static void packet_handler(u_char *param, const struct pcap_pkthdr *header,
     stats.inc_frame_count();
 
     class eth eth;
-    eth.set_buf((uint8_t *)pkt_data);
-    if (dump_enabled) eth.dump();
+    eth.set_buf((uint8_t *) pkt_data);
+    if (dump_enabled)
+        eth.dump();
     eth.receive();
 }

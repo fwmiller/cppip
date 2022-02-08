@@ -2,7 +2,7 @@
 #define __CPPIP_STATS
 
 class cppip_stats {
-   private:
+private:
     unsigned frame_count;
     unsigned eth_count;
     unsigned ieee802_2_count;
@@ -13,7 +13,7 @@ class cppip_stats {
     unsigned udp_count;
     unsigned tcp_count;
 
-   public:
+public:
     cppip_stats();
     unsigned get_frame_count();
     void set_frame_count(unsigned frame_count);

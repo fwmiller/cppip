@@ -6,43 +6,52 @@
 #include "cppip.h"
 #include "stats.h"
 
-static int readline(const char *prompt, char *line, int maxlen) {
+static int
+readline(const char *prompt, char *line, int maxlen) {
     int c, pos;
 
-    if (prompt == NULL || line == NULL) return (-1);
+    if (prompt == NULL || line == NULL)
+        return (-1);
 
     memset(line, 0, maxlen);
 
     printf("%s", prompt);
     for (pos = 0; pos < maxlen - 1; pos++) {
         c = getchar();
-        if (c == '\n') break;
+        if (c == '\n')
+            break;
         line[pos] = c;
     }
     return 0;
 }
 
-static int issep(char *sep, char ch) {
+static int
+issep(char *sep, char ch) {
     int i, len;
 
-    if (sep == NULL) return 0;
+    if (sep == NULL)
+        return 0;
 
     for (len = strlen(sep), i = 0; i < len; i++)
-        if (ch == sep[i]) return 1;
+        if (ch == sep[i])
+            return 1;
     return 0;
 }
 
-static void nextarg(char *ln, int *pos, char *sep, char *arg) {
+static void
+nextarg(char *ln, int *pos, char *sep, char *arg) {
     char *s;
     char ch;
 
-    if (ln == NULL || pos == NULL || arg == NULL) return;
+    if (ln == NULL || pos == NULL || arg == NULL)
+        return;
 
     s = arg;
 
     /* Skip whitespace */
     ch = ln[*pos];
-    while (isspace(ch)) ch = ln[++(*pos)];
+    while (isspace(ch))
+        ch = ln[++(*pos)];
 
     /* Fill in arg until a separator is reached */
     strcpy(s, "");
@@ -55,7 +64,8 @@ static void nextarg(char *ln, int *pos, char *sep, char *arg) {
 
 static const int CMDLINE_LEN = 128;
 
-void cli(void *pMyID) {
+void
+cli(void *pMyID) {
     char cmdline[CMDLINE_LEN];
     char arg[CMDLINE_LEN], sep[CMDLINE_LEN];
     int pos;
@@ -67,14 +77,15 @@ void cli(void *pMyID) {
 
     // Generate and send the initial ARP probe packet.  Assumes
     // my_addr->ha is set
-    uint8_t *pktbuf = (uint8_t *)malloc(ETH_MTU_SIZE);
+    uint8_t *pktbuf = (uint8_t *) malloc(ETH_MTU_SIZE);
     class arp ap;
     ap.set_buf(pktbuf);
     ap.send_probe();
 
     for (;;) {
         readline("> ", cmdline, CMDLINE_LEN);
-        if (strlen(cmdline) == 0) continue;
+        if (strlen(cmdline) == 0)
+            continue;
 
         pos = 0;
         nextarg(cmdline, &pos, sep, arg);

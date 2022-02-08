@@ -18,10 +18,10 @@ struct ipv6_hdr {
 typedef struct ipv6_hdr *ipv6_hdr_t;
 
 class ipv6 {
-   private:
+private:
     buf_t buf;
 
-   public:
+public:
     ipv6();
     buf_t get_buf();
     void set_buf(buf_t buf);

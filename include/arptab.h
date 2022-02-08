@@ -6,11 +6,11 @@
 static const int ARPTAB_ENTRIES = 16;
 
 class arptab_entry {
-   private:
+private:
     uint8_t ha[ETH_ADDR_LEN];  // Hardware address (Ethernet)
     uint32_t pa;               // Protocol address (IPv4)
 
-   public:
+public:
     arptab_entry();
     uint8_t *get_ha();
     void set_ha(uint8_t *ha);
@@ -21,10 +21,10 @@ class arptab_entry {
 typedef class arptab_entry *arptab_entry_t;
 
 class arptab {
-   private:
+private:
     class arptab_entry table[ARPTAB_ENTRIES];
 
-   public:
+public:
     arptab();
     int add_entry(uint32_t pa, uint8_t *ha);
     arptab_entry_t find_ha(uint8_t *ha);

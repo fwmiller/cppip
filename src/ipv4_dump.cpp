@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include "cppip.h"
 
-void ipv4::dump() {
-    if (this->buf == NULL) return;
+void
+ipv4::dump() {
+    if (this->buf == NULL)
+        return;
 
-    ipv4_hdr_t ih = (ipv4_hdr_t)this->buf;
+    ipv4_hdr_t ih = (ipv4_hdr_t) this->buf;
 
     printf("ipv4 ver %u hdr len %u tos 0x%02x", (ih->version >> 4) & 0x0f,
            this->get_hdr_len(), ih->tos);
@@ -18,32 +20,36 @@ void ipv4::dump() {
         uint8_t cost = (ih->tos >> 1) & 0x01;
 
         switch (prec) {
-            case 1:
-                printf(" PRIORITY");
-                break;
-            case 2:
-                printf(" IMMEDIATE");
-                break;
-            case 3:
-                printf(" FLASH");
-                break;
-            case 4:
-                printf(" FLASH-OVERRIDE");
-                break;
-            case 5:
-                printf(" CRITICAL");
-                break;
-            case 6:
-                printf(" INET-CTL");
-                break;
-            case 7:
-                printf(" NET-CTL");
-                break;
+        case 1:
+            printf(" PRIORITY");
+            break;
+        case 2:
+            printf(" IMMEDIATE");
+            break;
+        case 3:
+            printf(" FLASH");
+            break;
+        case 4:
+            printf(" FLASH-OVERRIDE");
+            break;
+        case 5:
+            printf(" CRITICAL");
+            break;
+        case 6:
+            printf(" INET-CTL");
+            break;
+        case 7:
+            printf(" NET-CTL");
+            break;
         }
-        if (delay) printf(" MIN_DELAY");
-        if (throughput) printf(" MAX_THROUGHPUT");
-        if (reliability) printf(" MAX_RELIABILITY");
-        if (cost) printf(" MIN_COST");
+        if (delay)
+            printf(" MIN_DELAY");
+        if (throughput)
+            printf(" MAX_THROUGHPUT");
+        if (reliability)
+            printf(" MAX_RELIABILITY");
+        if (cost)
+            printf(" MIN_COST");
     }
     printf(" len %u id 0x%04x\r\n", reverse_byte_order_short(ih->len),
            reverse_byte_order_short(ih->id));
@@ -53,8 +59,10 @@ void ipv4::dump() {
     uint16_t flags = frag >> 13;
     if (flags) {
         printf(" (");
-        if (flags & 0x01) printf("MF");
-        if (flags & 0x02) printf("DF");
+        if (flags & 0x01)
+            printf("MF");
+        if (flags & 0x02)
+            printf("DF");
         printf(")");
     }
     printf(" offset %u ttl %u protocol 0x%02x (",

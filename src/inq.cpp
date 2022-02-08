@@ -10,12 +10,20 @@ inq::inq() {
     this->full = false;
 }
 
-uint16_t inq::get_port() { return this->port; }
+uint16_t
+inq::get_port() {
+    return this->port;
+}
 
-void inq::set_port(uint16_t port) { this->port = port; }
+void
+inq::set_port(uint16_t port) {
+    this->port = port;
+}
 
-int inq::append(buf_t buf, int len) {
-    if (this->full) return 0;
+int
+inq::append(buf_t buf, int len) {
+    if (this->full)
+        return 0;
 
     int h = this->h;
     for (int i = 0;;) {
@@ -34,7 +42,8 @@ int inq::append(buf_t buf, int len) {
     }
 }
 
-int inq::remove(buf_t buf, int len) {
+int
+inq::remove(buf_t buf, int len) {
     int t = this->t;
     for (int i = 0;;) {
         if (i == len) {
@@ -48,12 +57,14 @@ int inq::remove(buf_t buf, int len) {
         buf[i++] = this->q[t];
         this->q[t] = 0;
 
-        if (full) full = false;
+        if (full)
+            full = false;
         t = (t + 1) % MAX_INQ_SIZE;
     }
 }
 
-void inq::dump() {
+void
+inq::dump() {
     printf(" ");
     for (int i = 0; i < MAX_INQ_SIZE; i++)
         if (i == this->h)

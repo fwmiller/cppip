@@ -7,13 +7,13 @@
 static const int MAX_INQ_SIZE = 16;  // 16 bytes
 
 class inq {
-   private:
+private:
     uint16_t port;
     uint8_t q[MAX_INQ_SIZE];
     int h, t;
     bool full;
 
-   public:
+public:
     inq();
     uint16_t get_port();
     void set_port(uint16_t port);

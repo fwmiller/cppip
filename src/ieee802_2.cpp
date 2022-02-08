@@ -1,18 +1,31 @@
 #include <stdio.h>
 #include "cppip.h"
 
-ieee802_2::ieee802_2() { this->buf = NULL; }
+ieee802_2::ieee802_2() {
+    this->buf = NULL;
+}
 
-buf_t ieee802_2::get_buf() { return this->buf; }
+buf_t
+ieee802_2::get_buf() {
+    return this->buf;
+}
 
-void ieee802_2::set_buf(buf_t buf) { this->buf = buf; }
+void
+ieee802_2::set_buf(buf_t buf) {
+    this->buf = buf;
+}
 
-void ieee802_2::receive() { return; }
+void
+ieee802_2::receive() {
+    return;
+}
 
-void ieee802_2::dump() {
-    if (this->buf == NULL) return;
+void
+ieee802_2::dump() {
+    if (this->buf == NULL)
+        return;
 
-    ieee802_2_hdr_t llc_hdr = (ieee802_2_hdr_t)this->buf;
+    ieee802_2_hdr_t llc_hdr = (ieee802_2_hdr_t) this->buf;
 
     printf("802.2 LLC dsap 0x%02x ssap 0x%02x", llc_hdr->dsap, llc_hdr->ssap);
 
@@ -21,7 +34,7 @@ void ieee802_2::dump() {
     else {
         uint16_t control;
         control =
-            reverse_byte_order_short(*((uint16_t *)&(llc_hdr->control)));
+            reverse_byte_order_short(*((uint16_t *) &(llc_hdr->control)));
         printf(" control 0x%04x (I/S-format)", control);
     }
     printf("\r\n");

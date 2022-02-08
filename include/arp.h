@@ -27,10 +27,10 @@ struct arp_hdr {
 typedef struct arp_hdr *arp_hdr_t;
 
 class arp {
-   private:
+private:
     buf_t buf;
 
-   public:
+public:
     arp();
     buf_t get_buf();
     void set_buf(buf_t buf);
