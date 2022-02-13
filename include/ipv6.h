@@ -19,12 +19,12 @@ typedef struct ipv6_hdr *ipv6_hdr_t;
 
 class ipv6 {
 private:
-    buf_t buf;
+    buf_t hdr;
 
 public:
     ipv6();
-    buf_t get_buf();
-    void set_buf(buf_t buf);
+    buf_t get_hdr();
+    void set_hdr(buf_t hdr);
     void receive();
     void dump();
 };

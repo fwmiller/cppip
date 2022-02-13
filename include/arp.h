@@ -28,21 +28,18 @@ typedef struct arp_hdr *arp_hdr_t;
 
 class arp {
 private:
-    buf_t buf;
+    buf_t hdr;
 
 public:
     arp();
-    buf_t get_buf();
-    void set_buf(buf_t buf);
+    buf_t get_hdr();
+    void set_hdr(buf_t hdr);
     void receive();
     void dump();
-    void generate(uint8_t *buf, uint16_t hw, uint16_t proto,
+    void generate(uint8_t *hdr, uint16_t hw, uint16_t proto,
                   uint8_t hw_addr_len, uint8_t proto_addr_len,
                   uint16_t opcode, uint8_t *sha, uint32_t spa, uint8_t *tha,
                   uint32_t tpa);
-
-    void send_probe();
-    void send_announce();
 };
 
 #endif

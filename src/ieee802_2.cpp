@@ -2,17 +2,17 @@
 #include "cppip.h"
 
 ieee802_2::ieee802_2() {
-    this->buf = NULL;
+    this->hdr = NULL;
 }
 
 buf_t
-ieee802_2::get_buf() {
-    return this->buf;
+ieee802_2::get_hdr() {
+    return this->hdr;
 }
 
 void
-ieee802_2::set_buf(buf_t buf) {
-    this->buf = buf;
+ieee802_2::set_hdr(buf_t hdr) {
+    this->hdr = hdr;
 }
 
 void
@@ -22,10 +22,10 @@ ieee802_2::receive() {
 
 void
 ieee802_2::dump() {
-    if (this->buf == NULL)
+    if (this->hdr == NULL)
         return;
 
-    ieee802_2_hdr_t llc_hdr = (ieee802_2_hdr_t) this->buf;
+    ieee802_2_hdr_t llc_hdr = (ieee802_2_hdr_t) this->hdr;
 
     printf("802.2 LLC dsap 0x%02x ssap 0x%02x", llc_hdr->dsap, llc_hdr->ssap);
 
@@ -35,7 +35,7 @@ ieee802_2::dump() {
         uint16_t control;
         control =
             reverse_byte_order_short(*((uint16_t *) &(llc_hdr->control)));
-        printf(" control 0x%04x (I/S-format)", control);
+        printf(" control 0x%04x", control);
     }
     printf("\r\n");
 }

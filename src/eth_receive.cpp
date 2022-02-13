@@ -4,13 +4,14 @@
 void
 eth::receive() {
     uint16_t ethertype;
+    buf_t hdr = this->frame + sizeof(struct eth_hdr);
 
     ethertype = this->get_ethertype();
     if (ethertype < ETH_MTU_SIZE) {
         stats.inc_ieee802_2_count();
 
         class ieee802_2 llc;
-        llc.set_buf(this->buf + sizeof(struct eth_hdr));
+        llc.set_hdr(hdr);
         if (dump_enabled)
             llc.dump();
         llc.receive();
@@ -27,7 +28,7 @@ eth::receive() {
             stats.inc_rarp_count();
 
         class arp arp;
-        arp.set_buf(this->buf + sizeof(struct eth_hdr));
+        arp.set_hdr(hdr);
         if (dump_enabled)
             arp.dump();
         arp.receive();
@@ -35,20 +36,20 @@ eth::receive() {
     case ETHERTYPE_IPV4: {
         stats.inc_ipv4_count();
 
-        class ipv4 ip;
-        ip.set_buf(this->buf + sizeof(struct eth_hdr));
+        class ipv4 ipv4;
+        ipv4.set_hdr(hdr);
         if (dump_enabled)
-            ip.dump();
-        ip.receive();
+            ipv4.dump();
+        ipv4.receive();
     } break;
     case ETHERTYPE_IPV6: {
         stats.inc_ipv6_count();
 
-        class ipv6 ip;
-        ip.set_buf(this->buf + sizeof(struct eth_hdr));
+        class ipv6 ipv6;
+        ipv6.set_hdr(hdr);
         if (dump_enabled)
-            ip.dump();
-        ip.receive();
+            ipv6.dump();
+        ipv6.receive();
     } break;
     }
 }

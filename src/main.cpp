@@ -1,3 +1,4 @@
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,16 +17,13 @@ pcap_t *intf_handl;
 class arptab arptab;
 class arptab_entry *my_addr;
 
-static void packet_handler(u_char *param, const struct pcap_pkthdr *header,
-                           const u_char *pkt_data);
+void initialize_pcap();
+void packet_handler(u_char *param, const struct pcap_pkthdr *header,
+                    const u_char *pkt_data);
 
 int
 main() {
-    pcap_if_t *alldevs;
-    pcap_if_t *intf;
-    char errbuf[PCAP_ERRBUF_SIZE];
-    int inum;
-    int i = 0;
+    pthread_t cli_thread;
 
     printf("C++ Internet Protocols (cppip)\r\n");
 
@@ -33,12 +31,33 @@ main() {
     uint8_t ha[ETH_ADDR_LEN] = {0xde, 0xad, 0xbe, 0xef, 0xfe, 0xed};
     my_addr->set_ha(ha);
 
+    initialize_pcap();
+
+    //_beginthread(cli, 0, NULL);
+    pthread_create(&cli_thread, NULL, cli, NULL);
+
+    /* Start the capture */
+    pcap_loop(intf_handl, 0, packet_handler, NULL);
+
+    // XXX Not reached
+    // Leave the interface adapter handle open so we can write raw packets
+    // pcap_close(intf_handl);
+    return 0;
+}
+
+void
+initialize_pcap() {
+    pcap_if_t *alldevs;
+    pcap_if_t *intf;
+    char errbuf[PCAP_ERRBUF_SIZE];
+    int i, inum;
+
     /* Retrieve device list */
     if (pcap_findalldevs(&alldevs, errbuf) == (-1)) {
         fprintf(stderr, "Error in pcap_findalldevs: %s\n", errbuf);
         exit(-1);
     }
-    for (intf = alldevs; intf != NULL; intf = intf->next) {
+    for (i = 0, intf = alldevs; intf != NULL; intf = intf->next) {
         printf("%d ", ++i);
         // printf("%s ", d->name);
         if (intf->name)
@@ -77,7 +96,7 @@ main() {
     if (intf_handl == NULL) {
         fprintf(stderr, "\nOpen adapter %s failed", intf->name);
         pcap_freealldevs(alldevs);
-        return (-1);
+        return;
     }
     printf("\nListening on %s\n",
            (intf->name == NULL ? intf->description : intf->name));
@@ -86,34 +105,22 @@ main() {
     strcpy(intf_name, intf->name);
 
     pcap_freealldevs(alldevs);
-
-    //_beginthread(cli, 0, NULL);
-#if 0
-    // Send ARP announcement
-    class arp a;
-    a.send_probe();
-#endif
-    /* Start the capture */
-    pcap_loop(intf_handl, 0, packet_handler, NULL);
-
-    // Leave the interface adapter handle open so we can write raw packets
-    // pcap_close(intf_handl);
-
-    return 0;
 }
 
 /* Callback function invoked by libpcap for every incoming packet */
-static void
+void
 packet_handler(u_char *param, const struct pcap_pkthdr *header,
                const u_char *pkt_data) {
     if (dump_enabled) {
-        printf("\r\nFrame %u\r\n", stats.get_frame_count());
+        printf("\r\nFrame %u length %u\r\n", stats.get_frame_count(),
+               header->len);
         // bufdump((uint8_t *)pkt_data, header->len);
     }
     stats.inc_frame_count();
 
     class eth eth;
-    eth.set_buf((uint8_t *) pkt_data);
+    eth.set_frame((uint8_t *) pkt_data);
+    eth.set_framelen(header->len);
     if (dump_enabled)
         eth.dump();
     eth.receive();

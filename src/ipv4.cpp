@@ -4,35 +4,35 @@
 #include "stats.h"
 
 ipv4::ipv4() {
-    this->buf = NULL;
+    this->hdr = NULL;
 }
 
 buf_t
-ipv4::get_buf() {
-    return this->buf;
+ipv4::get_hdr() {
+    return this->hdr;
 }
 
 void
-ipv4::set_buf(buf_t buf) {
-    this->buf = buf;
+ipv4::set_hdr(buf_t hdr) {
+    this->hdr = hdr;
 }
 
 uint8_t
 ipv4::get_hdr_len() {
-    if (this->buf == NULL)
+    if (this->hdr == NULL)
         return 0;
 
-    ipv4_hdr_t ih = (ipv4_hdr_t) this->buf;
+    ipv4_hdr_t ih = (ipv4_hdr_t) this->hdr;
     // return (ih->version & 0x0f) * 32 / 8;
     return (ih->version & 0x0f) << 2;
 }
 
 uint8_t
 ipv4::get_protocol() {
-    if (this->buf == NULL)
+    if (this->hdr == NULL)
         return 0;
 
-    ipv4_hdr_t ih = (ipv4_hdr_t) this->buf;
+    ipv4_hdr_t ih = (ipv4_hdr_t) this->hdr;
     return ih->protocol;
 }
 
@@ -43,7 +43,7 @@ ipv4::receive() {
         stats.inc_udp_count();
 
         class udp udp;
-        udp.set_buf(this->buf + this->get_hdr_len());
+        udp.set_buf(this->hdr + this->get_hdr_len());
         if (dump_enabled)
             udp.dump();
         udp.receive();

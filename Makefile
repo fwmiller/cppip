@@ -49,7 +49,7 @@ EXECUTABLE	:= cppip
 #
 # Rules
 #
-LIBS		:= -lpcap
+LIBS		:= -lpcap -lpthread
 all: $(OBJS)
 	$(LD) -o $(EXECUTABLE) $(OBJS) $(LIBS)
 

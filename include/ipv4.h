@@ -21,14 +21,14 @@ typedef struct ipv4_hdr *ipv4_hdr_t;
 
 class ipv4 {
 private:
-    buf_t buf;
+    buf_t hdr;
     uint8_t get_hdr_len();
     uint8_t get_protocol();
 
 public:
     ipv4();
-    buf_t get_buf();
-    void set_buf(buf_t buf);
+    buf_t get_hdr();
+    void set_hdr(buf_t hdr);
     void receive();
     void dump();
 };

@@ -3,10 +3,10 @@
 
 void
 arp::dump() {
-    if (this->buf == NULL)
+    if (this->hdr == NULL)
         return;
 
-    arp_hdr_t ah = (arp_hdr_t) this->buf;
+    arp_hdr_t ah = (arp_hdr_t) this->hdr;
 
     switch (reverse_byte_order_short(ah->opcode)) {
     case ARP_OP_REQ:
