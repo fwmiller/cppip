@@ -6,6 +6,7 @@ INC		:= include
 SRC		:= src
 BIN		:= build
 
+##############################################################################
 #
 # Tools
 #
@@ -13,12 +14,9 @@ MKDIR		:= mkdir -p
 CC		:= g++
 LD		:= g++
 CP		:= cp
-RM		:= rm -fr
+RM		:= rm -f
+RMR		:= rm -fr
 
-##############################################################################
-#
-# Tool options
-#
 CFLAGS		:= -c -Wall -Og
 #CFLAGS		+= -g
 CFLAGS		+= -D_DEBUG
@@ -55,34 +53,26 @@ LIBS		:= -lpcap
 all: $(OBJS)
 	$(LD) -o $(EXECUTABLE) $(OBJS) $(LIBS)
 
-#
-# Execute using QEMU emulator
-#
-run: all
-	qemu-system-x86_64 -m size=4 -nographic -no-reboot -drive format=raw,file=$(BIN)/iso.img
-
 clean:
-	rm -f $(EXECUTABLE)
-	$(RM) $(BIN)
+	$(RM) $(EXECUTABLE)
+	$(RMR) $(BIN)
 
-#
 # Indent pass of the include and src directories
-#
 indent: clean
 	cd $(INC);clang-format -i *.h
 	cd $(SRC);clang-format -i *.cpp
 
+# Line counts
 wc: clean
 	wc -l $(INC)/*.h $(SRC)/*.cpp
 
+# Debug
 debug:
 	@for f in $(CPP_SRCS); do echo $$f; done
 	@echo
 	@for f in $(OBJS); do echo $$f; done
 
-#
 # C++ source file compilation
-#
 $(BIN)/%.o: $(SRC)/%.cpp
 	@$(MKDIR) $(BIN)
 	$(CC) $(CFLAGS) -I$(INC) -o $@ $<
