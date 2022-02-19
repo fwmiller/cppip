@@ -1,9 +1,6 @@
+#include "arp.h"
 #include <stdlib.h>
 #include <string.h>
-#include "arptab.h"
-#include "cppip.h"
-
-extern class arptab_entry *my_addr;
 
 arp::arp() {
     this->hdr = NULL;

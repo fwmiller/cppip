@@ -26,6 +26,7 @@ private:
 
 public:
     arptab();
+    void dump();
     int add_entry(uint32_t pa, uint8_t *ha);
     arptab_entry_t find_ha(uint8_t *ha);
     arptab_entry_t find_pa(uint32_t pa);

@@ -21,6 +21,8 @@ CFLAGS		:= -c -Wall -Og
 #CFLAGS		+= -g
 CFLAGS		+= -D_DEBUG
 
+LIBS		:= -lpcap -lpthread
+
 INDENT_RULES := -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l80 -lp -npcs -nprs -psl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1
 
 MAX_DEPTH	:= 1
@@ -49,9 +51,13 @@ EXECUTABLE	:= cppip
 #
 # Rules
 #
-LIBS		:= -lpcap -lpthread
 all: $(OBJS)
 	$(LD) -o $(EXECUTABLE) $(OBJS) $(LIBS)
+
+# C++ source file compilation
+$(BIN)/%.o: $(SRC)/%.cpp
+	@$(MKDIR) $(BIN)
+	$(CC) $(CFLAGS) -I$(INC) -o $@ $<
 
 clean:
 	$(RM) $(EXECUTABLE)
@@ -71,8 +77,3 @@ debug:
 	@for f in $(CPP_SRCS); do echo $$f; done
 	@echo
 	@for f in $(OBJS); do echo $$f; done
-
-# C++ source file compilation
-$(BIN)/%.o: $(SRC)/%.cpp
-	@$(MKDIR) $(BIN)
-	$(CC) $(CFLAGS) -I$(INC) -o $@ $<

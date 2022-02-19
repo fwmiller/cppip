@@ -83,14 +83,17 @@ cli(void *pthread_arg) {
     ap.send_probe();
 #endif
     for (;;) {
-        readline("> ", cmdline, CMDLINE_LEN);
+        readline("cppip> ", cmdline, CMDLINE_LEN);
         if (strlen(cmdline) == 0)
             continue;
 
         pos = 0;
         nextarg(cmdline, &pos, sep, arg);
 
-        if (strcmp(arg, "dump") == 0) {
+        if (strcmp(arg, "quit") == 0 || strcmp(arg, "exit") == 0)
+            exit(0);
+
+        else if (strcmp(arg, "dump") == 0) {
             memset(arg, 0, CMDLINE_LEN);
             nextarg(cmdline, &pos, sep, arg);
             if (strcmp(arg, "on") == 0)
@@ -110,6 +113,12 @@ cli(void *pthread_arg) {
             printf("tcp      %u\r\n", stats.get_tcp_count());
 
         } else if (strcmp(arg, "arp") == 0) {
+        } else if (strcmp(arg, "help") == 0) {
+            printf("Commands:\r\n");
+            printf("dump (on|off)\r\n");
+            printf("stats\r\n");
+            printf("arp\r\n");
+            printf("quit | exit\r\n");
         }
     }
 }
