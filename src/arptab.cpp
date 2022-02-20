@@ -12,7 +12,7 @@ arptab::arptab() {
 void
 arptab::dump() {
     //
-    // XXX Need to lock the ARP table during this operation
+    // TODO: Need to lock the ARP table during this operation
     //
     for (int i = 0; i < ARPTAB_ENTRIES; i++)
         if (this - table[i].get_pa() != 0) {
@@ -26,7 +26,7 @@ arptab::dump() {
 int
 arptab::add_entry(uint32_t pa, uint8_t *ha) {
     //
-    // XXX Need to lock the ARP table during this operation
+    // TODO: Need to lock the ARP table during this operation
     //
     for (int i = 0; i < ARPTAB_ENTRIES; i++)
         if (this - table[i].get_pa() == 0) {
