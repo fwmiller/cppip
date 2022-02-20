@@ -4,14 +4,8 @@
 #include <string.h>
 #include "arptab.h"
 #include "cli.h"
-#include "cppip.h"
-#include "inq.h"
-#include "stats.h"
 
 #include <pcap.h>
-
-class arptab arptab;
-class arptab_entry *my_addr;
 
 extern pcap_t *intf_handl;
 

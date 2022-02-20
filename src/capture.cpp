@@ -1,9 +1,12 @@
-#include <pcap.h>
+#include <net/if.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/ioctl.h>
 #include "cppip.h"
 #include "stats.h"
+
+#include <pcap.h>
 
 static const int INTF_NAME_MAX_LEN = 4096;
 static char intf_name[INTF_NAME_MAX_LEN];
@@ -67,6 +70,14 @@ initialize_pcap() {
 
     memset(intf_name, 0, INTF_NAME_MAX_LEN);
     strcpy(intf_name, intf->name);
+
+    struct ifreq ifr;
+    memset(&ifr, 0, sizeof(ifr));
+    strcpy(ifr.ifr_name, intf_name);
+
+    ioctl(pcap_fileno(intf_handl), SIOCGIFHWADDR, &ifr);
+    dump_ethaddr((uint8_t *) ifr.ifr_hwaddr.sa_data);
+    printf("\r\n");
 
     pcap_freealldevs(alldevs);
 }

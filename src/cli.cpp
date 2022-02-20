@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "cppip.h"
+#include "arptab.h"
 #include "stats.h"
 
 static int
@@ -112,8 +112,10 @@ cli(void *pthread_arg) {
             printf("udp      %u\r\n", stats.get_udp_count());
             printf("tcp      %u\r\n", stats.get_tcp_count());
 
-        } else if (strcmp(arg, "arp") == 0) {
-        } else if (strcmp(arg, "help") == 0) {
+        } else if (strcmp(arg, "arp") == 0)
+            arptab.dump();
+
+        else if (strcmp(arg, "help") == 0) {
             printf("Commands:\r\n");
             printf("dump (on|off)\r\n");
             printf("stats\r\n");

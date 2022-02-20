@@ -1,7 +1,8 @@
 #ifndef __ARPTAB_H
 #define __ARPTAB_H
 
-#include "arp.h"
+#include <stdint.h>
+#include "cppip.h"
 
 static const int ARPTAB_ENTRIES = 16;
 
@@ -31,5 +32,8 @@ public:
     arptab_entry_t find_ha(uint8_t *ha);
     arptab_entry_t find_pa(uint32_t pa);
 };
+
+extern class arptab arptab;
+extern class arptab_entry *my_addr;
 
 #endif

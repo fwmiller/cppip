@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
-extern class arptab_entry *my_addr;
+class arptab arptab;
+class arptab_entry *my_addr;
 
 arptab::arptab() {
     memset(this->table, 0, sizeof(class arptab));
@@ -14,13 +15,12 @@ arptab::dump() {
     //
     // TODO: Need to lock the ARP table during this operation
     //
-    for (int i = 0; i < ARPTAB_ENTRIES; i++)
-        if (this - table[i].get_pa() != 0) {
-            dump_ethaddr(this->table[i].get_ha());
-            printf(" ");
-            dump_ipaddr(this->table[i].get_pa());
-            printf("\r\n");
-        }
+    for (int i = 0; i < ARPTAB_ENTRIES; i++) {
+        dump_ethaddr(this->table[i].get_ha());
+        printf(" ");
+        dump_ipaddr(this->table[i].get_pa());
+        printf("\r\n");
+    }
 }
 
 int
@@ -29,7 +29,7 @@ arptab::add_entry(uint32_t pa, uint8_t *ha) {
     // TODO: Need to lock the ARP table during this operation
     //
     for (int i = 0; i < ARPTAB_ENTRIES; i++)
-        if (this - table[i].get_pa() == 0) {
+        if (this->table[i].get_pa() == 0) {
             arptab_entry_t ae = &(this->table[i]);
             ae->set_pa(pa);
             ae->set_ha(ha);
