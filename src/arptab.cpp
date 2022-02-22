@@ -18,7 +18,7 @@ arptab::dump() {
     for (int i = 0; i < ARPTAB_ENTRIES; i++) {
         dump_ethaddr(this->table[i].get_ha());
         printf(" ");
-        dump_ipaddr(this->table[i].get_pa());
+        dump_ipaddr(reverse_byte_order_long(this->table[i].get_pa()));
         printf("\r\n");
     }
 }

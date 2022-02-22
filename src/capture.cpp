@@ -1,8 +1,10 @@
+#include <arpa/inet.h>
 #include <net/if.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/ioctl.h>
+#include "arptab.h"
 #include "cppip.h"
 #include "stats.h"
 
@@ -65,19 +67,37 @@ initialize_pcap() {
         pcap_freealldevs(alldevs);
         return;
     }
-    printf("\nListening on %s\n",
+    printf("\nListening on %s ",
            (intf->name == NULL ? intf->description : intf->name));
 
     memset(intf_name, 0, INTF_NAME_MAX_LEN);
     strcpy(intf_name, intf->name);
 
-    struct ifreq ifr;
-    memset(&ifr, 0, sizeof(ifr));
-    strcpy(ifr.ifr_name, intf_name);
+    /* Local IP address */
+    struct ifreq ifrpa;
+    memset(&ifrpa, 0, sizeof(ifrpa));
+    strcpy(ifrpa.ifr_name, intf_name);
+    ioctl(pcap_fileno(intf_handl), SIOCGIFADDR, &ifrpa);
 
-    ioctl(pcap_fileno(intf_handl), SIOCGIFHWADDR, &ifr);
-    dump_ethaddr((uint8_t *) ifr.ifr_hwaddr.sa_data);
+    struct sockaddr_in *ipaddr = (struct sockaddr_in *) &ifrpa.ifr_addr;
+    dump_ipaddr(reverse_byte_order_long(ipaddr->sin_addr.s_addr));
+    printf(" ");
+
+    /* Local Ethernet MAC address */
+    struct ifreq ifrhw;
+    memset(&ifrhw, 0, sizeof(ifrhw));
+    strcpy(ifrhw.ifr_name, intf_name);
+    ioctl(pcap_fileno(intf_handl), SIOCGIFHWADDR, &ifrhw);
+
+    dump_ethaddr((uint8_t *) ifrhw.ifr_hwaddr.sa_data);
     printf("\r\n");
+
+    /*
+     * Add local interface IP address and Ethernet MAC address to the
+     * ARP cache
+     */
+    arptab.add_entry(ipaddr->sin_addr.s_addr,
+                     (uint8_t *) ifrhw.ifr_hwaddr.sa_data);
 
     pcap_freealldevs(alldevs);
 }

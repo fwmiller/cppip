@@ -4,7 +4,7 @@
 
 static const int LEN = 16;
 
-bool dump_enabled = true;
+bool dump_enabled = false;
 
 void
 bufdump(uint8_t *buf, unsigned len) {
