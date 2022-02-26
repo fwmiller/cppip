@@ -27,6 +27,8 @@ void dump_ipproto(uint8_t proto);
 void dump_ipaddr(uint32_t ipaddr);
 void dump_ipv6addr(uint8_t *ipv6addr);
 
+void dump_ipaddr_str(uint32_t ipaddr, char *s);
+
 uint16_t reverse_byte_order_short(uint16_t x);
 uint32_t reverse_byte_order_long(uint32_t x);
 

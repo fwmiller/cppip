@@ -1,6 +1,7 @@
 #include "cppip.h"
 #include <ctype.h>
 #include <stdio.h>
+#include <string.h>
 
 static const int LEN = 16;
 
@@ -98,6 +99,20 @@ dump_ipaddr(uint32_t ipaddr) {
     printf("%u.", x);
     x = ipaddr & 0xff;
     printf("%u", x);
+}
+
+void
+dump_ipaddr_str(uint32_t ipaddr, char *s) {
+    uint8_t x;
+
+    x = ipaddr >> 24;
+    sprintf(s, "%u.", x);
+    x = (ipaddr >> 16) & 0xff;
+    sprintf(s + strlen(s), "%u.", x);
+    x = (ipaddr >> 8) & 0xff;
+    sprintf(s + strlen(s), "%u.", x);
+    x = ipaddr & 0xff;
+    sprintf(s + strlen(s), "%u", x);
 }
 
 void

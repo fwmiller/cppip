@@ -16,10 +16,23 @@ arptab::dump() {
     // TODO: Need to lock the ARP table during this operation
     //
     for (int i = 0; i < ARPTAB_ENTRIES; i++) {
-        dump_ethaddr(this->table[i].get_ha());
-        printf(" ");
-        dump_ipaddr(reverse_byte_order_long(this->table[i].get_pa()));
-        printf("\r\n");
+	arptab_entry_t ae = (arptab_entry_t) &(this->table[i]);
+	if (ae->get_pa() != 0) {
+	    char s[16];
+	    int i, len;
+
+	    memset(s, 0, 16);
+
+            dump_ipaddr_str(reverse_byte_order_long(ae->get_pa()), s);
+	    printf("%s", s);
+	    len = 16 - strlen(s);
+	    for (i = 0; i < len; i++)
+		printf(" ");
+
+	    printf(" ");
+            dump_ethaddr(ae->get_ha());
+            printf("\r\n");
+	}
     }
 }
 

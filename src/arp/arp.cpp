@@ -17,21 +17,6 @@ arp::set_hdr(buf_t hdr) {
 }
 
 void
-arp::receive() {
-    if (this->hdr == NULL)
-        return;
-
-    arp_hdr_t ah = (arp_hdr_t) this->hdr;
-
-    switch (reverse_byte_order_short(ah->opcode)) {
-    case ARP_OP_REQ:
-        break;
-    case ARP_OP_REP:
-        break;
-    }
-}
-
-void
 arp::generate(uint8_t *hdr, uint16_t hw, uint16_t proto, uint8_t hw_addr_len,
               uint8_t proto_addr_len, uint16_t opcode, uint8_t *sha,
               uint32_t spa, uint8_t *tha, uint32_t tpa) {
