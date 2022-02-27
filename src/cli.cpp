@@ -1,29 +1,14 @@
 #include "cli.h"
 #include <ctype.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "arptab.h"
 #include "stats.h"
 
-static int
-readline(const char *prompt, char *line, int maxlen) {
-    int c, pos;
-
-    if (prompt == NULL || line == NULL)
-        return (-1);
-
-    memset(line, 0, maxlen);
-
-    printf("%s", prompt);
-    for (pos = 0; pos < maxlen - 1; pos++) {
-        c = getchar();
-        if (c == '\n')
-            break;
-        line[pos] = c;
-    }
-    return 0;
-}
+char *readline(const char *prompt);
 
 static int
 issep(char *sep, char ch) {
@@ -66,25 +51,21 @@ static const int CMDLINE_LEN = 128;
 
 void *
 cli(void *pthread_arg) {
-    char cmdline[CMDLINE_LEN];
+    char *cmdline = NULL;
     char arg[CMDLINE_LEN], sep[CMDLINE_LEN];
     int pos;
 
-    memset(cmdline, 0, CMDLINE_LEN);
     memset(arg, 0, CMDLINE_LEN);
     memset(sep, 0, CMDLINE_LEN);
     strcpy(sep, " ");
-#if 0
-    // Generate and send the initial ARP probe packet.  Assumes
-    // my_addr->ha is set
-    uint8_t *pktbuf = (uint8_t *) malloc(ETH_MTU_SIZE);
-    class arp ap;
-    ap.set_hdr(pktbuf);
-    ap.send_probe();
-#endif
+
     for (;;) {
-        readline("cppip> ", cmdline, CMDLINE_LEN);
-        if (strlen(cmdline) == 0)
+        if (cmdline != NULL) {
+            free(cmdline);
+            cmdline = NULL;
+        }
+        cmdline = readline("cppip> ");
+        if (cmdline == NULL || strlen(cmdline) == 0)
             continue;
 
         pos = 0;
@@ -101,6 +82,8 @@ cli(void *pthread_arg) {
             else if (strcmp(arg, "off") == 0)
                 dump_enabled = false;
 
+            add_history(cmdline);
+
         } else if (strcmp(arg, "stats") == 0) {
             printf("frames   %u\r\n", stats.get_frame_count());
             printf("ethernet %u\r\n", stats.get_eth_count());
@@ -112,15 +95,21 @@ cli(void *pthread_arg) {
             printf("udp      %u\r\n", stats.get_udp_count());
             printf("tcp      %u\r\n", stats.get_tcp_count());
 
-        } else if (strcmp(arg, "arp") == 0)
+            add_history(cmdline);
+
+        } else if (strcmp(arg, "arp") == 0) {
             arptab.dump();
 
-        else if (strcmp(arg, "help") == 0) {
+            add_history(cmdline);
+
+        } else if (strcmp(arg, "help") == 0) {
             printf("Commands:\r\n");
             printf("dump (on|off)\r\n");
             printf("stats\r\n");
             printf("arp\r\n");
             printf("quit | exit\r\n");
+
+            add_history(cmdline);
         }
     }
 }

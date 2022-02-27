@@ -18,10 +18,10 @@ RM		:= rm -f
 RMR		:= rm -fr
 
 CFLAGS		:= -c -Wall -Og
-#CFLAGS		+= -g
+CFLAGS		+= -g
 CFLAGS		+= -D_DEBUG
 
-LIBS		:= -lpcap -lpthread
+LIBS		:= -lpcap -lpthread -lreadline
 
 INDENT_RULES := -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l80 -lp -npcs -nprs -psl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1
 
