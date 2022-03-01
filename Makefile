@@ -18,7 +18,7 @@ RM		:= rm -f
 RMR		:= rm -fr
 
 CFLAGS		:= -c -Wall -Og
-CFLAGS		+= -g
+#CFLAGS		+= -g
 CFLAGS		+= -D_DEBUG
 
 LIBS		:= -lpcap -lpthread -lreadline
