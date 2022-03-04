@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "arptab.h"
+#include "byteq.h"
 #include "stats.h"
 
 char *readline(const char *prompt);
@@ -45,6 +46,28 @@ nextarg(char *ln, int *pos, char *sep, char *arg) {
         ch = ln[++(*pos)];
     };
     *s = '\0';
+}
+
+static void
+byteq_test() {
+    byteq q;
+    char ch = 'a';
+
+    for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < 10; i++) {
+            q.append((buf_t) &ch, 1);
+            q.dump();
+
+            if (ch == 'z')
+                ch = 'a';
+            else
+                ch++;
+        }
+        for (int i = 0; i < 11; i++) {
+            q.remove((buf_t) &ch, 1);
+            q.dump();
+        }
+    }
 }
 
 static const int CMDLINE_LEN = 128;
@@ -110,6 +133,9 @@ cli(void *pthread_arg) {
             printf("quit | exit\r\n");
 
             add_history(cmdline);
+
+        } else if (strcmp(arg, "byteq") == 0) {
+            byteq_test();
         }
     }
 }
