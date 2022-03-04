@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "arptab.h"
 #include "byteq.h"
 #include "stats.h"
@@ -52,11 +53,12 @@ static void
 byteq_test() {
     byteq q;
     char ch = 'a';
+    char recv;
 
-    for (int j = 0; j < 4; j++) {
+    for (;;) {
         for (int i = 0; i < 10; i++) {
             q.append((buf_t) &ch, 1);
-            q.dump();
+            q.dump_contents();
 
             if (ch == 'z')
                 ch = 'a';
@@ -64,8 +66,8 @@ byteq_test() {
                 ch++;
         }
         for (int i = 0; i < 11; i++) {
-            q.remove((buf_t) &ch, 1);
-            q.dump();
+            q.remove((buf_t) &recv, 1);
+            q.dump_contents();
         }
     }
 }

@@ -3,58 +3,86 @@
 #include <stdio.h>
 #include <string.h>
 
+//
+// A byteq is a First-In-First-Out (FIFO) queue with a fixed size
+// circular buffer.  Data is copied into during an append() operation
+// and copied out during a remove() operation
+//
+
 byteq::byteq() {
     memset(this->q, 0, MAX_BYTEQ_SIZE);
+    this->len = 0;
     this->h = 0;
     this->t = 0;
     this->full = false;
 }
 
 int
+byteq::get_length() {
+    return this->len;
+}
+
+//
+// Append len bytes contained in buf to the head of the queue
+//
+int
 byteq::append(buf_t buf, int len) {
     if (this->full)
         return 0;
 
+    // Input data contained in buf is copied byte by byte to the
+    // head of the FIFO buffer
+    //
     int h = this->h;
     for (int i = 0;;) {
         this->q[h] = buf[i++];
+        this->len++;
 
         h = (h + 1) % MAX_BYTEQ_SIZE;
         if (h == this->t) {
+            // Queue buffer has reached capacity
             this->h = h;
             this->full = true;
             return i;
         }
         if (i == len) {
+            // All len bytes of buf have been appended
             this->h = h;
             return i;
         }
     }
 }
 
+//
+// Remove len bytes from the tail of the queue and copy them to buf
+//
 int
 byteq::remove(buf_t buf, int len) {
     int t = this->t;
     for (int i = 0;;) {
         if (i == len) {
+            // All len bytes requested from the queue have been copied to buf
             this->t = t;
             return i;
         }
         if (t == this->h && !full) {
+            // Empty queue
             this->t = t;
             return i;
         }
+        // Copy and clear byte from tail of queue to proper location in buf
         buf[i++] = this->q[t];
         this->q[t] = 0;
+        this->len--;
 
-        if (full)
-            full = false;
+        full = false;
         t = (t + 1) % MAX_BYTEQ_SIZE;
     }
 }
 
 void
 byteq::dump() {
+    printf("contains %d bytes\r\n", this->len);
     printf(" ");
     for (int i = 0; i < MAX_BYTEQ_SIZE; i++)
         if (i == this->h)
@@ -72,4 +100,21 @@ byteq::dump() {
             printf(".");
 
     printf("]\r\n");
+}
+
+void
+byteq::dump_contents() {
+    printf(" [");
+    fflush(stdout);
+    for (int i = 0; i < MAX_BYTEQ_SIZE; i++)
+        if (isprint(this->q[i])) {
+            printf("%c", this->q[i]);
+            fflush(stdout);
+        } else {
+            printf(".");
+            fflush(stdout);
+        }
+
+    printf("]\r");
+    fflush(stdout);
 }
