@@ -9,12 +9,20 @@
 // and copied out during a remove() operation
 //
 
+#define CLEAR                           \
+    memset(this->q, 0, MAX_BYTEQ_SIZE); \
+    this->len = 0;                      \
+    this->h = 0;                        \
+    this->t = 0;                        \
+    this->full = false
+
 byteq::byteq() {
-    memset(this->q, 0, MAX_BYTEQ_SIZE);
-    this->len = 0;
-    this->h = 0;
-    this->t = 0;
-    this->full = false;
+    CLEAR;
+}
+
+void
+byteq::clear() {
+    CLEAR;
 }
 
 int

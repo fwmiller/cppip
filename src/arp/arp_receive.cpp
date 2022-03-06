@@ -12,12 +12,12 @@ arp::receive() {
     switch (reverse_byte_order_short(ah->opcode)) {
     case ARP_OP_REQ:
     case ARP_OP_REP:
-	/*
-	 * TODO: Check for an update to the Ethernet MAC address if
-	 * the spa is found
-	 */
-	if (arptab.find_pa(ah->spa) == NULL)
-		arptab.add_entry(ah->spa, ah->sha);
+        /*
+         * TODO: Check for an update to the Ethernet MAC address if
+         * the spa is found
+         */
+        if (arptab.find_pa(ah->spa) == NULL)
+            arptab.add_entry(ah->spa, ah->sha);
         break;
     }
 }

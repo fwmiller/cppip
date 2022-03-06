@@ -14,6 +14,4 @@ udp::dump() {
            reverse_byte_order_short(uh->src),
            reverse_byte_order_short(uh->len),
            reverse_byte_order_short(uh->cksum));
-    // bufdump(this->buf + sizeof(struct udp_hdr),
-    // reverse_byte_order_short(uh->len));
 }

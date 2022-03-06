@@ -15,6 +15,7 @@ private:
 
 public:
     byteq();
+    void clear();
     int get_length();
     virtual int append(buf_t buf, int len);
     virtual int remove(buf_t buf, int len);

@@ -1,22 +1,19 @@
-#include <stdlib.h>
 #include "udptab.h"
+#include <stdlib.h>
 
 class udptab udptab;
 
-udptab::udptab()
-{
-	return;
+udptab::udptab() {
+    return;
 }
 
 void
-udptab::dump()
-{
-	return;
+udptab::dump() {
+    return;
 }
 
 class inq *
-udptab::find_port(uint16_t port)
-{
+udptab::find_port(uint16_t port) {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
         if (this->table[i].get_port() == port)
             return &(this->table[i]);
@@ -24,7 +21,23 @@ udptab::find_port(uint16_t port)
 }
 
 class inq *
-udptab::alloc_port(uint16_t port)
-{
-	return NULL;
+udptab::alloc_port(uint16_t port) {
+    for (int i = 0; i < UDPTAB_ENTRIES; i++)
+        if (this->table[i].get_port() == 0) {
+            class inq *q = (class inq *) &(this->table[i]);
+            q->set_port(port);
+            return q;
+        }
+    return NULL;
+}
+
+void
+udptab::free_port(uint16_t port) {
+    for (int i = 0; i < UDPTAB_ENTRIES; i++)
+        if (this->table[i].get_port() == port) {
+            class inq *q = (class inq *) &(this->table[i]);
+            q->set_port(0);
+            q->clear();
+            return;
+        }
 }

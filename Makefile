@@ -51,16 +51,19 @@ EXECUTABLE	:= cppip
 # Rules
 #
 all: $(OBJS)
-	$(LD) -o $(EXECUTABLE) $(OBJS) $(LIBS)
+	@echo Linking $(EXECUTABLE)
+	@$(LD) -o $(EXECUTABLE) $(OBJS) $(LIBS)
 
 # C++ source file compilation
 $(BIN)/%.o: $(SRC)/%.cpp
 	@$(MKDIR) $(BIN)
-	$(CC) $(CFLAGS) -I$(INC) -o $@ $<
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) -I$(INC) -o $@ $<
 
 $(BIN)/%.o: $(SRC)/*/%.cpp
 	@$(MKDIR) $(BIN)
-	$(CC) $(CFLAGS) -I$(INC) -o $@ $<
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) -I$(INC) -o $@ $<
 
 clean:
 	@$(RM) $(EXECUTABLE)
@@ -68,8 +71,8 @@ clean:
 
 # Indent pass of the include and src directories
 indent: clean
-	cd $(INC);clang-format -i *.h
-	cd $(SRC);clang-format -i *.cpp
+	@cd $(INC);clang-format -i *.h
+	@clang-format -i $(CPP_SRCS)
 
 # Line counts
 wc: clean
