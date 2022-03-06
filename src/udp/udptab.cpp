@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "udptab.h"
 
+class udptab udptab;
+
 udptab::udptab()
 {
 	return;
@@ -15,7 +17,10 @@ udptab::dump()
 class inq *
 udptab::find_port(uint16_t port)
 {
-	return NULL;
+    for (int i = 0; i < UDPTAB_ENTRIES; i++)
+        if (this->table[i].get_port() == port)
+            return &(this->table[i]);
+    return NULL;
 }
 
 class inq *

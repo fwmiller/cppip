@@ -63,8 +63,8 @@ $(BIN)/%.o: $(SRC)/*/%.cpp
 	$(CC) $(CFLAGS) -I$(INC) -o $@ $<
 
 clean:
-	$(RM) $(EXECUTABLE)
-	$(RMR) $(BIN)
+	@$(RM) $(EXECUTABLE)
+	@$(RMR) $(BIN)
 
 # Indent pass of the include and src directories
 indent: clean
@@ -73,7 +73,7 @@ indent: clean
 
 # Line counts
 wc: clean
-	wc -l $(INC)/*.h $(SRC)/*.cpp
+	@wc -l $(INC)/*.h $(CPP_SRCS)
 
 # Debug
 debug:

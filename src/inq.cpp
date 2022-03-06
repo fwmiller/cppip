@@ -2,7 +2,6 @@
 
 inq::inq() {
     this->port = 0;
-    return;
 }
 
 uint16_t

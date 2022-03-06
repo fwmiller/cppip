@@ -5,6 +5,8 @@
 
 static const int UDPTAB_ENTRIES = 16;
 
+extern class udptab udptab;
+
 class udptab {
 private:
 	class inq table[UDPTAB_ENTRIES];
