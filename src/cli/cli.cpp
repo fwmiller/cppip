@@ -10,69 +10,13 @@
 #include "byteq.h"
 #include "stats.h"
 
+static const int CMDLINE_LEN = 128;
+
 char *readline(const char *prompt);
 
-static int
-issep(char *sep, char ch) {
-    int i, len;
+void byteq_test();
 
-    if (sep == NULL)
-        return 0;
-
-    for (len = strlen(sep), i = 0; i < len; i++)
-        if (ch == sep[i])
-            return 1;
-    return 0;
-}
-
-static void
-nextarg(char *ln, int *pos, char *sep, char *arg) {
-    char *s;
-    char ch;
-
-    if (ln == NULL || pos == NULL || arg == NULL)
-        return;
-
-    s = arg;
-
-    /* Skip whitespace */
-    ch = ln[*pos];
-    while (isspace(ch))
-        ch = ln[++(*pos)];
-
-    /* Fill in arg until a separator is reached */
-    strcpy(s, "");
-    while (ch != '\0' && !issep(sep, ch)) {
-        *(s++) = ch;
-        ch = ln[++(*pos)];
-    };
-    *s = '\0';
-}
-
-static void
-byteq_test() {
-    byteq q;
-    char ch = 'a';
-    char recv;
-
-    for (;;) {
-        for (int i = 0; i < 10; i++) {
-            q.append((buf_t) &ch, 1);
-            q.dump_contents();
-
-            if (ch == 'z')
-                ch = 'a';
-            else
-                ch++;
-        }
-        for (int i = 0; i < 11; i++) {
-            q.remove((buf_t) &recv, 1);
-            q.dump_contents();
-        }
-    }
-}
-
-static const int CMDLINE_LEN = 128;
+void nextarg(char *ln, int *pos, char *sep, char *arg);
 
 void *
 cli(void *pthread_arg) {
@@ -138,6 +82,8 @@ cli(void *pthread_arg) {
 
         } else if (strcmp(arg, "byteq") == 0) {
             byteq_test();
+
+            add_history(cmdline);
         }
     }
 }
