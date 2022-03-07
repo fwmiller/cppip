@@ -18,6 +18,29 @@ void byteq_test();
 
 void nextarg(char *ln, int *pos, char *sep, char *arg);
 
+static void
+cmd_dump(char *cmdline, int *pos, char *sep, char *arg) {
+    memset(arg, 0, CMDLINE_LEN);
+    nextarg(cmdline, pos, sep, arg);
+    if (strcmp(arg, "on") == 0)
+        dump_enabled = true;
+    else if (strcmp(arg, "off") == 0)
+        dump_enabled = false;
+}
+
+static void
+cmd_stats() {
+    printf("frames   %u\r\n", stats.get_frame_count());
+    printf("ethernet %u\r\n", stats.get_eth_count());
+    printf("802.2    %u\r\n", stats.get_ieee802_2_count());
+    printf("arp      %u\r\n", stats.get_arp_count());
+    printf("rarp     %u\r\n", stats.get_rarp_count());
+    printf("ipv4     %u\r\n", stats.get_ipv4_count());
+    printf("ipv6     %u\r\n", stats.get_ipv6_count());
+    printf("udp      %u\r\n", stats.get_udp_count());
+    printf("tcp      %u\r\n", stats.get_tcp_count());
+}
+
 void *
 cli(void *pthread_arg) {
     char *cmdline = NULL;
@@ -44,25 +67,12 @@ cli(void *pthread_arg) {
             exit(0);
 
         else if (strcmp(arg, "dump") == 0) {
-            memset(arg, 0, CMDLINE_LEN);
-            nextarg(cmdline, &pos, sep, arg);
-            if (strcmp(arg, "on") == 0)
-                dump_enabled = true;
-            else if (strcmp(arg, "off") == 0)
-                dump_enabled = false;
+            cmd_dump(cmdline, &pos, sep, arg);
 
             add_history(cmdline);
 
         } else if (strcmp(arg, "stats") == 0) {
-            printf("frames   %u\r\n", stats.get_frame_count());
-            printf("ethernet %u\r\n", stats.get_eth_count());
-            printf("802.2    %u\r\n", stats.get_ieee802_2_count());
-            printf("arp      %u\r\n", stats.get_arp_count());
-            printf("rarp     %u\r\n", stats.get_rarp_count());
-            printf("ipv4     %u\r\n", stats.get_ipv4_count());
-            printf("ipv6     %u\r\n", stats.get_ipv6_count());
-            printf("udp      %u\r\n", stats.get_udp_count());
-            printf("tcp      %u\r\n", stats.get_tcp_count());
+            cmd_stats();
 
             add_history(cmdline);
 
