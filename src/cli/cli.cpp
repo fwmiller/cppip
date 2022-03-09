@@ -9,6 +9,7 @@
 #include "arptab.h"
 #include "byteq.h"
 #include "stats.h"
+#include "udptab.h"
 
 static const int CMDLINE_LEN = 128;
 
@@ -94,6 +95,9 @@ cli(void *pthread_arg) {
             byteq_test();
 
             add_history(cmdline);
+
+        } else if (strcmp(arg, "udp") == 0) {
+	    udptab.dump();
         }
     }
 }

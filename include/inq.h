@@ -9,6 +9,7 @@ private:
 
 public:
     inq();
+    void dump();
     uint16_t get_port();
     void set_port(uint16_t port);
 };
