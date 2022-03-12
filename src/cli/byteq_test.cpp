@@ -1,4 +1,5 @@
 #include "byteq.h"
+#include <stdio.h>
 
 void
 byteq_test() {
@@ -10,6 +11,7 @@ byteq_test() {
         for (int i = 0; i < 10; i++) {
             q.append((buf_t) &ch, 1);
             q.dump_contents();
+            printf("\r");
 
             if (ch == 'z')
                 ch = 'a';
@@ -19,6 +21,7 @@ byteq_test() {
         for (int i = 0; i < 11; i++) {
             q.remove((buf_t) &recv, 1);
             q.dump_contents();
+            printf("\r");
         }
     }
 }

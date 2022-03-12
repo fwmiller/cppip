@@ -112,7 +112,7 @@ byteq::dump() {
 
 void
 byteq::dump_contents() {
-    printf(" [");
+    printf("[");
     fflush(stdout);
     for (int i = 0; i < MAX_BYTEQ_SIZE; i++)
         if (isprint(this->q[i])) {
@@ -123,6 +123,6 @@ byteq::dump_contents() {
             fflush(stdout);
         }
 
-    printf("]\r");
+    printf("]");
     fflush(stdout);
 }

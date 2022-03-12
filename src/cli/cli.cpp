@@ -97,7 +97,9 @@ cli(void *pthread_arg) {
             add_history(cmdline);
 
         } else if (strcmp(arg, "udp") == 0) {
-	    udptab.dump();
+            udptab.dump();
+
+            add_history(cmdline);
         }
     }
 }

@@ -1,14 +1,13 @@
-#include <stdio.h>
 #include "inq.h"
+#include <stdio.h>
 
 inq::inq() {
     this->port = 0;
 }
 
 void
-inq::dump()
-{
-	printf("%5u  %d", this->port, this->get_length());
+inq::dump() {
+    printf("%5u  %d", this->port, this->get_length());
 }
 
 uint16_t

@@ -10,11 +10,11 @@ udptab::udptab() {
 
 void
 udptab::dump() {
-	for (int i = 0; i < UDPTAB_ENTRIES; i++)
-		if (this->table[i].get_port() != 0) {
-			this->table[i].dump();
-			printf("\r\n");
-		}
+    for (int i = 0; i < UDPTAB_ENTRIES; i++)
+        if (this->table[i].get_port() != 0) {
+            this->table[i].dump();
+            printf("\r\n");
+        }
 }
 
 class inq *

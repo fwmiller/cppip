@@ -3,8 +3,8 @@
 
 #include "cppip.h"
 
-// static const int MAX_BYTEQ_SIZE = 2048; // 2 KB
-static const int MAX_BYTEQ_SIZE = 16;  // 16 bytes
+static const int MAX_BYTEQ_SIZE = 2048;  // 2 KB
+// static const int MAX_BYTEQ_SIZE = 64;  // 64 bytes
 
 class byteq {
 private:

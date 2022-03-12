@@ -23,12 +23,20 @@ udp::receive() {
         return;
 
     udp_hdr_t uh = (udp_hdr_t) this->buf;
-    class inq *q = udptab.find_port(reverse_byte_order_short(uh->dst));
+    uint16_t port = reverse_byte_order_short(uh->dst);
+
+    class inq *q = udptab.find_port(port);
     if (q == NULL) {
         // No input queue open drop packet data
-        return;
+
+        // TODO: for fun
+        q = udptab.alloc_port(port);
+        if (q == NULL)
+            return;
     }
     int len = reverse_byte_order_short(uh->len);
     int n = q->append(this->buf + sizeof(struct udp_hdr), len);
-    printf("rcvd %d bytes queued %d bytes\r\n", len, n);
+    printf("udp port %u rcvd %d bytes queued %d bytes\r\n", port, len, n);
+    q->dump_contents();
+    printf("\r\n");
 }
