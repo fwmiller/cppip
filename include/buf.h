@@ -3,18 +3,19 @@
 
 #include <stdint.h>
 
-static const int BUFSIZE = 2048;      // bytes
-static const int BUFPOOL_SIZE = 512;  // buffers
-
 typedef uint8_t *buf_t;
 
 class bufpool {
 private:
-    buf_t pool[BUFPOOL_SIZE * BUFSIZE];
+    buf_t pool;
+    int nbufs;
+    int bufsize;
     int idx;
 
 public:
-    bufpool();
+    bufpool(int nbufs, int bufsize);
+    int get_nbufs();
+    int get_bufsize();
     buf_t alloc();
 };
 
