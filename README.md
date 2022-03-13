@@ -18,14 +18,15 @@ a byte:
 
 `typedef uint8_t *buf_t`
 
-### Buffer Pool
+#### Buffer Pool
 
 From this a buffer pool is created.  A buffer pool is a contiguous segment
-of memory that has been divided into a contiguous set of buffers.  The
-buffer pool manages allocations from this pool only.  No freeing of buffers
-is supported.
+of memory that has been divided into a contiguous set of fixed size buffers.
+It is assumed that buffer pools will be allocated only at initialization
+and so the buffer pool allows allocations from the pool only.  No freeing
+of buffers is supported.
 
-### Buffer Queue
+#### Buffer Queue
 
 There is also a buffer queue that manages a set of buffer pointers in a
 First-In-First-Out queue.
