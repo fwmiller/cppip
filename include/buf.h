@@ -19,4 +19,17 @@ public:
     buf_t alloc();
 };
 
+class bufq {
+private:
+    buf_t q;
+    int len;
+
+public:
+    bufq(int entries);
+    int append(buf_t buf);
+    buf_t remove();
+    void dump();
+    void dump_contents();
+};
+
 #endif

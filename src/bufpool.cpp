@@ -1,6 +1,6 @@
-#include "buf.h"
 #include <stdlib.h>
 #include <string.h>
+#include "buf.h"
 
 bufpool::bufpool(int nbufs, int bufsize) {
     this->pool = (buf_t) malloc(nbufs * bufsize);
@@ -10,14 +10,12 @@ bufpool::bufpool(int nbufs, int bufsize) {
 }
 
 int
-bufpool::get_nbufs()
-{
+bufpool::get_nbufs() {
     return this->nbufs;
 }
 
 int
-bufpool::get_bufsize()
-{
+bufpool::get_bufsize() {
     return this->bufsize;
 }
 
