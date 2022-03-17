@@ -21,11 +21,14 @@ public:
 
 class bufq {
 private:
-    buf_t q;
+    buf_t *q;
     int len;
+    int h, t;
+    bool full;
 
 public:
     bufq(int entries);
+    int get_length();
     int append(buf_t buf);
     buf_t remove();
     void dump();

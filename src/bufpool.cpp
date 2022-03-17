@@ -4,6 +4,7 @@
 
 bufpool::bufpool(int nbufs, int bufsize) {
     this->pool = (buf_t) malloc(nbufs * bufsize);
+    memset(this->pool, 0, nbufs * bufsize);
     this->nbufs = nbufs;
     this->bufsize = bufsize;
     this->idx = 0;
