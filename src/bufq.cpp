@@ -1,3 +1,5 @@
+#include <ctype.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "buf.h"
@@ -45,7 +47,7 @@ bufq::append(buf_t buf, int len) {
 //
 buf_t
 bufq::remove(int *len) {
-    if (!full && this->h == this->t) {
+    if (!(this->full) && this->h == this->t) {
         *len = 0;
         return NULL;
     }
@@ -60,10 +62,42 @@ bufq::remove(int *len) {
 
 void
 bufq::dump() {
-    return;
+    if (!(this->full) && this->h == this->t)
+        return;
+
+    for (int i = this->h;;) {
+        printf("%p  %d\r\n", this->q[i], this->len[i]);
+
+        i = (i + 1) % this->entries;
+        if (i == this->t)
+            break;
+    }
 }
 
 void
 bufq::dump_contents() {
-    return;
+    if (!(this->full) && this->h == this->t)
+        return;
+
+    for (int i = this->h;;) {
+        printf("[");
+        fflush(stdout);
+
+        for (int j = 0; j < this->len[i]; j++) {
+            char ch = *(this->q[i] + j);
+            if (isprint(ch)) {
+                printf("%c", ch);
+                fflush(stdout);
+            } else {
+                printf(".");
+                fflush(stdout);
+            }
+        }
+        printf("]\r\n");
+        fflush(stdout);
+
+        i = (i + 1) % this->entries;
+        if (i == this->t)
+            break;
+    }
 }

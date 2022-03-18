@@ -17,7 +17,7 @@ CP		:= cp
 RM		:= rm -f
 RMR		:= rm -fr
 
-CFLAGS		:= -c -Wall -Og
+CFLAGS		:= -c -Wall -Og -fpermissive
 #CFLAGS		+= -g
 CFLAGS		+= -D_DEBUG
 
