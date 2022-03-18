@@ -29,9 +29,8 @@ private:
 
 public:
     bufq(int entries);
-    int get_length();
-    int append(buf_t buf);
-    buf_t remove();
+    int append(buf_t buf, int len);
+    buf_t remove(int *len);
     void dump();
     void dump_contents();
 };

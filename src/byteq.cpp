@@ -31,7 +31,7 @@ byteq::get_length() {
 }
 
 //
-// Append len bytes contained in buf to the head of the queue
+// Append len bytes contained in buf to the tail of the queue
 //
 int
 byteq::append(buf_t buf, int len) {
@@ -39,52 +39,52 @@ byteq::append(buf_t buf, int len) {
         return 0;
 
     // Input data contained in buf is copied byte by byte to the
-    // head of the FIFO buffer
+    // tail of the FIFO buffer
     //
-    int h = this->h;
+    int t = this->t;
     for (int i = 0;;) {
-        this->q[h] = buf[i++];
+        this->q[t] = buf[i++];
         this->len++;
 
-        h = (h + 1) % MAX_BYTEQ_SIZE;
-        if (h == this->t) {
+        t = (t + 1) % MAX_BYTEQ_SIZE;
+        if (t == this->h) {
             // Queue buffer has reached capacity
-            this->h = h;
+            this->t = t;
             this->full = true;
             return i;
         }
         if (i == len) {
             // All len bytes of buf have been appended
-            this->h = h;
+            this->t = t;
             return i;
         }
     }
 }
 
 //
-// Remove len bytes from the tail of the queue and copy them to buf
+// Remove len bytes from the head of the queue and copy them to buf
 //
 int
 byteq::remove(buf_t buf, int len) {
-    int t = this->t;
+    int h = this->h;
     for (int i = 0;;) {
         if (i == len) {
             // All len bytes requested from the queue have been copied to buf
-            this->t = t;
+            this->h = h;
             return i;
         }
-        if (t == this->h && !full) {
+        if (h == this->t && !full) {
             // Empty queue
-            this->t = t;
+            this->h = h;
             return i;
         }
         // Copy and clear byte from tail of queue to proper location in buf
-        buf[i++] = this->q[t];
-        this->q[t] = 0;
+        buf[i++] = this->q[h];
+        this->q[h] = 0;
         this->len--;
 
         full = false;
-        t = (t + 1) % MAX_BYTEQ_SIZE;
+        h = (h + 1) % MAX_BYTEQ_SIZE;
     }
 }
 
