@@ -22,7 +22,8 @@ public:
 class bufq {
 private:
     buf_t *q;
-    int len;
+    int *len;
+    int entries;
     int h, t;
     bool full;
 
