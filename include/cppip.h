@@ -13,6 +13,7 @@ extern bool dump_enabled;
 #include "arp.h"
 #include "eth.h"
 #include "ethertype.h"
+#include "icmp.h"
 #include "icmpv6.h"
 #include "ieee802_2.h"
 #include "ipproto.h"

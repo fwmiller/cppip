@@ -125,6 +125,102 @@ dump_ipv6addr(uint8_t *ipv6addr) {
     }
 }
 
+void
+dump_icmp_type(uint8_t icmptype) {
+    switch (icmptype) {
+    case ICMPTYPE_ECHO_REPLY:
+        printf("Echo reply");
+        break;
+    case ICMPTYPE_DEST_UNREACH:
+        printf("Destination unreachable");
+        break;
+    case ICMPTYPE_SOURCE_QUENCH:
+        printf("Source quench");
+        break;
+    case ICMPTYPE_REDIRECT:
+        printf("Redirect");
+        break;
+    case ICMPTYPE_ALT_HOST_ADDRESS:
+        printf("Alternate host address");
+        break;
+    case ICMPTYPE_ECHO:
+        printf("Echo request");
+        break;
+    case ICMPTYPE_ROUTER_ADVERTISEMENT:
+        printf("Router advertisement");
+        break;
+    case ICMPTYPE_ROUTER_SELECTION:
+        printf("Router selection");
+        break;
+    case ICMPTYPE_TIME_EXCEEDED:
+        printf("Time exceeded");
+        break;
+    case ICMPTYPE_PARAM_PROBLEM:
+        printf("Parameter problem");
+        break;
+    case ICMPTYPE_TIMESTAMP:
+        printf("Timestamp request");
+        break;
+    case ICMPTYPE_TIMESTAMP_REPLY:
+        printf("Timestamp reply");
+        break;
+    case ICMPTYPE_INFO_REQUEST:
+        printf("Information request");
+        break;
+    case ICMPTYPE_INFO_REPLY:
+        printf("Information reply");
+        break;
+    case ICMPTYPE_ADDR_MASK_REQUEST:
+        printf("Address mask request");
+        break;
+    case ICMPTYPE_ADDR_MASK_REPLY:
+        printf("Address mask reply");
+        break;
+    case ICMPTYPE_TRACEROUTE:
+        printf("Traceroute");
+        break;
+    case ICMPTYPE_DGRAM_CONV_ERROR:
+        printf("Datagram conversion error");
+        break;
+    case ICMPTYPE_MOBILE_HOST_REDIRECT:
+        printf("Mobile host redirect");
+        break;
+    case ICMPTYPE_IPV6_WHERE_ARE_YOU:
+        printf("IPv6 where are you");
+        break;
+    case ICMPTYPE_IPV6_I_AM_HERE:
+        printf("IPv6 I am here");
+        break;
+    case ICMPTYPE_MOBILE_REG_REQUEST:
+        printf("Mobile registration request");
+        break;
+    case ICMPTYPE_MOBILE_REG_REPLY:
+        printf("Mobile registration reply");
+        break;
+    case ICMPTYPE_DOMAIN_NAME_REQUEST:
+        printf("Domain name request");
+        break;
+    case ICMPTYPE_DOMAIN_NAME_REPLY:
+        printf("Domain name reply");
+        break;
+    case ICMPTYPE_SKIP:
+        printf("Skip");
+        break;
+    case ICMPTYPE_PHOTURIS:
+        printf("Photuris");
+        break;
+    case ICMPTYPE_EXT_ECHO_REQUEST:
+        printf("Extended echo request");
+        break;
+    case ICMPTYPE_EXT_ECHO_REPLY:
+        printf("Extended echo reply");
+        break;
+    default:
+        printf("UNKNOWN");
+        break;
+    }
+}
+
 uint16_t
 reverse_byte_order_short(uint16_t x) {
     return (((x & 0xff) << 8) | ((x & 0xff00) >> 8));
