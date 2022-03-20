@@ -10,6 +10,7 @@ private:
     unsigned rarp_count;
     unsigned ipv4_count;
     unsigned ipv6_count;
+    unsigned icmp_count;
     unsigned udp_count;
     unsigned tcp_count;
 
@@ -36,6 +37,9 @@ public:
     unsigned get_ipv6_count();
     void set_ipv6_count(unsigned ipv6_count);
     void inc_ipv6_count();
+    unsigned get_icmp_count();
+    void set_icmp_count(unsigned icmp_count);
+    void inc_icmp_count();
     unsigned get_udp_count();
     void set_udp_count(unsigned udp_count);
     void inc_udp_count();

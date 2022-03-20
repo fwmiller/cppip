@@ -112,6 +112,21 @@ cppip_stats::inc_ipv6_count() {
 }
 
 unsigned
+cppip_stats::get_icmp_count() {
+    return this->icmp_count;
+}
+
+void
+cppip_stats::set_icmp_count(unsigned icmp_count) {
+    this->icmp_count = icmp_count;
+}
+
+void
+cppip_stats::inc_icmp_count() {
+    this->icmp_count++;
+}
+
+unsigned
 cppip_stats::get_udp_count() {
     return this->udp_count;
 }

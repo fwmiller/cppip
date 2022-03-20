@@ -38,6 +38,7 @@ cmd_stats() {
     printf("rarp     %u\r\n", stats.get_rarp_count());
     printf("ipv4     %u\r\n", stats.get_ipv4_count());
     printf("ipv6     %u\r\n", stats.get_ipv6_count());
+    printf("icmp     %u\r\n", stats.get_icmp_count());
     printf("udp      %u\r\n", stats.get_udp_count());
     printf("tcp      %u\r\n", stats.get_tcp_count());
 }
@@ -87,6 +88,8 @@ cli(void *pthread_arg) {
             printf("dump (on|off)\r\n");
             printf("stats\r\n");
             printf("arp\r\n");
+            printf("byteq\r\n");
+            printf("udp\r\n");
             printf("quit | exit\r\n");
 
             add_history(cmdline);

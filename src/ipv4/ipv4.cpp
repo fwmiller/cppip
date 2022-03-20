@@ -39,6 +39,10 @@ ipv4::get_protocol() {
 void
 ipv4::receive() {
     switch (this->get_protocol()) {
+    case IP_PROTO_ICMP: {
+        stats.inc_icmp_count();
+
+    } break;
     case IP_PROTO_UDP: {
         stats.inc_udp_count();
 
@@ -47,7 +51,7 @@ ipv4::receive() {
         if (dump_enabled)
             udp.dump();
         udp.receive();
-    }
+    } break;
     case IP_PROTO_TCP: {
         stats.inc_tcp_count();
     } break;
