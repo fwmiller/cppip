@@ -11,15 +11,15 @@ BIN		:= build
 # Tools
 #
 MKDIR		:= mkdir -p
-CC		:= g++
+CPP		:= g++
 LD		:= g++
 CP		:= cp
 RM		:= rm -f
 RMR		:= rm -fr
 
-CFLAGS		:= -c -Wall -Og -fpermissive
-#CFLAGS		+= -g
-CFLAGS		+= -D_DEBUG
+CPPFLAGS	:= -c -Wall -Og -fpermissive
+#CPPFLAGS	+= -g
+CPPFLAGS	+= -D_DEBUG
 
 LIBS		:= -lpcap -lpthread -lreadline
 
@@ -50,20 +50,31 @@ EXECUTABLE	:= cppip
 #
 # Rules
 #
+
+NC		:= \033[0m
+BLACK		:= \033[0;30m
+RED		:= \033[0;31m
+GREEN		:= \033[0;32m
+YELLOW		:= \033[0;33m
+BLUE		:= \033[0;34m
+PURPLE		:= \033[0;35m
+CYAN		:= \033[0;36m
+WHITE		:= \033[0;37m
+
 all: $(OBJS)
-	@echo Linking $(EXECUTABLE)
+	@printf "Linking ${CYAN}$(EXECUTABLE)${NC}\r\n"
 	@$(LD) -o $(EXECUTABLE) $(OBJS) $(LIBS)
 
 # C++ source file compilation
 $(BIN)/%.o: $(SRC)/%.cpp
 	@$(MKDIR) $(BIN)
-	@echo Compiling $<
-	@$(CC) $(CFLAGS) -I$(INC) -o $@ $<
+	@printf "Compiling ${CYAN}$<${NC}\r\n"
+	@$(CPP) $(CPPFLAGS) -I$(INC) -o $@ $<
 
 $(BIN)/%.o: $(SRC)/*/%.cpp
 	@$(MKDIR) $(BIN)
-	@echo Compiling $<
-	@$(CC) $(CFLAGS) -I$(INC) -o $@ $<
+	@printf "Compiling ${CYAN}$<${NC}\r\n"
+	@$(CPP) $(CPPFLAGS) -I$(INC) -o $@ $<
 
 clean:
 	@$(RM) $(EXECUTABLE)
@@ -80,8 +91,8 @@ wc: clean
 
 # Debug
 debug:
-	@for f in $(CPP_SRCS); do echo $$f; done
+	@for f in $(CPP_SRCS); do printf "${CYAN}$$f${NC}\r\n"; done
 	@echo
-	@for f in $(CPP_FILES); do echo $$f; done
+	@for f in $(CPP_FILES); do printf "${CYAN}$$f${NC}\r\n"; done
 	@echo
-	@for f in $(OBJS); do echo $$f; done
+	@for f in $(OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
