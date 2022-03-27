@@ -42,6 +42,11 @@ ipv4::receive() {
     case IP_PROTO_ICMP: {
         stats.inc_icmp_count();
 
+        class icmp icmp;
+        icmp.set_buf(this->hdr + this->get_hdr_len());
+        if (dump_enabled)
+            icmp.dump();
+        icmp.receive();
     } break;
     case IP_PROTO_UDP: {
         stats.inc_udp_count();

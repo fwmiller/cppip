@@ -19,8 +19,3 @@ void
 icmp::receive() {
     return;
 }
-
-void
-icmp::dump() {
-    return;
-}

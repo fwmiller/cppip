@@ -27,6 +27,7 @@ void dump_ethaddr(uint8_t *ethaddr);
 void dump_ipproto(uint8_t proto);
 void dump_ipaddr(uint32_t ipaddr);
 void dump_ipv6addr(uint8_t *ipv6addr);
+void dump_icmp_type(uint8_t icmptype);
 
 void dump_ipaddr_str(uint32_t ipaddr, char *s);
 
