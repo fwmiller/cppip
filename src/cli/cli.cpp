@@ -58,7 +58,7 @@ cli(void *pthread_arg) {
             free(cmdline);
             cmdline = NULL;
         }
-        cmdline = readline("cppip> ");
+        cmdline = readline("\033[0;36mcppip\033[0m> ");
         if (cmdline == NULL || strlen(cmdline) == 0)
             continue;
 

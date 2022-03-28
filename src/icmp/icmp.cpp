@@ -7,12 +7,12 @@ icmp::icmp() {
 
 buf_t
 icmp::get_buf() {
-    return NULL;
+    return this->buf;
 }
 
 void
 icmp::set_buf(buf_t buf) {
-    return;
+    this->buf = buf;
 }
 
 void

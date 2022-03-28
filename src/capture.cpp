@@ -109,7 +109,7 @@ packet_handler(u_char *param, const struct pcap_pkthdr *header,
     if (dump_enabled) {
         printf("\r\nFrame %u length %u\r\n", stats.get_frame_count(),
                header->len);
-        // bufdump((uint8_t *)pkt_data, header->len);
+        // bufdump((uint8_t *) pkt_data, header->len);
     }
     stats.inc_frame_count();
 
