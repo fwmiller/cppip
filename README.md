@@ -27,9 +27,11 @@ figure illustrates the memory associated with the buffer pool.  The pool
 element tracks the location of a dynamically allocated segment of memory
 that is nbufs * bufsize in length.
 
-<div align="center">
 ![Buffer Pool](doc/bufpool.png)
-</div>
+
+<p align="center>
+<img src="doc/bufpool.png">
+</p>
 
 After the bufpool memory is allocated, all of the buffers contained in
 that memory are inserted into a stack data structure using a linked list
