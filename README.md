@@ -29,7 +29,7 @@ that is nbufs * bufsize in length.
 
 ![Buffer Pool](doc/bufpool.png)
 
-<p align="center>
+<p align="center">
 <img src="doc/bufpool.png">
 </p>
 
