@@ -21,12 +21,19 @@ a byte:
 #### Buffer Pool
 
 From this a buffer pool is created.  A buffer pool is a contiguous segment
-of memory that has been divided into a contiguous set of fixed size buffers.
-It is assumed that buffer pools will be allocated only at initialization
-and so the buffer pool allows allocations from the pool only.  No freeing
-of buffers is supported.
+of memory that has been divided into a contiguous set of fixed size buffers
+and those buffers are then all inserted into a stack.  The following
+figure illustrates the memory associated with the buffer pool.  The pool
+element tracks the location of a dynamically allocated segment of memory
+that is nbufs * bufsize in length.
 
 ![Buffer Pool](doc/bufpool.png)
+
+After the bufpool memory is allocated, all of the buffers contained in
+that memory are inserted into a stack data structure using a linked list
+of addresses that are each stored in the first few bytes of the buffer.
+The stack allow for O(1) insertion and removal operations which are
+acceptable for hard real-time applications.
 
 #### Buffer Queue
 
