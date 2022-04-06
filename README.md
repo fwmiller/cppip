@@ -13,7 +13,7 @@ Data structures are only allocated from the heap at initialization.
 
 ## Data Structures
 
-The most basic data structure is the buffer which is simply a pointer to
+The most basic data structure is the buffer that is simply a pointer to
 a byte:
 
 `typedef uint8_t *buf_t`
@@ -32,8 +32,8 @@ that is nbufs * bufsize in length.
 After the bufpool memory is allocated, all of the buffers contained in
 that memory are inserted into a stack data structure using a linked list
 of addresses that are each stored in the first few bytes of the buffer.
-The stack allow for O(1) insertion and removal operations which are
-acceptable for hard real-time applications.
+The use of a stack enables constant time insertion and removal operations
+that are acceptable for hard real-time applications.
 
 #### Buffer Queue
 
