@@ -26,6 +26,8 @@ It is assumed that buffer pools will be allocated only at initialization
 and so the buffer pool allows allocations from the pool only.  No freeing
 of buffers is supported.
 
+![Buffer Pool](doc/bufpool.png)
+
 #### Buffer Queue
 
 There is also a buffer queue that manages a set of buffer pointers in a

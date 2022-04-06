@@ -7,7 +7,11 @@ bufpool::bufpool(int nbufs, int bufsize) {
     memset(this->pool, 0, nbufs * bufsize);
     this->nbufs = nbufs;
     this->bufsize = bufsize;
-    this->idx = 0;
+    this->stack = NULL;
+
+    // Setup the stack
+    for (int i = 0; i < nbufs; i++)
+        this->push((buf_t)(this->pool + (i * bufsize)));
 }
 
 int
@@ -21,8 +25,22 @@ bufpool::get_bufsize() {
 }
 
 buf_t
-bufpool::alloc() {
-    if (this->idx == this->nbufs)
+bufpool::pop() {
+    buf_t buf;
+
+    if (this->stack == NULL)
         return NULL;
-    return (buf_t)(this->pool + ((this->idx++) * this->bufsize));
+
+    buf = this->stack;
+    this->stack = *((buf_t *) this->stack);
+    return buf;
+}
+
+void
+bufpool::push(buf_t buf) {
+    if (buf == NULL)
+        return;
+
+    *((buf_t *) buf) = this->stack;
+    *((buf_t *) this->stack) = buf;
 }

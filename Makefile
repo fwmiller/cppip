@@ -92,7 +92,7 @@ wc: clean
 # Debug
 debug:
 	@for f in $(CPP_SRCS); do printf "${CYAN}$$f${NC}\r\n"; done
-	@echo
+	@printf "\r\n"
 	@for f in $(CPP_FILES); do printf "${CYAN}$$f${NC}\r\n"; done
-	@echo
+	@printf "\r\n"
 	@for f in $(OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
