@@ -27,8 +27,6 @@ figure illustrates the memory associated with the buffer pool.  The pool
 element tracks the location of a dynamically allocated segment of memory
 that is nbufs * bufsize in length.
 
-![Buffer Pool](doc/bufpool.png)
-
 <p align="center">
 <img src="doc/bufpool.png">
 </p>
