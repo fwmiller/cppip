@@ -27,13 +27,11 @@ figure illustrates the memory associated with the buffer pool.  The pool
 element tracks the location of a dynamically allocated segment of memory
 that is nbufs * bufsize in length.
 
-<p align="center">
-<img src="doc/bufpool.png">
-</p>
+<p align="center"><img src="doc/bufs.png"></p>
 
 After the bufpool memory is allocated, all of the buffers contained in
 that memory are inserted into a stack data structure using a linked list
-of addresses that are each stored in the first few bytes of the buffer.
+of addresses that are stored in the first few bytes of each buffer.
 The use of a stack enables constant time insertion and removal operations
 that are acceptable for hard real-time applications.
 

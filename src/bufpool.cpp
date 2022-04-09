@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "buf.h"
@@ -26,12 +27,10 @@ bufpool::get_bufsize() {
 
 buf_t
 bufpool::pop() {
-    buf_t buf;
-
     if (this->stack == NULL)
         return NULL;
 
-    buf = this->stack;
+    buf_t buf = this->stack;
     this->stack = *((buf_t *) this->stack);
     return buf;
 }
@@ -43,4 +42,12 @@ bufpool::push(buf_t buf) {
 
     *((buf_t *) buf) = this->stack;
     *((buf_t *) this->stack) = buf;
+}
+
+void
+bufpool::dump() {
+    for (buf_t buf = this->stack; buf != NULL;) {
+        printf("%p\r\n", buf);
+        buf = *((buf_t *) buf);
+    }
 }

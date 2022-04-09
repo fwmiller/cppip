@@ -18,6 +18,7 @@ public:
     int get_bufsize();
     buf_t pop();
     void push(buf_t buf);
+    void dump();
 };
 
 class bufq {
