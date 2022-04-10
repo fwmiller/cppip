@@ -25,6 +25,20 @@ bufq::bufq(int entries) {
     this->full = false;
 }
 
+int
+bufq::get_length() {
+    int h, len;
+
+    if (this->full)
+        return this->entries;
+
+    for (len = 0, h = this->h; h != this->t;
+         len++, h = (h + 1) % this->entries)
+        ;
+
+    return len;
+}
+
 //
 // Append a buf_t pointer to the tail of the queue
 //

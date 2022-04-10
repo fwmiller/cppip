@@ -33,6 +33,7 @@ private:
 
 public:
     bufq(int entries);
+    int get_length();
     int append(buf_t buf, int len);
     buf_t remove(int *len);
     void dump();
