@@ -4,15 +4,16 @@
 #include "buf.h"
 
 bufpool::bufpool(int nbufs, int bufsize) {
-    this->pool = (buf_t) malloc(nbufs * bufsize);
-    memset(this->pool, 0, nbufs * bufsize);
+    buf_t pool = (buf_t) malloc(nbufs * bufsize);
+    memset(pool, 0, nbufs * bufsize);
+    this->pool = pool;
     this->nbufs = nbufs;
     this->bufsize = bufsize;
     this->stack = NULL;
 
     // Setup the stack
     for (int i = 0; i < nbufs; i++)
-        this->push((buf_t)(this->pool + (i * bufsize)));
+        this->push((buf_t)(pool + (i * bufsize)));
 }
 
 int
@@ -41,7 +42,7 @@ bufpool::push(buf_t buf) {
         return;
 
     *((buf_t *) buf) = this->stack;
-    *((buf_t *) this->stack) = buf;
+    this->stack = buf;
 }
 
 void

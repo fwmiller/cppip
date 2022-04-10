@@ -21,6 +21,8 @@ public:
     void dump();
 };
 
+typedef class bufpool *bufpool_t;
+
 class bufq {
 private:
     buf_t *q;
@@ -36,5 +38,7 @@ public:
     void dump();
     void dump_contents();
 };
+
+typedef class bufq *bufq_t;
 
 #endif

@@ -13,19 +13,20 @@ Data structures are only allocated from the heap at initialization.
 
 ## Data Structures
 
-The most basic data structure is the buffer that is simply a pointer to
-a byte:
+The most basic data structure is the buffer, `buf_t`, that is simply
+a pointer to a byte:
 
 `typedef uint8_t *buf_t`
 
-#### Buffer Pool
+From this a buffer pool and a buffer queue are defined.
 
-From this a buffer pool is created.  A buffer pool is a contiguous segment
-of memory that has been divided into a contiguous set of fixed size buffers
-and those buffers are then all inserted into a stack.  The following
-figure illustrates the memory associated with the buffer pool.  The pool
-element tracks the location of a dynamically allocated segment of memory
-that is nbufs * bufsize in length.
+A buffer pool is a contiguous segment of memory that has been divided
+into a contiguous list of fixed size buffers that are managed as a stack.
+
+A buffer queue is a First-In-First-Out queue of buffers.
+
+The following figure illustrates the relationships between these
+data structures.
 
 <p align="center"><img src="doc/bufs.png"></p>
 
@@ -34,8 +35,6 @@ that memory are inserted into a stack data structure using a linked list
 of addresses that are stored in the first few bytes of each buffer.
 The use of a stack enables constant time insertion and removal operations
 that are acceptable for hard real-time applications.
-
-#### Buffer Queue
 
 There is also a buffer queue that manages a set of buffer pointers in a
 First-In-First-Out queue.

@@ -16,6 +16,7 @@ static const int CMDLINE_LEN = 128;
 char *readline(const char *prompt);
 
 void byteq_test();
+void bufq_test();
 
 void nextarg(char *ln, int *pos, char *sep, char *arg);
 
@@ -88,14 +89,20 @@ cli(void *pthread_arg) {
             printf("dump (on|off)\r\n");
             printf("stats\r\n");
             printf("arp\r\n");
-            printf("byteq\r\n");
             printf("udp\r\n");
+            printf("byteq\r\n");
+            printf("bufq\r\n");
             printf("quit | exit\r\n");
 
             add_history(cmdline);
 
         } else if (strcmp(arg, "byteq") == 0) {
             byteq_test();
+
+            add_history(cmdline);
+
+        } else if (strcmp(arg, "bufq") == 0) {
+            bufq_test();
 
             add_history(cmdline);
 

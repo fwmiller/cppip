@@ -5,7 +5,7 @@
 
 void
 byteq_test() {
-    byteq q;
+    class byteq q;
     char ch = 'a';
     char recv;
     time_t start, curr;

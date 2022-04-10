@@ -61,6 +61,8 @@ PURPLE		:= \033[0;35m
 CYAN		:= \033[0;36m
 WHITE		:= \033[0;37m
 
+.PHONY: clean indent wc debug
+
 all: $(OBJS)
 	@printf "Linking ${CYAN}$(EXECUTABLE)${NC}\r\n"
 	@$(LD) -o $(EXECUTABLE) $(OBJS) $(LIBS)
