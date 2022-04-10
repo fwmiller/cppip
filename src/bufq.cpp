@@ -11,13 +11,15 @@
 //
 
 bufq::bufq(int entries) {
-    int qsize = entries * sizeof(void *);
-    this->q = (buf_t *) malloc(qsize);
-    memset(this->q, 0, qsize);
+    int size = entries * sizeof(void *);
+    this->q = (buf_t *) malloc(size);
+    memset(this->q, 0, size);
 
-    int lensize = entries * sizeof(int);
-    this->len = (int *) malloc(lensize);
-    memset(this->len, 0, lensize);
+    size = entries * sizeof(int);
+    this->size = (int *) malloc(size);
+    this->len = (int *) malloc(size);
+    memset(this->size, 0, size);
+    memset(this->len, 0, size);
 
     this->entries = entries;
     this->h = 0;
@@ -25,6 +27,9 @@ bufq::bufq(int entries) {
     this->full = false;
 }
 
+//
+// Determine how many buffers are currently in the queue
+//
 int
 bufq::get_length() {
     int h, len;
@@ -43,11 +48,12 @@ bufq::get_length() {
 // Append a buf_t pointer to the tail of the queue
 //
 int
-bufq::append(buf_t buf, int len) {
+bufq::append(buf_t buf, int size, int len) {
     if (this->full)
         return (-1);
 
     this->q[t] = buf;
+    this->size[t] = size;
     this->len[t] = len;
     this->t = (this->t + 1) % this->entries;
     if (this->t == this->h)
@@ -60,12 +66,13 @@ bufq::append(buf_t buf, int len) {
 // Remove a buf_t pointer from the head of the queue
 //
 buf_t
-bufq::remove(int *len) {
+bufq::remove(int *size, int *len) {
     if (!(this->full) && this->h == this->t) {
         *len = 0;
         return NULL;
     }
     buf_t buf = this->q[this->h];
+    *size = this->size[this->h];
     *len = this->len[this->h];
     this->h = (this->h + 1) % this->entries;
     if (this->full)
@@ -80,7 +87,7 @@ bufq::dump() {
         return;
 
     for (int i = this->h;;) {
-        printf("%p  %d\r\n", this->q[i], this->len[i]);
+        printf("%p  %5d  %5d\r\n", this->q[i], this->size[i], this->len[i]);
 
         i = (i + 1) % this->entries;
         if (i == this->t)

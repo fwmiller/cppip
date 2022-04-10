@@ -3,8 +3,14 @@
 
 #include <stdint.h>
 
+//
+// Buffer pointer
+//
 typedef uint8_t *buf_t;
 
+//
+// Buffer pool
+//
 class bufpool {
 private:
     buf_t pool;
@@ -23,19 +29,23 @@ public:
 
 typedef class bufpool *bufpool_t;
 
+//
+// Buffer queue
+//
 class bufq {
 private:
-    buf_t *q;
-    int *len;
-    int entries;
-    int h, t;
-    bool full;
+    buf_t *q;     // Array of buffer ptrs
+    int *size;    // Size of each buffer allocation
+    int *len;     // Current length of data contained in buffer <= size
+    int entries;  // Number of entries in the buffer ptr array
+    int h, t;     // Queue head and tail indices in buffer ptr array
+    bool full;    // Full flag
 
 public:
     bufq(int entries);
     int get_length();
-    int append(buf_t buf, int len);
-    buf_t remove(int *len);
+    int append(buf_t buf, int size, int len);
+    buf_t remove(int *size, int *len);
     void dump();
     void dump_contents();
 };

@@ -11,7 +11,7 @@ bufq_test() {
     bp->dump();
 
     bq = new bufq(8);
-    printf("bufq\r\n");
+    printf("bufq length %d\r\n", bq->get_length());
     bq->dump();
     bq->dump_contents();
     printf("\r\n");
@@ -22,11 +22,11 @@ bufq_test() {
         if (buf == NULL)
             break;
 
-        bq->append(buf, 0);
+        bq->append(buf, 64, 0);
 
         printf("bufpool\r\n");
         bp->dump();
-        printf("bufq\r\n");
+        printf("bufq length %d\r\n", bq->get_length());
         bq->dump();
         bq->dump_contents();
         printf("\r\n");

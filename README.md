@@ -18,15 +18,13 @@ a pointer to a byte:
 
 `typedef uint8_t *buf_t`
 
-From this a buffer pool and a buffer queue are defined.
-
-A buffer pool is a contiguous segment of memory that has been divided
-into a contiguous list of fixed size buffers that are managed as a stack.
-
-A buffer queue is a First-In-First-Out queue of buffers.
+From this a buffer pool and a buffer queue are defined.  A buffer pool is
+a contiguous segment of memory that has been divided into a contiguous list
+of fixed size buffers that are managed as a stack.  A buffer queue is a
+First-In-First-Out (FIFO) queue of buffers.
 
 The following figure illustrates the relationships between these
-data structures.
+data structures:
 
 <p align="center"><img src="doc/bufs.png"></p>
 
