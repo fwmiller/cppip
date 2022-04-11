@@ -35,17 +35,18 @@ typedef class bufpool *bufpool_t;
 class bufq {
 private:
     buf_t *q;     // Array of buffer ptrs
-    int *size;    // Size of each buffer allocation
-    int *len;     // Current length of data contained in buffer <= size
+    int *len;     // Current length of data contained in buffer
     int entries;  // Number of entries in the buffer ptr array
+    int bufsize;  // Size of each buffers allocated memory
     int h, t;     // Queue head and tail indices in buffer ptr array
     bool full;    // Full flag
 
 public:
-    bufq(int entries);
+    bufq(int entries, int bufsize);
+    int get_bufsize();
     int get_length();
-    int append(buf_t buf, int size, int len);
-    buf_t remove(int *size, int *len);
+    int append(buf_t buf, int len);
+    buf_t remove(int *len);
     void dump();
     void dump_contents();
 };

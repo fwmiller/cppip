@@ -35,4 +35,10 @@ The use of a stack enables constant time insertion and removal operations
 that are acceptable for hard real-time applications.
 
 There is also a buffer queue that manages a set of buffer pointers in a
-First-In-First-Out queue.
+First-In-First-Out queue.  This data structure is based on an array of
+buffer pointers.  No buffers allocated as part of this data structure,
+it manages buffer pointers only.  The head and tail buffer pointers are
+indicies into this array that advance in a circular manner, i.e. when
+a head or tail buffer pointer reaches the end of the array, it returns
+to the first buffer pointer in the array.  Buffer pointers are inserted
+at the tail of the queue and removed from the head of the queue.
