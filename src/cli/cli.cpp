@@ -74,7 +74,7 @@ cli(void *pthread_arg) {
 
             add_history(cmdline);
 
-        } else if (strcmp(arg, "stats") == 0) {
+        } else if (strcmp(arg, "st") == 0) {
             cmd_stats();
 
             add_history(cmdline);
@@ -87,21 +87,21 @@ cli(void *pthread_arg) {
         } else if (strcmp(arg, "help") == 0) {
             printf("Commands:\r\n");
             printf("dump (on|off)\r\n");
-            printf("stats\r\n");
+            printf("st\r\n");
             printf("arp\r\n");
             printf("udp\r\n");
-            printf("byteq\r\n");
-            printf("bufq\r\n");
+            printf("byteq_test\r\n");
+            printf("bufq_test\r\n");
             printf("quit | exit\r\n");
 
             add_history(cmdline);
 
-        } else if (strcmp(arg, "byteq") == 0) {
+        } else if (strcmp(arg, "byteq_test") == 0) {
             byteq_test();
 
             add_history(cmdline);
 
-        } else if (strcmp(arg, "bufq") == 0) {
+        } else if (strcmp(arg, "bufq_test") == 0) {
             bufq_test();
 
             add_history(cmdline);
