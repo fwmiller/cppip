@@ -53,7 +53,7 @@ bufq::get_length() {
 //
 int
 bufq::append(buf_t buf, int len) {
-    if (this->full)
+    if (buf == NULL || this->full)
         return (-1);
 
     this->q[t] = buf;

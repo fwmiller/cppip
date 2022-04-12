@@ -10,30 +10,18 @@ bufq_test() {
     time_t start, curr;
 
     bp = new bufpool(8, 64);
-    printf("bufpool bufsize %d\r\n", bp->get_bufsize());
-    bp->dump();
-
     bq = new bufq(8, 64);
-    printf("bufq bufsize %d length %d\r\n", bq->get_bufsize(),
-           bq->get_length());
-    bq->dump();
-    bq->dump_contents();
-    printf("\r\n");
-
     srand(0);
+
     for (start = time(NULL);;) {
         if (rand() < RAND_MAX / 2) {
             // Get an buffer from bufpool and insert it in the queue
-            buf_t buf = bp->pop();
-            if (buf != NULL)
-                bq->append(buf, 0);
+            bq->append(bp->pop(), 0);
 
         } else {
             // Remove a buffer from the queue and return it to bufpool
-            int len;
-            buf_t buf = bq->remove(&len);
-            if (buf != NULL)
-                bp->push(buf);
+            int len = 0;
+            bp->push(bq->remove(&len));
         }
         printf("bufpool bufsize %d\r\n", bp->get_bufsize());
         bp->dump();
