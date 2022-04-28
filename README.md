@@ -18,10 +18,12 @@ a pointer to a byte:
 
 `typedef uint8_t *buf_t`
 
-From this a buffer pool and a buffer queue are defined.  A buffer pool is
-a contiguous segment of memory that has been divided into a contiguous list
-of fixed size buffers that are managed as a stack.  A buffer queue is a
-First-In-First-Out (FIFO) queue of buffers.
+From this a buffer pool and a buffer queue are defined.
+
+A buffer pool is a contiguous segment of memory that has been divided
+into a contiguous list of fixed size buffers that are managed as a
+stack.  A buffer queue is a First-In-First-Out (FIFO) queue of buffer
+pointers.
 
 The following figure illustrates the relationships between these
 data structures:
@@ -34,11 +36,10 @@ of addresses that are stored in the first few bytes of each buffer.
 The use of a stack enables constant time insertion and removal operations
 that are acceptable for hard real-time applications.
 
-There is also a buffer queue that manages a set of buffer pointers in a
-First-In-First-Out queue.  This data structure is based on an array of
-buffer pointers.  No buffers allocated as part of this data structure,
-it manages buffer pointers only.  The head and tail buffer pointers are
-indicies into this array that advance in a circular manner, i.e. when
-a head or tail buffer pointer reaches the end of the array, it returns
-to the first buffer pointer in the array.  Buffer pointers are inserted
+There is also a buffer queue that manages an array of buffer pointers in
+a First-In-First-Out queue.  No buffer memory is allocated as part of this
+data structure, it manages buffer pointers only.  The queue head and tail
+are indexes into this array that advance in a circular manner, i.e. when
+a head or tail index reaches the end of the array, it returns to the first
+buffer pointer at the beginning of the array.  Buffer pointers are inserted
 at the tail of the queue and removed from the head of the queue.
