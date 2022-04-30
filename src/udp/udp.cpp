@@ -25,7 +25,7 @@ udp::receive() {
     udp_hdr_t uh = (udp_hdr_t) this->buf;
     uint16_t port = reverse_byte_order_short(uh->dst);
 
-    class inq *q = udptab.find_port(port);
+    class bufq *q = udptab.find_port(port);
     if (q == NULL) {
         // No input queue open drop packet data
 
@@ -35,8 +35,9 @@ udp::receive() {
             return;
     }
     int len = reverse_byte_order_short(uh->len);
-    int n = q->append(this->buf + sizeof(struct udp_hdr), len);
-    printf("udp port %u rcvd %d bytes queued %d bytes\r\n", port, len, n);
+    int result = q->append(this->buf + sizeof(struct udp_hdr), len);
+    if (result == 0)
+        printf("udp port %u rcvd %d bytes\r\n", port, len);
     q->dump_contents();
     printf("\r\n");
 }

@@ -5,33 +5,35 @@
 class udptab udptab;
 
 udptab::udptab() {
-    for (int i = 0; i < UDPTAB_ENTRIES; i++)
-        this->table[i] = new inq(16, 64);
+    for (int i = 0; i < UDPTAB_ENTRIES; i++) {
+        this->port[i] = 0;
+        this->table[i] = new bufq(16, 64);
+    }
 }
 
 void
 udptab::dump() {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
-        if (this->table[i] != NULL && this->table[i]->get_port() != 0) {
+        if (this->port[i] != 0 && this->table[i] != NULL) {
             this->table[i]->dump();
             printf("\r\n");
         }
 }
 
-class inq *
+class bufq *
 udptab::find_port(uint16_t port) {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
-        if (this->table[i] != NULL && this->table[i]->get_port() == port)
+        if (this->port[i] == port)
             return this->table[i];
     return NULL;
 }
 
-class inq *
+class bufq *
 udptab::alloc_port(uint16_t port) {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
-        if (this->table[i] != NULL && this->table[i]->get_port() == 0) {
-            class inq *q = this->table[i];
-            q->set_port(port);
+        if (this->port[i] == 0) {
+            class bufq *q = this->table[i];
+            this->port[i] = port;
             return q;
         }
     return NULL;
@@ -40,9 +42,9 @@ udptab::alloc_port(uint16_t port) {
 void
 udptab::free_port(uint16_t port) {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
-        if (this->table[i] != NULL && this->table[i]->get_port() == port) {
-            class inq *q = this->table[i];
-            q->set_port(0);
+        if (this->port[i] == port) {
+            this->port[i] = 0;
+            // class bufq *q = this->table[i];
             // q->clear();
             return;
         }
