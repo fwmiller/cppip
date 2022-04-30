@@ -1,7 +1,7 @@
 #include "inq.h"
 #include <stdio.h>
 
-inq::inq() {
+inq::inq(int entries, int bufsize) : bufq(entries, bufsize) {
     this->port = 0;
 }
 

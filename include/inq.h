@@ -1,14 +1,14 @@
 #ifndef __INQ_H
 #define __INQ_H
 
-#include "byteq.h"
+#include "buf.h"
 
-class inq : public byteq {
+class inq : public bufq {
 private:
     uint16_t port;
 
 public:
-    inq();
+    inq(int entries, int bufsize);
     void dump();
     uint16_t get_port();
     void set_port(uint16_t port);

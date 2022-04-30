@@ -9,7 +9,7 @@ extern class udptab udptab;
 
 class udptab {
 private:
-    class inq table[UDPTAB_ENTRIES];
+    class inq *table[UDPTAB_ENTRIES];
 
 public:
     udptab();

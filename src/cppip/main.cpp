@@ -34,8 +34,8 @@ main() {
     printf(")\r\n");
 
     // Assign initial MAC address to support the initial ARP probe
-    uint8_t ha[ETH_ADDR_LEN] = {0xde, 0xad, 0xbe, 0xef, 0xfe, 0xed};
-    my_addr->set_ha(ha);
+    // uint8_t ha[ETH_ADDR_LEN] = {0xde, 0xad, 0xbe, 0xef, 0xfe, 0xed};
+    // my_addr->set_ha(ha);
 
     initialize_pcap();
 
