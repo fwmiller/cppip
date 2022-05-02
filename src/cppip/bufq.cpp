@@ -88,13 +88,17 @@ bufq::dump() {
     if (!(this->full) && this->h == this->t)
         return;
 
+    printf("<");
     for (int i = this->h;;) {
-        printf("%p  %5d\r\n", this->q[i], this->len[i]);
+        printf("%d", this->len[i]);
 
         i = (i + 1) % this->entries;
         if (i == this->t)
             break;
+
+        printf(",");
     }
+    printf(">");
 }
 
 void

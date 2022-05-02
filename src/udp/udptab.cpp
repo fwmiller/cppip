@@ -15,8 +15,9 @@ void
 udptab::dump() {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
         if (this->port[i] != 0 && this->table[i] != NULL) {
-            printf("port %u\r\n", this->port[i]);
+            printf("%5u ", this->port[i]);
             this->table[i]->dump();
+            printf("\r\n");
         }
 }
 

@@ -39,7 +39,8 @@ that are acceptable for hard real-time applications.
 There is also a buffer queue that manages an array of buffer pointers in
 a First-In-First-Out queue.  No buffer memory is allocated as part of this
 data structure, it manages buffer pointers only.  The queue head and tail
-are indexes into this array that advance in a circular manner, i.e. when
-a head or tail index reaches the end of the array, it returns to the first
-buffer pointer at the beginning of the array.  Buffer pointers are inserted
-at the tail of the queue and removed from the head of the queue.
+are indexes into this buffer pointer array that advance in a circular
+manner, i.e. when a head or tail index reaches the end of the array, it
+returns to the first buffer pointer at the beginning of the array.  Buffer
+pointers are inserted at the tail of the queue and removed from the head
+of the queue.
