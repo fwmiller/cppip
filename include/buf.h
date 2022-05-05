@@ -35,7 +35,7 @@ typedef class bufpool *bufpool_t;
 class bufq {
 private:
     buf_t *q;     // Array of buffer ptrs
-    int *len;     // Current length of data contained in buffer
+    int *len;     // Array of the current lengths of the buffers
     int entries;  // Number of entries in the buffer ptr array
     int bufsize;  // Size of each buffers allocated memory
     int h, t;     // Queue head and tail indices in buffer ptr array

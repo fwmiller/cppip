@@ -6,6 +6,9 @@
 // static const int MAX_BYTEQ_SIZE = 2048;  // 2 KB
 static const int MAX_BYTEQ_SIZE = 64;  // 64 bytes
 
+//
+// Byte queue
+//
 class byteq {
 private:
     uint8_t q[MAX_BYTEQ_SIZE];

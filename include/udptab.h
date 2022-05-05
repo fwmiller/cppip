@@ -7,6 +7,9 @@ static const int UDPTAB_ENTRIES = 16;
 
 extern class udptab udptab;
 
+//
+// UDP table
+//
 class udptab {
 private:
     uint16_t port[UDPTAB_ENTRIES];

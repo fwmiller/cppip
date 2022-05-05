@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include "cppip.h"
 
+//
+// UDP header overlay
+//
 struct udp_hdr {
     uint16_t src;
     uint16_t dst;
@@ -13,6 +16,9 @@ struct udp_hdr {
 
 typedef struct udp_hdr *udp_hdr_t;
 
+//
+// UDP header processing
+//
 class udp {
 private:
     buf_t buf;

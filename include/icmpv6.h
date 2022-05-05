@@ -35,6 +35,9 @@ static const uint8_t ICMP_TYPE_MCAST_ROUTER_SOL = 152;
 static const uint8_t ICMP_TYPE_MCAST_ROUTER_TERM = 153;
 static const uint8_t ICMP_TYPE_RPL_CTL = 155;
 
+//
+// ICMPv6 header overlay
+//
 struct icmpv6_hdr {
     uint8_t type;
     uint8_t code;
@@ -43,6 +46,9 @@ struct icmpv6_hdr {
 
 typedef struct icmpv6_hdr *icmpv6_hdr_t;
 
+//
+// ICMPv6 header processing
+//
 class icmpv6 {
 private:
     buf_t buf;

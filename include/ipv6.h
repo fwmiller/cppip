@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include "cppip.h"
 
+//
+// IPv6 header overlay
+//
 struct ipv6_hdr {
     uint8_t ver_class;
     uint8_t class_flow;
@@ -17,6 +20,9 @@ struct ipv6_hdr {
 
 typedef struct ipv6_hdr *ipv6_hdr_t;
 
+//
+// IPv6 header processing
+//
 class ipv6 {
 private:
     buf_t hdr;

@@ -6,6 +6,9 @@
 
 static const int ARPTAB_ENTRIES = 16;
 
+//
+// ARP table entry
+//
 class arptab_entry {
 private:
     uint8_t ha[ETH_ADDR_LEN];  // Hardware address (Ethernet)
@@ -21,6 +24,9 @@ public:
 
 typedef class arptab_entry *arptab_entry_t;
 
+//
+// ARP table
+//
 class arptab {
 private:
     class arptab_entry table[ARPTAB_ENTRIES];

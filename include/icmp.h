@@ -34,6 +34,9 @@ static const uint8_t ICMPTYPE_PHOTURIS = 40;
 static const uint8_t ICMPTYPE_EXT_ECHO_REQUEST = 42;
 static const uint8_t ICMPTYPE_EXT_ECHO_REPLY = 43;
 
+//
+// ICMPv4 header overlay
+//
 struct icmp_hdr {
     uint8_t type;
     uint8_t code;
@@ -42,6 +45,9 @@ struct icmp_hdr {
 
 typedef struct icmp_hdr *icmp_hdr_t;
 
+//
+// ICMPv4 header processing
+//
 class icmp {
 private:
     buf_t buf;

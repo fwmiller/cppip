@@ -12,6 +12,9 @@ const static uint16_t ARP_OP_REP = 0x0002;
 const static uint16_t RARP_OP_REQ = 0x0003;
 const static uint16_t RARP_OP_REP = 0x0004;
 
+//
+// ARP header overlay
+//
 struct arp_hdr {
     uint16_t hw;
     uint16_t proto;
@@ -26,6 +29,9 @@ struct arp_hdr {
 
 typedef struct arp_hdr *arp_hdr_t;
 
+//
+// ARP header processing
+//
 class arp {
 private:
     buf_t hdr;

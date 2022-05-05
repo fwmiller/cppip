@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include "cppip.h"
 
+//
+// IPv4 header overlay
+//
 struct ipv4_hdr {
     uint8_t version;
     uint8_t tos;
@@ -19,6 +22,9 @@ struct ipv4_hdr {
 
 typedef struct ipv4_hdr *ipv4_hdr_t;
 
+//
+// IPv4 header processing
+//
 class ipv4 {
 private:
     buf_t hdr;

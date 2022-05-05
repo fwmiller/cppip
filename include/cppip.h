@@ -21,6 +21,9 @@ extern bool dump_enabled;
 #include "ipv6.h"
 #include "udp.h"
 
+//
+// Utilities
+//
 void bufdump(uint8_t *buf, unsigned len);
 void dump_ethertype(uint16_t ethertype);
 void dump_ethaddr(uint8_t *ethaddr);

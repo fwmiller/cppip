@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include "cppip.h"
 
+//
+// IEEE 802.2 header overlay
+//
 struct ieee802_2_hdr {
     uint8_t dsap;
     uint8_t ssap;
@@ -13,6 +16,9 @@ struct ieee802_2_hdr {
 
 typedef struct ieee802_2_hdr *ieee802_2_hdr_t;
 
+//
+// IEEE 802.2 header processing
+//
 class ieee802_2 {
 private:
     buf_t hdr;
