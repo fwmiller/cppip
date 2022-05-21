@@ -1,15 +1,18 @@
 #include "sockets.h"
+#include <stdlib.h>
 #include "udptab.h"
 
-class udptab udptab;
-
 socket::socket(int type) {
-    return;
+    this->type = type;
 }
 
 int
 socket::bind(socket *sd, uint16_t port) {
-    return (-1);
+    bufq_t q = udptab.alloc_port(port);
+    if (q == NULL)
+        return (-1);
+    this->recvq = q;
+    return 0;
 }
 
 int

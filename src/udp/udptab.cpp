@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+class udptab udptab;
+
 udptab::udptab() {
     for (int i = 0; i < UDPTAB_ENTRIES; i++) {
         this->port[i] = 0;
@@ -19,7 +21,7 @@ udptab::dump() {
         }
 }
 
-class bufq *
+bufq_t
 udptab::find_port(uint16_t port) {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
         if (this->port[i] == port)
@@ -27,11 +29,11 @@ udptab::find_port(uint16_t port) {
     return NULL;
 }
 
-class bufq *
+bufq_t
 udptab::alloc_port(uint16_t port) {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
         if (this->port[i] == 0) {
-            class bufq *q = this->table[i];
+            bufq_t q = this->table[i];
             this->port[i] = port;
             return q;
         }
@@ -43,7 +45,7 @@ udptab::free_port(uint16_t port) {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
         if (this->port[i] == port) {
             this->port[i] = 0;
-            // class bufq *q = this->table[i];
+            // bufq_t q = this->table[i];
             // q->clear();
             return;
         }

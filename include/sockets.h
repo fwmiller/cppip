@@ -2,8 +2,13 @@
 #define __SOCKETS_H
 
 #include <stdint.h>
+#include "buf.h"
 
 class socket {
+private:
+    int type;
+    bufq_t recvq;
+
 public:
     socket(int type);
     int bind(socket *sd, uint16_t port);

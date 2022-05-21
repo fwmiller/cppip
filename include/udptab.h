@@ -13,13 +13,13 @@ extern class udptab udptab;
 class udptab {
 private:
     uint16_t port[UDPTAB_ENTRIES];
-    class bufq *table[UDPTAB_ENTRIES];
+    bufq_t table[UDPTAB_ENTRIES];
 
 public:
     udptab();
     void dump();
-    class bufq *find_port(uint16_t port);
-    class bufq *alloc_port(uint16_t port);
+    bufq_t find_port(uint16_t port);
+    bufq_t alloc_port(uint16_t port);
     void free_port(uint16_t port);
 };
 
