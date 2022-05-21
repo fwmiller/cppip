@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include "buf.h"
 
+// These should be non-zero
+static const int SOCK_DGRAM = 1;
+
 class socket {
 private:
     int type;
@@ -11,22 +14,10 @@ private:
 
 public:
     socket(int type);
-    int bind(socket *sd, uint16_t port);
-    int connect(socket *sd, uint32_t servAddr, uint16_t servPort);
+    int bind(uint16_t port);
 
-    int read(socket *sd, void *buf, unsigned n);
-    int write(socket *sd, void *buf, unsigned n);
-
-    int recv(socket *sd, void *buf, unsigned n, int flags);
-    int recvfrom(socket *sd, void *buf, unsigned n, int flags,
-                 uint32_t fromAddr, uint16_t fromPort);
-
-    int send(socket *sd, void *buf, unsigned n, int flags);
-    int sendto(socket *sd, void *buf, unsigned n, int flags, uint32_t toAddr,
-               uint16_t toPort);
-
-    int shutdown(socket *sd, int howTo);
-    int close(socket *sd);
+    int recv(void *buf, unsigned n, int flags);
+    int send(void *buf, unsigned n, int flags);
 };
 
 #endif
