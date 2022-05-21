@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-class udptab udptab;
-
 udptab::udptab() {
     for (int i = 0; i < UDPTAB_ENTRIES; i++) {
         this->port[i] = 0;

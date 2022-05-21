@@ -5,23 +5,23 @@
 
 class socket {
 public:
-    int socket(int family, int type, int protocol);
-    int bind(int sd, const struct sockaddr *myAddr, int addrLength);
-    int connect(int sd, struct sockaddr *servAddr, int addrLength);
+    socket(int type);
+    int bind(socket *sd, uint16_t port);
+    int connect(socket *sd, uint32_t servAddr, uint16_t servPort);
 
-    int read(int sd, void *buf, uint32_t n);
-    int write(int sd, void *buf, uint32_t n);
+    int read(socket *sd, void *buf, unsigned n);
+    int write(socket *sd, void *buf, unsigned n);
 
-    int recv(int sd, void *buf, uint32_t n, int flags);
-    int recvfrom(int sd, void *buf, uint32_t n, int flags,
-                 struct sockaddr *fromAddr, socklen_t *addrLength);
+    int recv(socket *sd, void *buf, unsigned n, int flags);
+    int recvfrom(socket *sd, void *buf, unsigned n, int flags,
+                 uint32_t fromAddr, uint16_t fromPort);
 
-    int send(int sd, void *buf, uint32_t n, int flags);
-    int sendto(int sd, void *buf, uint32_t n, int flags,
-               struct sockaddr *toAddr, socklen_t addrLength);
+    int send(socket *sd, void *buf, unsigned n, int flags);
+    int sendto(socket *sd, void *buf, unsigned n, int flags, uint32_t toAddr,
+               uint16_t toPort);
 
-    int shutdown(int sd, int howTo);
-    int close(int sd);
+    int shutdown(socket *sd, int howTo);
+    int close(socket *sd);
 };
 
 #endif
