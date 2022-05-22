@@ -2,7 +2,7 @@
 
 *cppip* is an Internet protocol stack for embedded, real-time systems written in C++.
 
-*cppip* is specifically designed for statically managed networks that use primarily UDP to pass application data.  Embedded, hard real-time applications that make use of highly controlled Ethernet networks require a protocol stack that is high-performance, and verifiable.
+*cppip* is specifically designed for statically managed networks that use primarily UDP to pass application data.  Embedded, hard real-time applications that make use of highly controlled Ethernet networks require a protocol stack that is high-performance and verifiable.
 
 *cppip* uses only the stack for dynamic memory after initialization.  Stack data structures are allocated from the heap only during initialization.
 
@@ -24,7 +24,7 @@ The following figure illustrates the relationships between these data structures
 
 A buffer pool is a contiguous segment of memory that has been divided into a contiguous list of fixed size buffers that are managed as a stack.
 
-After the bufpool memory is allocated at initialization, it is divided into a sequence of fixed size buffer.  The base address of each of these buffers is then inserted into a stack data structure using a linked list of addresses that are stored in the first few bytes of each buffer.  The use of a stack enables constant time insertion and removal operations that are acceptable for hard real-time applications.
+After the bufpool memory is allocated at initialization, it is divided into a sequence of fixed size buffers.  The base address of each of these buffers is then inserted into a stack data structure using a linked list of addresses that are stored in the first few bytes of each buffer.  The use of a stack enables constant time insertion and removal operations that are acceptable for hard real-time applications.
 
 ### Buffer Queues
 
