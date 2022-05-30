@@ -16,13 +16,31 @@ port::bind(uint16_t portnum) {
 }
 
 int
-port::length() {
+port::get_nbufs() {
+    if (this->receiveq != NULL)
+        return this->receiveq->get_nbufs();
+    return (-1);
+}
+
+int
+port::get_length() {
+    if (this->receiveq != NULL)
+        return this->receiveq->get_length();
     return (-1);
 }
 
 int
 port::receive(void *buf, unsigned bufsize) {
-    return (-1);
+    if (this->receiveq == NULL)
+        return (-1);
+
+    // Remove packet buffer from queue
+    int len = 0;
+    buf_t b = this->receiveq->remove(&len);
+
+    // Copy packet buffer data into parameter buffer
+
+    // ??? Free packet buffer
 }
 
 int

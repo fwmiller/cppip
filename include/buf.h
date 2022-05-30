@@ -43,6 +43,7 @@ private:
 
 public:
     bufq(int entries, int bufsize);
+    int get_nbufs();
     int get_bufsize();
     int get_length();
     int append(buf_t buf, int len);

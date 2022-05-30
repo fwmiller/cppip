@@ -26,13 +26,29 @@ bufq::bufq(int entries, int bufsize) {
     this->full = false;
 }
 
+//
+// Determine number of buffers in the queue
+//
+int
+bufq::get_nbufs() {
+    int h, n;
+
+    if (this->full)
+        return this->entries;
+
+    for (n = 0, h = this->h; h != this->t; n++, h = (h + 1) % this->entries)
+        ;
+
+    return n;
+}
+
 int
 bufq::get_bufsize() {
     return this->bufsize;
 }
 
 //
-// Determine how many buffers are currently in the queue
+// Determine the sum of the lengths of the buffers in the queue
 //
 int
 bufq::get_length() {
@@ -42,7 +58,7 @@ bufq::get_length() {
         return this->entries;
 
     for (len = 0, h = this->h; h != this->t;
-         len++, h = (h + 1) % this->entries)
+         len += this->len[h], h = (h + 1) % this->entries)
         ;
 
     return len;

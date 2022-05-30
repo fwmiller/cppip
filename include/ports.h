@@ -14,8 +14,11 @@ public:
     // Bind portnum to this port
     int bind(uint16_t portnum);
 
+    // Return the number of buffers in the queue
+    int get_nbufs();
+
     // Return the length in bytes of data in the port receive queue
-    int length();
+    int get_length();
 
     // Remove up to bufsize bytes from the port receive queue and
     // copy them into buf.  Each receive call returns the data from
