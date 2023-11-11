@@ -17,7 +17,7 @@ CP		:= cp
 RM		:= rm -f
 RMR		:= rm -fr
 
-CPPFLAGS	:= -c -Wall -Og -fpermissive
+CPPFLAGS	:= -c -Wall -Wno-class-memaccess -Og -fpermissive
 #CPPFLAGS	+= -g
 CPPFLAGS	+= -D_DEBUG
 
@@ -44,7 +44,7 @@ OBJS		:= $(foreach f,$(CPP_FILES),$(addprefix $(BIN)/,$(subst .cpp,.o,$(f))))
 #
 # Executable file
 #
-EXECUTABLE	:= cppip
+EXE		:= cppip
 
 ##############################################################################
 #
@@ -64,8 +64,8 @@ WHITE		:= \033[0;37m
 .PHONY: clean indent wc debug
 
 all: $(OBJS)
-	@printf "Linking ${CYAN}$(EXECUTABLE)${NC}\r\n"
-	@$(LD) -o $(EXECUTABLE) $(OBJS) $(LIBS)
+	@printf "Linking ${CYAN}$(EXE)${NC}\r\n"
+	@$(LD) -o $(EXE) $(OBJS) $(LIBS)
 
 # C++ source file compilation
 $(BIN)/%.o: $(SRC)/%.cpp
@@ -79,7 +79,7 @@ $(BIN)/%.o: $(SRC)/*/%.cpp
 	@$(CPP) $(CPPFLAGS) -I$(INC) -o $@ $<
 
 clean:
-	@$(RM) $(EXECUTABLE)
+	@$(RM) $(EXE)
 	@$(RMR) $(BIN)
 
 # Indent pass of the include and src directories

@@ -13,7 +13,7 @@ bufpool::bufpool(int nbufs, int bufsize) {
 
     // Setup the stack
     for (int i = 0; i < nbufs; i++)
-        this->push((buf_t)(pool + (i * bufsize)));
+        this->push((buf_t) (pool + (i * bufsize)));
 }
 
 int
