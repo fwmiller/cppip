@@ -40,6 +40,5 @@ public:
 };
 
 extern class arptab arptab;
-extern class arptab_entry *my_addr;
 
 #endif
