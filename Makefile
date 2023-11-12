@@ -4,7 +4,7 @@
 #
 INC		:= include
 SRC		:= src
-BIN		:= build
+BIN		:= bin
 
 ##############################################################################
 #
@@ -12,6 +12,7 @@ BIN		:= build
 #
 MKDIR		:= mkdir -p
 CPP		:= g++
+AR		:= ar -rc
 LD		:= g++
 CP		:= cp
 RM		:= rm -f
@@ -20,8 +21,6 @@ RMR		:= rm -fr
 CPPFLAGS	:= -c -Wall -Wno-class-memaccess -Og -fpermissive
 #CPPFLAGS	+= -g
 CPPFLAGS	+= -D_DEBUG
-
-LIBS		:= -lpcap -lpthread -lreadline
 
 INDENT_RULES := -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l80 -lp -npcs -nprs -psl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1
 
@@ -39,6 +38,53 @@ CPP_FILES	:= $(sort $(notdir $(CPP_SRCS)))
 # Object files
 #
 OBJS		:= $(foreach f,$(CPP_FILES),$(addprefix $(BIN)/,$(subst .cpp,.o,$(f))))
+
+LIBCPPIP_OBJS	:=		\
+	$(BIN)/arp.o		\
+	$(BIN)/arp_dump.o	\
+	$(BIN)/arp_receive.o	\
+	$(BIN)/arptab.o		\
+	$(BIN)/arptab_entry.o	\
+	$(BIN)/bufpool.o	\
+	$(BIN)/bufq.o		\
+	$(BIN)/cppip.o		\
+	$(BIN)/eth.o		\
+	$(BIN)/eth_dump.o	\
+	$(BIN)/eth_receive.o	\
+	$(BIN)/eth_send.o	\
+	$(BIN)/icmp.o		\
+	$(BIN)/icmp_dump.o	\
+	$(BIN)/icmpv6.o		\
+	$(BIN)/ieee802_2.o	\
+	$(BIN)/ipproto_dump.o	\
+	$(BIN)/ipv4.o		\
+	$(BIN)/ipv4_dump.o	\
+	$(BIN)/ipv6.o		\
+	$(BIN)/ipv6_dump.o	\
+	$(BIN)/ports.o		\
+	$(BIN)/sockets.o	\
+	$(BIN)/stats.o		\
+	$(BIN)/udp.o		\
+	$(BIN)/udp_dump.o	\
+	$(BIN)/udp_receive.o	\
+	$(BIN)/udptab.o
+
+CLI_OBJS	:=		\
+	$(BIN)/bufq_test.o	\
+	$(BIN)/byteq.o		\
+	$(BIN)/byteq_test.o	\
+	$(BIN)/capture.o	\
+	$(BIN)/cli.o		\
+	$(BIN)/main.o		\
+	$(BIN)/nextarg.o
+
+
+##############################################################################
+#
+# Library file
+#
+LIBCPPIP	:= $(BIN)/libcppip.a
+LIBS		:= $(LIBCPPIP) -lpcap -lpthread -lreadline
 
 ##############################################################################
 #
@@ -64,15 +110,12 @@ WHITE		:= \033[0;37m
 .PHONY: clean indent wc debug
 
 all: $(OBJS)
+	@printf "Archiving ${CYAN}$(LIBCPPIP)${NC}\r\n"
+	@$(AR) $(LIBCPPIP) $(LIBCPPIP_OBJS)
 	@printf "Linking ${CYAN}$(EXE)${NC}\r\n"
-	@$(LD) -o $(EXE) $(OBJS) $(LIBS)
+	$(LD) -o $(EXE) $(CLI_OBJS) $(LIBS)
 
 # C++ source file compilation
-$(BIN)/%.o: $(SRC)/%.cpp
-	@$(MKDIR) $(BIN)
-	@printf "Compiling ${CYAN}$<${NC}\r\n"
-	@$(CPP) $(CPPFLAGS) -I$(INC) -o $@ $<
-
 $(BIN)/%.o: $(SRC)/*/%.cpp
 	@$(MKDIR) $(BIN)
 	@printf "Compiling ${CYAN}$<${NC}\r\n"
@@ -80,6 +123,7 @@ $(BIN)/%.o: $(SRC)/*/%.cpp
 
 clean:
 	@$(RM) $(EXE)
+	@$(RM) $(LIBCPPIP)
 	@$(RMR) $(BIN)
 
 # Indent pass of the include and src directories
@@ -98,3 +142,5 @@ debug:
 	@for f in $(CPP_FILES); do printf "${CYAN}$$f${NC}\r\n"; done
 	@printf "\r\n"
 	@for f in $(OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
+	@printf "\r\n"
+	@for f in $(LIBCPPIP_OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
