@@ -45,6 +45,7 @@ udptab::free_port(uint16_t port) {
     for (int i = 0; i < UDPTAB_ENTRIES; i++)
         if (this->port[i] == port) {
             this->port[i] = 0;
+            // TODO:
             // bufq_t q = this->table[i];
             // q->clear();
             return;

@@ -10,6 +10,7 @@
 extern pcap_t *intf_handl;
 
 void initialize_pcap();
+void *dhcp(void *pthread_arg);
 void packet_handler(u_char *param, const struct pcap_pkthdr *header,
                     const u_char *pkt_data);
 
@@ -25,7 +26,7 @@ set_color_cyan() {
 
 int
 main() {
-    pthread_t cli_thread;
+    pthread_t dhcp_thread, cli_thread;
 
     printf("C++ Internet Protocols (");
     set_color_cyan();
@@ -37,9 +38,9 @@ main() {
     // uint8_t ha[ETH_ADDR_LEN] = {0xde, 0xad, 0xbe, 0xef, 0xfe, 0xed};
     // my_addr->set_ha(ha);
 
+    cppip_init();
+    pthread_create(&dhcp_thread, NULL, dhcp, NULL);
     initialize_pcap();
-
-    //_beginthread(cli, 0, NULL);
     pthread_create(&cli_thread, NULL, cli, NULL);
 
     /* Start the capture */

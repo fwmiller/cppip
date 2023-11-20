@@ -15,14 +15,16 @@ udp::receive() {
     if (q == NULL) {
         // No input queue open drop packet data
 
-        // TODO: for fun
+        // TODO: for fun - just allocating a UDP queue for any incoming
+        // UDP packet until the UDP table is filled up...
         q = udptab.alloc_port(port);
         if (q == NULL)
             return;
     }
     int len = reverse_byte_order_short(uh->len);
     q->append(this->buf + sizeof(struct udp_hdr), len);
+
     printf("udp port %u rcvd %d bytes\r\n", port, len);
-    q->dump_contents();
-    printf("\r\n");
+    // q->dump_contents();
+    // printf("\r\n");
 }

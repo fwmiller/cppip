@@ -6,8 +6,8 @@
 
 //
 // A bufq is a First-In-First-Out (FIFO) queue of buf_t pointers. The
-// data structure works with buf_t pointers, it does not copy data in
-// out of the buffers
+// data structure works with buf_t pointers, it does not touch the data
+// in the buffers
 //
 
 bufq::bufq(int entries, int bufsize) {

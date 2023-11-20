@@ -21,6 +21,8 @@ extern bool dump_enabled;
 #include "ipv6.h"
 #include "udp.h"
 
+void cppip_init();
+
 //
 // Utilities
 //

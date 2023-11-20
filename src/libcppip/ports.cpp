@@ -1,5 +1,6 @@
 #include "ports.h"
 #include <stdlib.h>
+#include <string.h>
 #include "udptab.h"
 
 port::port() {
@@ -8,7 +9,13 @@ port::port() {
 
 int
 port::bind(uint16_t portnum) {
-    bufq_t q = udptab.alloc_port(portnum);
+    bufq_t q;
+
+    q = udptab.find_port(portnum);
+    if (q != NULL)
+        return (-1);
+
+    q = udptab.alloc_port(portnum);
     if (q == NULL)
         return (-1);
     this->receiveq = q;
@@ -37,10 +44,15 @@ port::receive(void *buf, unsigned bufsize) {
     // Remove packet buffer from queue
     int len = 0;
     buf_t b = this->receiveq->remove(&len);
+    if (b == NULL)
+        return (-1);
 
     // Copy packet buffer data into parameter buffer
+    memcpy(buf, b, (bufsize > (unsigned) len ? len : bufsize));
 
     // ??? Free packet buffer
+
+    return len;
 }
 
 int

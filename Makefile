@@ -37,8 +37,6 @@ CPP_FILES	:= $(sort $(notdir $(CPP_SRCS)))
 #
 # Object files
 #
-OBJS		:= $(foreach f,$(CPP_FILES),$(addprefix $(BIN)/,$(subst .cpp,.o,$(f))))
-
 LIBCPPIP_OBJS	:=		\
 	$(BIN)/arp.o		\
 	$(BIN)/arp_dump.o	\
@@ -48,6 +46,7 @@ LIBCPPIP_OBJS	:=		\
 	$(BIN)/bufpool.o	\
 	$(BIN)/bufq.o		\
 	$(BIN)/cppip.o		\
+	$(BIN)/cppip_dump.o	\
 	$(BIN)/eth.o		\
 	$(BIN)/eth_dump.o	\
 	$(BIN)/eth_receive.o	\
@@ -69,6 +68,9 @@ LIBCPPIP_OBJS	:=		\
 	$(BIN)/udp_receive.o	\
 	$(BIN)/udptab.o
 
+DHCP_OBJS	:=		\
+	$(BIN)/dhcp.o
+
 CLI_OBJS	:=		\
 	$(BIN)/bufq_test.o	\
 	$(BIN)/byteq.o		\
@@ -84,7 +86,8 @@ CLI_OBJS	:=		\
 # Library file
 #
 LIBCPPIP	:= $(BIN)/libcppip.a
-LIBS		:= $(LIBCPPIP) -lpcap -lpthread -lreadline
+LIBDHCP		:= $(BIN)/libdhcp.a
+LIBS		:= $(LIBDHCP) $(LIBCPPIP) -lpcap -lpthread -lreadline
 
 ##############################################################################
 #
@@ -109,9 +112,11 @@ WHITE		:= \033[0;37m
 
 .PHONY: clean indent wc debug
 
-all: $(OBJS)
+all: $(DHCP_OBJS) $(LIBCPPIP_OBJS) $(CLI_OBJS)
 	@printf "Archiving ${CYAN}$(LIBCPPIP)${NC}\r\n"
 	@$(AR) $(LIBCPPIP) $(LIBCPPIP_OBJS)
+	@printf "Archiving ${CYAN}$(LIBDHCP)${NC}\r\n"
+	@$(AR) $(LIBDHCP) $(DHCP_OBJS)
 	@printf "Linking ${CYAN}$(EXE)${NC}\r\n"
 	$(LD) -o $(EXE) $(CLI_OBJS) $(LIBS)
 
@@ -124,6 +129,7 @@ $(BIN)/%.o: $(SRC)/*/%.cpp
 clean:
 	@$(RM) $(EXE)
 	@$(RM) $(LIBCPPIP)
+	@$(RM) $(LIBDHCP)
 	@$(RMR) $(BIN)
 
 # Indent pass of the include and src directories
@@ -144,3 +150,7 @@ debug:
 	@for f in $(OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
 	@printf "\r\n"
 	@for f in $(LIBCPPIP_OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
+	@printf "\r\n"
+	@for f in $(DHCP_OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
+	@printf "\r\n"
+	@for f in $(CLI_OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
