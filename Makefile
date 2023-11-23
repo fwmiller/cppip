@@ -69,7 +69,8 @@ LIBCPPIP_OBJS	:=		\
 	$(BIN)/udptab.o
 
 DHCP_OBJS	:=		\
-	$(BIN)/dhcp.o
+	$(BIN)/dhcp.o		\
+	$(BIN)/dhcp_dump.o
 
 CLI_OBJS	:=		\
 	$(BIN)/bufq_test.o	\
