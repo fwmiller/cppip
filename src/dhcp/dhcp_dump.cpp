@@ -69,6 +69,7 @@ dhcp_dump_opt_type(uint8_t type, uint8_t len, uint8_t *val) {
     switch (type) {
     case DHCP_OPT_PAD:
         printf("pad");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_SUBNET_MASK:
         printf("subnet mask ");
@@ -76,6 +77,7 @@ dhcp_dump_opt_type(uint8_t type, uint8_t len, uint8_t *val) {
         break;
     case DHCP_OPT_TIME_OFFSET:
         printf("time offset");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_ROUTER:
         printf("router ");
@@ -83,6 +85,7 @@ dhcp_dump_opt_type(uint8_t type, uint8_t len, uint8_t *val) {
         break;
     case DHCP_OPT_TIME_SERVER:
         printf("time server");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_NAME_SERVER:
         printf("name server ");
@@ -94,18 +97,23 @@ dhcp_dump_opt_type(uint8_t type, uint8_t len, uint8_t *val) {
         break;
     case DHCP_OPT_LOG_SERVER:
         printf("log server");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_COOKIE_SERVER:
         printf("cookie server");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_LPR_SERVER:
         printf("lpr server");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_IMPRESS_SERVER:
         printf("impress server");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_RESOURCE_LOCATION_SERVER:
         printf("location server");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_HOST_NAME:
         printf("host name ");
@@ -114,9 +122,11 @@ dhcp_dump_opt_type(uint8_t type, uint8_t len, uint8_t *val) {
         break;
     case DHCP_OPT_BOOT_FILE_SIZE:
         printf("boot file size");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_MERIT_DUMP_FILE:
         printf("merit dump file");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_DOMAIN_NAME:
         printf("domain name ");
@@ -125,12 +135,15 @@ dhcp_dump_opt_type(uint8_t type, uint8_t len, uint8_t *val) {
         break;
     case DHCP_OPT_SWAP_SERVER:
         printf("swap server");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_ROOT_PATH:
         printf("root path");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_EXTENSIONS_PATH:
         printf("extensions path");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_REQUESTED_IP_ADDR:
         printf("ip address ");
@@ -138,9 +151,11 @@ dhcp_dump_opt_type(uint8_t type, uint8_t len, uint8_t *val) {
         break;
     case DHCP_OPT_IP_ADDR_LEASE_TIME:
         printf("ip address lease time");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_OVERLOAD:
         printf("overload");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_MESSAGE_TYPE:
         printf("message type ");
@@ -148,27 +163,35 @@ dhcp_dump_opt_type(uint8_t type, uint8_t len, uint8_t *val) {
         break;
     case DHCP_OPT_SERVER_ID:
         printf("server id");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_PARAMETER_REQ_LIST:
         printf("parameter request list");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_MESSAGE:
         printf("message");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_MAX_DHCP_MSG_SIZE:
         printf("max dhcp message size");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_RENEWAL:
         printf("renewal");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_REBINDING:
         printf("rebinding");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_VENDOR_CLASS_ID:
         printf("vendor class id");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_CLIENT_ID:
         printf("client id");
+        printf(" len %d", len);
         break;
     case DHCP_OPT_TFTP_SERVER_NAME:
         printf("tftp server name ");
@@ -184,14 +207,13 @@ dhcp_dump_opt_type(uint8_t type, uint8_t len, uint8_t *val) {
         printf("end");
         break;
     default:
-        printf("UNKNOWN");
+        printf("UNKNOWN (%u)", type);
     }
 }
 
 void
 dhcp_dump(uint8_t *buf, int buflen) {
     dhcp_hdr_t dh = (dhcp_hdr_t) buf;
-    uint8_t *type, *len, *val;
 
     if (dh->op == 1)
         printf("request");
@@ -228,13 +250,12 @@ dhcp_dump(uint8_t *buf, int buflen) {
     int optlen = buflen - sizeof(struct dhcp_hdr);
     uint8_t *opt = buf + sizeof(struct dhcp_hdr);
     while (optlen > 0) {
-        type = opt;
-        len = opt + 1;
-        val = opt + 2;
+        uint8_t *type = opt;
+        uint8_t *len = opt + 1;
+        uint8_t *val = opt + 2;
 
-        printf("  ");
+        printf("    ");
         dhcp_dump_opt_type(*type, *len, val);
-        // printf(" len %d", *len);
         printf("\r\n");
 
         if (*type == DHCP_OPT_END)

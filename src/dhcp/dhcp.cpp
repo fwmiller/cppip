@@ -23,9 +23,10 @@ dhcp(void *pthread_arg) {
             len = dhcp_server.receive(buf, ETH_MTU_SIZE);
             if (len < 0)
                 break;
-
+#if _DEBUG_DHCP
             printf("dhcp server ");
             dhcp_dump(buf, len);
+#endif
         }
         n = dhcp_client.get_nbufs();
         while (n > 0) {
@@ -33,9 +34,10 @@ dhcp(void *pthread_arg) {
             len = dhcp_client.receive(buf, ETH_MTU_SIZE);
             if (len < 0)
                 break;
-
+#if _DEBUG_DHCP
             printf("dhcp client ");
             dhcp_dump(buf, len);
+#endif
         }
         usleep(20000);  // 20 milliseconds
     }

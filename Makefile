@@ -21,6 +21,7 @@ RMR		:= rm -fr
 CPPFLAGS	:= -c -Wall -Wno-class-memaccess -Og -fpermissive
 #CPPFLAGS	+= -g
 CPPFLAGS	+= -D_DEBUG
+#CPPFLAGS	+= -D_DEBUG_DHCP
 
 INDENT_RULES := -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l80 -lp -npcs -nprs -psl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1
 
