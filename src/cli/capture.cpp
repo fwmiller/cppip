@@ -80,8 +80,10 @@ initialize_pcap() {
     ioctl(pcap_fileno(intf_handl), SIOCGIFADDR, &ifrpa);
 
     struct sockaddr_in *ipaddr = (struct sockaddr_in *) &ifrpa.ifr_addr;
-    dump_ipaddr(reverse_byte_order_long(ipaddr->sin_addr.s_addr));
-    printf(" ");
+    if (ipaddr->sin_addr.s_addr > 0) {
+        dump_ipaddr(reverse_byte_order_long(ipaddr->sin_addr.s_addr));
+        printf(" ");
+    }
 
     /* Local Ethernet MAC address */
     struct ifreq ifrhw;

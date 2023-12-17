@@ -2,17 +2,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "arptab.h"
 #include "cli.h"
+#include "cppip.h"
 
 #include <pcap.h>
 
 extern pcap_t *intf_handl;
 
 void initialize_pcap();
-void *dhcp(void *pthread_arg);
 void packet_handler(u_char *param, const struct pcap_pkthdr *header,
                     const u_char *pkt_data);
+void *dhcp(void *pthread_arg);
+void *dns(void *pthread_arg);
 
 void
 set_color_none() {
@@ -26,7 +27,7 @@ set_color_cyan() {
 
 int
 main() {
-    pthread_t dhcp_thread, cli_thread;
+    pthread_t dhcp_thread, dns_thread, cli_thread;
 
     printf("C++ Internet Protocols (");
     set_color_cyan();
@@ -40,6 +41,7 @@ main() {
 
     cppip_init();
     pthread_create(&dhcp_thread, NULL, dhcp, NULL);
+    pthread_create(&dns_thread, NULL, dns, NULL);
     initialize_pcap();
     pthread_create(&cli_thread, NULL, cli, NULL);
 

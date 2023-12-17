@@ -21,7 +21,8 @@ RMR		:= rm -fr
 CPPFLAGS	:= -c -Wall -Wno-class-memaccess -Og -fpermissive
 #CPPFLAGS	+= -g
 CPPFLAGS	+= -D_DEBUG
-#CPPFLAGS	+= -D_DEBUG_DHCP
+CPPFLAGS	+= -D_DEBUG_DHCP
+CPPFLAGS	+= -D_DEBUG_DNS
 
 INDENT_RULES := -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l80 -lp -npcs -nprs -psl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1
 
@@ -73,6 +74,9 @@ DHCP_OBJS	:=		\
 	$(BIN)/dhcp.o		\
 	$(BIN)/dhcp_dump.o
 
+DNS_OBJS	:=		\
+	$(BIN)/dns.o		\
+
 CLI_OBJS	:=		\
 	$(BIN)/bufq_test.o	\
 	$(BIN)/byteq.o		\
@@ -89,7 +93,8 @@ CLI_OBJS	:=		\
 #
 LIBCPPIP	:= $(BIN)/libcppip.a
 LIBDHCP		:= $(BIN)/libdhcp.a
-LIBS		:= $(LIBDHCP) $(LIBCPPIP) -lpcap -lpthread -lreadline
+LIBDNS		:= $(BIN)/libdns.a
+LIBS		:= $(LIBDNS) $(LIBDHCP) $(LIBCPPIP) -lpcap -lpthread -lreadline
 
 ##############################################################################
 #
@@ -114,13 +119,15 @@ WHITE		:= \033[0;37m
 
 .PHONY: clean indent wc debug
 
-all: $(DHCP_OBJS) $(LIBCPPIP_OBJS) $(CLI_OBJS)
+all: $(DNS_OBJS) $(DHCP_OBJS) $(LIBCPPIP_OBJS) $(CLI_OBJS)
 	@printf "Archiving ${CYAN}$(LIBCPPIP)${NC}\r\n"
 	@$(AR) $(LIBCPPIP) $(LIBCPPIP_OBJS)
 	@printf "Archiving ${CYAN}$(LIBDHCP)${NC}\r\n"
 	@$(AR) $(LIBDHCP) $(DHCP_OBJS)
+	@printf "Archiving ${CYAN}$(LIBDNS)${NC}\r\n"
+	@$(AR) $(LIBDNS) $(DNS_OBJS)
 	@printf "Linking ${CYAN}$(EXE)${NC}\r\n"
-	$(LD) -o $(EXE) $(CLI_OBJS) $(LIBS)
+	@$(LD) -o $(EXE) $(CLI_OBJS) $(LIBS)
 
 # C++ source file compilation
 $(BIN)/%.o: $(SRC)/*/%.cpp
@@ -132,6 +139,7 @@ clean:
 	@$(RM) $(EXE)
 	@$(RM) $(LIBCPPIP)
 	@$(RM) $(LIBDHCP)
+	@$(RM) $(LIBDNS)
 	@$(RMR) $(BIN)
 
 # Indent pass of the include and src directories
@@ -154,5 +162,7 @@ debug:
 	@for f in $(LIBCPPIP_OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
 	@printf "\r\n"
 	@for f in $(DHCP_OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
+	@printf "\r\n"
+	@for f in $(DNS_OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
 	@printf "\r\n"
 	@for f in $(CLI_OBJS); do printf "${CYAN}$$f${NC}\r\n"; done
