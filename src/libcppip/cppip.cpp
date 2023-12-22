@@ -1,4 +1,8 @@
 #include "cppip.h"
+#include <stdlib.h>
+
+// The buffer pool
+bufpool_t bp = NULL;
 
 uint16_t
 reverse_byte_order_short(uint16_t x) {
@@ -13,5 +17,5 @@ reverse_byte_order_long(uint32_t x) {
 
 void
 cppip_init() {
-    return;
+    bp = new bufpool(32, 1518);
 }

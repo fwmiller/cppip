@@ -11,6 +11,7 @@ typedef uint8_t *buf_t;
 extern bool dump_enabled;
 
 #include "arp.h"
+#include "buf.h"
 #include "eth.h"
 #include "ethertype.h"
 #include "icmp.h"
@@ -20,6 +21,8 @@ extern bool dump_enabled;
 #include "ipv4.h"
 #include "ipv6.h"
 #include "udp.h"
+
+extern bufpool_t bp;
 
 void cppip_init();
 

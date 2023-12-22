@@ -24,6 +24,8 @@ bufq::bufq(int entries, int bufsize) {
     this->h = 0;
     this->t = 0;
     this->full = false;
+
+    pthread_mutex_init(&(this->mutex), NULL);
 }
 
 //
@@ -33,18 +35,25 @@ int
 bufq::get_nbufs() {
     int h, n;
 
-    if (this->full)
-        return this->entries;
-
+    pthread_mutex_lock(&(this->mutex));
+    if (this->full) {
+        int entries = this->entries;
+        pthread_mutex_unlock(&(this->mutex));
+        return entries;
+    }
     for (n = 0, h = this->h; h != this->t; n++, h = (h + 1) % this->entries)
         ;
 
+    pthread_mutex_unlock(&(this->mutex));
     return n;
 }
 
 int
 bufq::get_bufsize() {
-    return this->bufsize;
+    pthread_mutex_lock(&(this->mutex));
+    int bufsize = this->bufsize;
+    pthread_mutex_unlock(&(this->mutex));
+    return bufsize;
 }
 
 //
@@ -54,13 +63,18 @@ int
 bufq::get_length() {
     int h, len;
 
-    if (this->full)
-        return this->entries;
+    pthread_mutex_lock(&(this->mutex));
+    if (this->full) {
+        int entries = this->entries;
+        pthread_mutex_unlock(&(this->mutex));
+        return entries;
+    }
 
     for (len = 0, h = this->h; h != this->t;
          len += this->len[h], h = (h + 1) % this->entries)
         ;
 
+    pthread_mutex_unlock(&(this->mutex));
     return len;
 }
 
@@ -72,12 +86,14 @@ bufq::append(buf_t buf, int len) {
     if (buf == NULL || this->full)
         return (-1);
 
+    pthread_mutex_lock(&(this->mutex));
     this->q[t] = buf;
     this->len[t] = len;
     this->t = (this->t + 1) % this->entries;
     if (this->t == this->h)
         this->full = true;
 
+    pthread_mutex_unlock(&(this->mutex));
     return 0;
 }
 
@@ -86,7 +102,10 @@ bufq::append(buf_t buf, int len) {
 //
 buf_t
 bufq::remove(int *len) {
+    pthread_mutex_lock(&(this->mutex));
+
     if (!(this->full) && this->h == this->t) {
+        pthread_mutex_unlock(&(this->mutex));
         *len = 0;
         return NULL;
     }
@@ -96,14 +115,18 @@ bufq::remove(int *len) {
     if (this->full)
         this->full = false;
 
+    pthread_mutex_unlock(&(this->mutex));
     return buf;
 }
 
 void
 bufq::dump() {
-    if (!(this->full) && this->h == this->t)
-        return;
+    pthread_mutex_lock(&(this->mutex));
 
+    if (!(this->full) && this->h == this->t) {
+        pthread_mutex_unlock(&(this->mutex));
+        return;
+    }
     printf("<");
     for (int i = this->h;;) {
         printf("%d", this->len[i]);
@@ -115,12 +138,18 @@ bufq::dump() {
         printf(",");
     }
     printf(">");
+
+    pthread_mutex_unlock(&(this->mutex));
 }
 
 void
 bufq::dump_contents() {
-    if (!(this->full) && this->h == this->t)
+    pthread_mutex_lock(&(this->mutex));
+
+    if (!(this->full) && this->h == this->t) {
+        pthread_mutex_unlock(&(this->mutex));
         return;
+    }
 
     for (int i = this->h;;) {
         printf("[");
@@ -143,4 +172,5 @@ bufq::dump_contents() {
         if (i == this->t)
             break;
     }
+    pthread_mutex_unlock(&(this->mutex));
 }

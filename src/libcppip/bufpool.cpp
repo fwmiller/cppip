@@ -10,6 +10,7 @@ bufpool::bufpool(int nbufs, int bufsize) {
     this->nbufs = nbufs;
     this->bufsize = bufsize;
     this->stack = NULL;
+    pthread_mutex_init(&(this->mutex), NULL);
 
     // Setup the stack
     for (int i = 0; i < nbufs; i++)
@@ -18,37 +19,51 @@ bufpool::bufpool(int nbufs, int bufsize) {
 
 int
 bufpool::get_nbufs() {
-    return this->nbufs;
+    pthread_mutex_lock(&(this->mutex));
+    int nbufs = this->nbufs;
+    pthread_mutex_unlock(&(this->mutex));
+    return nbufs;
 }
 
 int
 bufpool::get_bufsize() {
-    return this->bufsize;
+    pthread_mutex_lock(&(this->mutex));
+    int bufsize = this->bufsize;
+    pthread_mutex_unlock(&(this->mutex));
+    return bufsize;
 }
 
 buf_t
 bufpool::pop() {
-    if (this->stack == NULL)
+    pthread_mutex_lock(&(this->mutex));
+    if (this->stack == NULL) {
+        pthread_mutex_unlock(&(this->mutex));
         return NULL;
-
+    }
     buf_t buf = this->stack;
     this->stack = *((buf_t *) this->stack);
+    pthread_mutex_unlock(&(this->mutex));
     return buf;
 }
 
 void
 bufpool::push(buf_t buf) {
-    if (buf == NULL)
+    pthread_mutex_lock(&(this->mutex));
+    if (buf == NULL) {
+        pthread_mutex_unlock(&(this->mutex));
         return;
-
+    }
     *((buf_t *) buf) = this->stack;
     this->stack = buf;
+    pthread_mutex_unlock(&(this->mutex));
 }
 
 void
 bufpool::dump() {
+    pthread_mutex_lock(&(this->mutex));
     for (buf_t buf = this->stack; buf != NULL;) {
         printf("%p\r\n", buf);
         buf = *((buf_t *) buf);
     }
+    pthread_mutex_unlock(&(this->mutex));
 }

@@ -1,6 +1,7 @@
 #ifndef __BUF_H
 #define __BUF_H
 
+#include <pthread.h>
 #include <stdint.h>
 
 //
@@ -17,6 +18,7 @@ private:
     int nbufs;
     int bufsize;
     buf_t stack;
+    pthread_mutex_t mutex;
 
 public:
     bufpool(int nbufs, int bufsize);
@@ -40,6 +42,7 @@ private:
     int bufsize;  // Size of each buffers allocated memory
     int h, t;     // Queue head and tail indices in buffer ptr array
     bool full;    // Full flag
+    pthread_mutex_t mutex;
 
 public:
     bufq(int entries, int bufsize);

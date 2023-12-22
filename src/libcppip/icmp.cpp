@@ -17,5 +17,5 @@ icmp::set_buf(buf_t buf) {
 
 void
 icmp::receive() {
-    return;
+    this->dump();
 }

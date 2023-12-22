@@ -4,7 +4,7 @@
 #
 INC		:= include
 SRC		:= src
-BIN		:= bin
+BUILD		:= build
 
 ##############################################################################
 #
@@ -40,60 +40,60 @@ CPP_FILES	:= $(sort $(notdir $(CPP_SRCS)))
 # Object files
 #
 LIBCPPIP_OBJS	:=		\
-	$(BIN)/arp.o		\
-	$(BIN)/arp_dump.o	\
-	$(BIN)/arp_receive.o	\
-	$(BIN)/arptab.o		\
-	$(BIN)/arptab_entry.o	\
-	$(BIN)/bufpool.o	\
-	$(BIN)/bufq.o		\
-	$(BIN)/cppip.o		\
-	$(BIN)/cppip_dump.o	\
-	$(BIN)/eth.o		\
-	$(BIN)/eth_dump.o	\
-	$(BIN)/eth_receive.o	\
-	$(BIN)/eth_send.o	\
-	$(BIN)/icmp.o		\
-	$(BIN)/icmp_dump.o	\
-	$(BIN)/icmpv6.o		\
-	$(BIN)/ieee802_2.o	\
-	$(BIN)/ipproto_dump.o	\
-	$(BIN)/ipv4.o		\
-	$(BIN)/ipv4_dump.o	\
-	$(BIN)/ipv6.o		\
-	$(BIN)/ipv6_dump.o	\
-	$(BIN)/ports.o		\
-	$(BIN)/sockets.o	\
-	$(BIN)/stats.o		\
-	$(BIN)/udp.o		\
-	$(BIN)/udp_dump.o	\
-	$(BIN)/udp_receive.o	\
-	$(BIN)/udptab.o
+	$(BUILD)/arp.o		\
+	$(BUILD)/arp_dump.o	\
+	$(BUILD)/arp_receive.o	\
+	$(BUILD)/arptab.o		\
+	$(BUILD)/arptab_entry.o	\
+	$(BUILD)/bufpool.o	\
+	$(BUILD)/bufq.o		\
+	$(BUILD)/cppip.o		\
+	$(BUILD)/cppip_dump.o	\
+	$(BUILD)/eth.o		\
+	$(BUILD)/eth_dump.o	\
+	$(BUILD)/eth_receive.o	\
+	$(BUILD)/eth_send.o	\
+	$(BUILD)/icmp.o		\
+	$(BUILD)/icmp_dump.o	\
+	$(BUILD)/icmpv6.o		\
+	$(BUILD)/ieee802_2.o	\
+	$(BUILD)/ipproto_dump.o	\
+	$(BUILD)/ipv4.o		\
+	$(BUILD)/ipv4_dump.o	\
+	$(BUILD)/ipv6.o		\
+	$(BUILD)/ipv6_dump.o	\
+	$(BUILD)/ports.o		\
+	$(BUILD)/sockets.o	\
+	$(BUILD)/stats.o		\
+	$(BUILD)/udp.o		\
+	$(BUILD)/udp_dump.o	\
+	$(BUILD)/udp_receive.o	\
+	$(BUILD)/udptab.o
 
 DHCP_OBJS	:=		\
-	$(BIN)/dhcp.o		\
-	$(BIN)/dhcp_dump.o
+	$(BUILD)/dhcp.o		\
+	$(BUILD)/dhcp_dump.o
 
 DNS_OBJS	:=		\
-	$(BIN)/dns.o		\
+	$(BUILD)/dns.o		\
 
 CLI_OBJS	:=		\
-	$(BIN)/bufq_test.o	\
-	$(BIN)/byteq.o		\
-	$(BIN)/byteq_test.o	\
-	$(BIN)/capture.o	\
-	$(BIN)/cli.o		\
-	$(BIN)/main.o		\
-	$(BIN)/nextarg.o
+	$(BUILD)/bufq_test.o	\
+	$(BUILD)/byteq.o		\
+	$(BUILD)/byteq_test.o	\
+	$(BUILD)/capture.o	\
+	$(BUILD)/cli.o		\
+	$(BUILD)/main.o		\
+	$(BUILD)/nextarg.o
 
 
 ##############################################################################
 #
 # Library file
 #
-LIBCPPIP	:= $(BIN)/libcppip.a
-LIBDHCP		:= $(BIN)/libdhcp.a
-LIBDNS		:= $(BIN)/libdns.a
+LIBCPPIP	:= $(BUILD)/libcppip.a
+LIBDHCP		:= $(BUILD)/libdhcp.a
+LIBDNS		:= $(BUILD)/libdns.a
 LIBS		:= $(LIBDNS) $(LIBDHCP) $(LIBCPPIP) -lpcap -lpthread -lreadline
 
 ##############################################################################
@@ -130,8 +130,8 @@ all: $(DNS_OBJS) $(DHCP_OBJS) $(LIBCPPIP_OBJS) $(CLI_OBJS)
 	@$(LD) -o $(EXE) $(CLI_OBJS) $(LIBS)
 
 # C++ source file compilation
-$(BIN)/%.o: $(SRC)/*/%.cpp
-	@$(MKDIR) $(BIN)
+$(BUILD)/%.o: $(SRC)/*/%.cpp
+	@$(MKDIR) $(BUILD)
 	@printf "Compiling ${CYAN}$<${NC}\r\n"
 	@$(CPP) $(CPPFLAGS) -I$(INC) -o $@ $<
 
@@ -140,7 +140,7 @@ clean:
 	@$(RM) $(LIBCPPIP)
 	@$(RM) $(LIBDHCP)
 	@$(RM) $(LIBDNS)
-	@$(RMR) $(BIN)
+	@$(RMR) $(BUILD)
 
 # Indent pass of the include and src directories
 indent: clean
